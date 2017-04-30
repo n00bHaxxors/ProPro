@@ -8,8 +8,8 @@ import java.util.ArrayList;
  @author Lluís Trilla
  */
 
-public class Hub {asdasdsaadsdasads
-    private ArrayList<MT_Indirecte>
+public class Hub {
+    private ArrayList<MT_Indirecte> Transports;
 
     /**
      * @brief Crea un Hub
