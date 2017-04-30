@@ -3,13 +3,18 @@
  @author Marc Cané Salamià
  */
 public class Desplaçament {
-    private int duracio, preu;
+
+    private int preu;
+    private LocalTime duracio;
+
     private Mitja_Transport mitja;
 
     /** @brief Consulta la duracio del desplaçament
      @pre cert
      @post Retorna la duració del desplaçament en segons*/
-    public int duracio() {
+
+    public LocalTime duracio() {
+
         return duracio;
     }
 
@@ -23,8 +28,8 @@ public class Desplaçament {
     /** @brief Consulta el mitjà de transport usat en el desplaçament
      @pre cert
      @post Retorna el mitjà de transport usat*/
-    public String mitja_usat(){
-        return mitja;
-    }
+
+    public Mitja_Transport mitja_usat(){ return mitja; }
+
 
 }
