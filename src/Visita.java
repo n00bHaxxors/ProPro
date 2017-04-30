@@ -6,7 +6,7 @@
 import java.time;
 
 public class Visita {
-    private Lloc visitat; //entenc que no ha de ser un array...
+    private Visitable visitat;
     private LocalDate data_visita; //cal?
     //ajudeume a posar atributs aqui
 
@@ -20,5 +20,12 @@ public class Visita {
      @post Visita amb lloc visitat i data de visita creada*/
     public Visita(Lloc v, LocalDate data){
         visitat=v; data_visita=data;
+    }
+
+    /** @brief Consulta el nom del lloc visitat
+     @pre cert
+     @post Retorna el nom del lloc visitat*/
+    public nom_visitable(){
+        return visitat.nom();
     }
 }

@@ -25,7 +25,7 @@ public class Circuit {
     /** @brief Consulta el temps total
      @pre cert
      @post Retorna el temps total que durarà el circuit*/
-    public int temps_total() {
+    public LocalTime temps_total() {
         return sumatori_temps;
     }
 
