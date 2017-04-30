@@ -34,7 +34,7 @@ public class Circuit {
     /** @brief Consulta el preu per persona
      @pre cert
      @post Retorna el preu per persona*/
-    public int preu_persona{
+    public int preu_persona(){
         return preu_per_persona;
     }
 
