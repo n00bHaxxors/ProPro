@@ -1,8 +1,10 @@
 /** @file Client.java
     @brief Classe Allotjament
 */
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 /** @class Client
     @brief Client
     @author Ismael El Habri
@@ -11,7 +13,7 @@ import java.util.HashSet;
 
 public class Client {
     private String nom;
-    
+    private ArrayList<Visita> visites;
     
     private HashSet<String> preferencies;
     
@@ -30,5 +32,20 @@ public class Client {
         return preferencies.contains(car);
     }
     
+    public void afegirVisita(Visitable PuntVisita, LocalDate data) {
+        Visita temp = new Visita(PuntVisita, data);
+        visites.add(temp);
+    }
+    
+    public boolean shaVisitat(Visitable punt){
+        Iterator itr = visites.iterator();
+        boolean trobat = false;
+        Visita temp;
+        while (itr.hasNext() && !trobat){
+            temp = (Visita) itr.next();
+            trobat = punt.nom().equals(temp.nom());
+        }
+        return trobat;
+    }
     
 }

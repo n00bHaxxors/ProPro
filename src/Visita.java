@@ -3,7 +3,7 @@
  @author Marc Cané Salamià
  */
 
-import java.time;
+import java.time.*;
 
 public class Visita {
     private Visitable visitat;
