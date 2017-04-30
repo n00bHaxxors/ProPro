@@ -62,7 +62,7 @@ public class Visitable extends PuntInteres{
 	@pre cert
 	@post Lloc de pas a partir d'un lloc*/
     public Visitable(Lloc llocDePas){
-        super(llocDePas.nom(), 0, llocDePas.posicio(), null, llocDePas.zona());
+        super(llocDePas.nom(), 0, llocDePas.coordenada(), null, llocDePas.zona());
         llocPas=true;
         tempsRec=null;
         dies_tancat=null;
