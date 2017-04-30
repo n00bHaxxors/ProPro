@@ -1,11 +1,13 @@
-
 /** @class Visita
  @brief Lloc on ja ha estat un client (ta ok?)
  @author Marc Cané Salamià
  */
+
+import java.time;
+
 public class Visita {
     private Lloc visitat; //entenc que no ha de ser un array...
-    private LocalDate data_visita; //?
+    private LocalDate data_visita; //cal?
     //ajudeume a posar atributs aqui
 
     /** @brief Constructor per defecte

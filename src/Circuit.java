@@ -7,15 +7,20 @@
     @author Marc Cané Salamià
 */
 
+import java.time;
+
 public class Circuit {
-    private int sumatori_temps, preu_per_persona;
+    private int preu_per_persona;
     private Float grau_satisfacio;
+    private LocalTime sumatori_temps;
     private ArrayList<Lloc> llocs;
 
-    /** @brief Constructor circuit donat un arraylist de llocs
+    /** @brief Constructor circuit amb paràmetres
      @pre cert
-     @post Circuit creat*/
-    public Circuit(ArrayList<Lloc> l){}
+     @post Circuit amb preu,grau,temps i llocs creat*/
+    public Circuit(int preu, Float grau, LocalTime t, ArrayList<Lloc> l){
+        preu_per_persona=preu; grau_satisfacio=grau; sumatori_temps=t; llocs=l;
+    }
 
     /** @brief Consulta el temps total
      @pre cert
@@ -27,9 +32,7 @@ public class Circuit {
     /** @brief Consulta el grau de satisfacció (mitja?) que tindràn els clients al fer el circuit
      @pre cert
      @post Retorna el grau de satisfaccio mitjà*/
-    public Float grau_satisfacio(Client/Grupclients c){
-        return grau_satisfacio; //!wtf
-    }
+    public Float grau_satisfacio(Grupclients c){ return grau_satisfacio; } //grupclients o client?
 
     /** @brief Consulta el preu per persona
      @pre cert
