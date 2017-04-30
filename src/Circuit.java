@@ -7,7 +7,8 @@
     @author Marc Cané Salamià
 */
 
-import java.time;
+import java.time.*;
+import java.util.ArrayList;
 
 public class Circuit {
     private int preu_per_persona;
