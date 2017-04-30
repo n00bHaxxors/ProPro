@@ -1,10 +1,13 @@
 /** @class MT_Indirecte
+
  @brief Recurs que permet desplaçar-nos entre llocs primaris
+
  @author Marc Cané Salamià
  */
 public class MT_Indirecte extends Mitja_Transport {
     //private Coordenada ubicacio; //ja estarà a lloc origen?
     private Lloc origen, desti;
+
 
     private LocalTime temps_recomanat; //temps per arribar fins al mt
     private LocalTime temps_previst; //trasllat des del mitj`a de transport en el lloc primari de dest´ı fins a qualsevol dels seus llocs secundaris associats (´unic per a tots els llocs secundaris)

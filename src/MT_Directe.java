@@ -19,4 +19,5 @@ public class MT_Directe extends Mitja_Transport {
     public int preu(){
         return preu;
     }
+
 }

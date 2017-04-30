@@ -1,3 +1,4 @@
+
 /** @class Visita
  @brief Lloc on ja ha estat un client (ta ok?)
  @author Marc Cané Salamià
