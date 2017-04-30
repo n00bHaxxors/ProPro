@@ -20,7 +20,7 @@ public class Lloc {
     public Lloc(String n, Coordenada c, TimeZone z) {
         nom=n;
         coordenadaLloc = c;
-        zona = z;
+        Zona = z;
         
     }
 }
