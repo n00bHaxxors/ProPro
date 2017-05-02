@@ -3,7 +3,7 @@
  @author Marc Cané Salamià
  */
 
-import java.time;
+import java.time.*;
 
 public class MT_Indirecte extends Mitja_Transport {
     //private Coordenada ubicacio; //ja estarà a lloc origen?

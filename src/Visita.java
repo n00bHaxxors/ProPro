@@ -18,14 +18,14 @@ public class Visita {
     /** @brief Constructor amb paràmetres
      @pre cert
      @post Visita amb lloc visitat i data de visita creada*/
-    public Visita(Lloc v, LocalDate data){
+    public Visita(Visitable v, LocalDate data){
         visitat=v; data_visita=data;
     }
 
     /** @brief Consulta el nom del lloc visitat
      @pre cert
      @post Retorna el nom del lloc visitat*/
-    public nom_visitable(){
+    public String nom_visitable(){
         return visitat.nom();
     }
 }

@@ -48,4 +48,8 @@ public class PuntInteres {
 	@post retorna cert si el punt d'interès té la característica i fals en c.c.*/
     public boolean conteCaracteristica(String car){ return caracteristiques.contains(car); }
     
+    
+    public void afegirTransportDirecte(){
+        //no sé com ferho encara
+    }
 }

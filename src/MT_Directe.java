@@ -3,7 +3,7 @@
  @author Marc Cané Salamià
  */
 
-import java.time;
+import java.time.*;
 
 public class MT_Directe extends Mitja_Transport {
     private int preu;

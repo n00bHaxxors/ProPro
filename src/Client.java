@@ -43,7 +43,7 @@ public class Client {
         Visita temp;
         while (itr.hasNext() && !trobat){
             temp = (Visita) itr.next();
-            trobat = punt.nom().equals(temp.nom());
+            trobat = punt.nom().equals(temp.nom_visitable());
         }
         return trobat;
     }
