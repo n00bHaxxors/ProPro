@@ -17,6 +17,7 @@ public class PuntInteres {
     private Coordenada ubicacio;
     private HashSet<String> caracteristiques;
     private TimeZone zona;
+    private ArrayList<MT_Directe> transportsDirectes;
     
     //Mètodes
     
@@ -26,6 +27,7 @@ public class PuntInteres {
     PuntInteres(String nomPunt, float preuVisita, Coordenada pos, ArrayList<String> CaracteristiquesPunt, TimeZone zonaHoraria){
         nom=nomPunt; preu=preuVisita; ubicacio=pos;  zona=zonaHoraria;
         caracteristiques=new HashSet(CaracteristiquesPunt);
+        transportsDirectes= new ArrayList();
     }
     
     /** @brief Consulta el nom del punt d'interès
@@ -49,7 +51,5 @@ public class PuntInteres {
     public boolean conteCaracteristica(String car){ return caracteristiques.contains(car); }
     
     
-    public void afegirTransportDirecte(){
-        //no sé com ferho encara
-    }
+    public void afegirTransportDirecte(MT_Directe transport){ transportsDirectes.add(transport); }
 }
