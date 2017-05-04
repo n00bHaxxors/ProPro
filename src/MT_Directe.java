@@ -17,15 +17,15 @@ public class MT_Directe extends Mitja_Transport {
     /** @brief Constructor amb parametres
      @pre cert
      @post Mitja de transport amb nom, preu, durada creat*/
-    public Mitja_Transport(String n, int p, LocalTime d, PuntInteres d){ //connexio directe
-        nom=n; preu=p; durada=d;
+    public MT_Directe(String n, int p, LocalTime d, PuntInteres dest){ //connexio directe
+        super(n); preu=p; durada=d; desti=dest;
     }
  
     /** @brief Constructor amb parametres
      @pre cert
      @post Mitja de transport amb nom, preu i durada creat*/
-    public Mitja_Transport(String n, int p, LocalTime d){ //transport random
-        Mitja_Transport(n,p,d,NULL);    
+    public MT_Directe(String n, int p, LocalTime d){ //transport random
+        super(n); preu=p; durada=d; desti=null;  
     }
  
     /** @brief Consulta el preu d'us del mitjà de trasport
