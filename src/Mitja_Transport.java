@@ -8,7 +8,7 @@ public class Mitja_Transport {
     /** @brief Constructor per defecte
      @pre cert
      @post Mitja de transport buit creat*/
-    public Mitja_Transport(){}
+    public Mitja_Transport(String n){ nom = n; }
 
     /** @brief Consulta el nom del mitja de transport
      @pre cert
