@@ -7,14 +7,14 @@
  */
 
 public class Coordenada {
-    private Double x, y;
+    private Float x, y;
 
     /**
      * @brief Crea una coordenada geogràfica a partir de les seves components vertical i horitzontal
      * @pre cert
      * @post Coordenada a la posicio que li hem assignat
      */
-    public Coordenada(Double nord, Double est){
+    public Coordenada(Float nord, Float est){
         x=est;
         y=nord;
     }

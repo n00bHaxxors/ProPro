@@ -15,18 +15,18 @@ import java.util.TimeZone;
 public class Visitable extends PuntInteres{
     
    
-    public class BlocHorari{
+    public static class BlocHorari{
         /** @class BlocHorari
             @brief Franja temporal en qué el un lloc visitable está obert.
             @author Ismael El Habri
         */
-        private LocalDateTime inici, fi;
+        private LocalDate inici, fi;
         private LocalTime horaInici, horaFi;
         
         /** @brief Crea una franja amb els parametres
 	@pre cert
 	@post BlocHorari amb la franja corresponent */
-        public BlocHorari(LocalDateTime diaInici, LocalTime hInici, LocalDateTime diaFi, LocalTime hFi) {
+        public BlocHorari(LocalDate diaInici, LocalTime hInici, LocalDate diaFi, LocalTime hFi) {
             inici=diaInici; fi=diaFi;
             horaInici=hInici; horaFi=hFi;
         }
@@ -36,7 +36,7 @@ public class Visitable extends PuntInteres{
 	@post retorna cert si estarà obert durant tota la visita i fals en cas contrari */
         public boolean estaraObert(LocalDateTime iniciVisita, LocalDateTime fiVisita){
             boolean resultat = false;
-            if(!iniciVisita.isBefore(inici) && !fiVisita.isAfter(fi)){
+            if(!iniciVisita.isBefore(LocalDateTime.of(inici,horaInici)) && !fiVisita.isAfter(LocalDateTime.of(fi,horaFi))){
                 resultat = !iniciVisita.toLocalTime().isBefore(horaInici)&&!fiVisita.toLocalTime().isAfter(horaFi);
             }
             return resultat;
