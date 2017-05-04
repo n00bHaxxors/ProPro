@@ -179,7 +179,7 @@ class IO {
                     String nomMT=scan.nextLine();
                     LocalTime duradaTrajecte= LocalTime.parse(scan.nextLine());
                     Float preu = scan.nextFloat();
-                    MT_Directe transport = new MT_Directe(nomMT, (int) (preu*10),duradaTrajecte);
+                    MT_Directe transport = new MT_Directe(nomMT, (int) (preu*100),duradaTrajecte);
 
                     Iterator<Lloc> llocIt = LlistaLlocs.iterator();
                     boolean trobat = false;
@@ -189,6 +189,47 @@ class IO {
                         else LlocActual = llocIt.next();
                     }
                     LlocActual.associarTransport(transport);
+                    scan.nextLine();
+                    break;
+                }
+                case "transport directe": {
+                    String nomOrigen = scan.nextLine();
+                    String nomDesti = scan.nextLine();
+                    String nomMT=scan.nextLine();
+                    LocalTime duradaTrajecte= LocalTime.parse(scan.nextLine());
+                    Float preu = scan.nextFloat();
+
+
+                    Iterator<Allotjament> it = LlistaAllotjaments.iterator();
+                    Iterator<Visitable> jt = LlistaVisitables.iterator();
+                    Iterator<Lloc> llocIt = LlistaLlocs.iterator();
+                    boolean trobat = false;
+
+                    Allotjament allotjamentActual = it.next();
+                    while (it.hasNext() && !trobat) {
+                        if (allotjamentActual.nom() == nomDesti) trobat = true;
+                        else allotjamentActual = it.next();
+                    }
+                    trobat = false;
+                    Visitable visitableActual = jt.next();
+                    while (jt.hasNext() && !trobat) {
+                        if (visitableActual.nom() == nomDesti) trobat = true;
+                        else visitableActual = jt.next();
+                    }
+                    String lloc = scan.nextLine();
+                    trobat = false;
+                    Lloc LlocActual = llocIt.next();
+                    while (llocIt.hasNext() && !trobat) {
+                        if (LlocActual.nom() == lloc) trobat = true;
+                        else LlocActual = llocIt.next();
+                    }
+                    if (jt.hasNext()) {
+                        LlocActual.associarTransportDirecte(new MT_Directe(nomMT,(int) (preu*100),duradaTrajecte,visitableActual));
+                    } else if (it.hasNext()) {
+                        LlocActual.associarTransportDirecte(new MT_Directe(nomMT,(int) (preu*100),duradaTrajecte,allotjamentActual));
+                    } else {
+                        //excepcio
+                    }
                     scan.nextLine();
                     break;
                 }
