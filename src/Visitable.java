@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.TimeZone;
 /** @class Visitable
@@ -35,9 +34,16 @@ public class Visitable extends PuntInteres{
 	@pre bloc horari diferent de null i temps iniciVisita posterior a fiVisita
 	@post retorna cert si estarà obert durant tota la visita i fals en cas contrari */
         public boolean estaraObert(LocalDateTime iniciVisita, LocalDateTime fiVisita){
+            boolean mateixDia = iniciVisita.toLocalDate().equals(fiVisita.toLocalDate()); //comprovem que son el mateix dia
             boolean resultat = false;
-            if(!iniciVisita.isBefore(LocalDateTime.of(inici,horaInici)) && !fiVisita.isAfter(LocalDateTime.of(fi,horaFi))){
-                resultat = !iniciVisita.toLocalTime().isBefore(horaInici)&&!fiVisita.toLocalTime().isAfter(horaFi);
+            if(!mateixDia){
+                LocalDateTime aux = iniciVisita;
+                iniciVisita = fiVisita;
+                fiVisita = aux;
+            }
+            resultat = iniciVisita.toLocalDate().isAfter(inici) && fiVisita.toLocalDate().isBefore(fi);
+            if (resultat) {
+                resultat = iniciVisita.toLocalTime().isAfter(horaInici) && iniciVisita.toLocalTime().isBefore(horaFi) && fiVisita.toLocalTime().isAfter(horaInici) && fiVisita.toLocalTime().isBefore(horaFi);
             }
             return resultat;
         }
@@ -50,15 +56,33 @@ public class Visitable extends PuntInteres{
     public static class ExcepcioHorari{
         private LocalDate dia;
         private LocalTime inici, fi;
+         
+        /** @brief Crea una excepció d'horari
+            @pre cert
+            @post Excepció d'horari el dia diaEx amb nou horari de hInici a hFi per el dia en concret
+        */
         public ExcepcioHorari(LocalDate diaEx, LocalTime hInici, LocalTime hFi){
             dia=diaEx; inici=hInici; fi=hFi;
+        }
+        
+        /** @brief Indica si una visita està en el dia d'horari excepcional i si estara obert durant les hores de la visita
+            @pre cert
+            @post cert si estara obert i el dia en concret i fals en c.c.
+        */
+        public boolean esAquestDia(LocalDateTime iniciVisita, LocalDateTime fiVisita){
+            boolean resultat = iniciVisita.toLocalDate().equals(dia) && fiVisita.toLocalDate().equals(dia);
+            if (resultat){
+                LocalDateTime obertura = dia.atTime(inici), tencament = dia.atTime(fi);
+                resultat = fiVisita.isBefore(tencament) && iniciVisita.isBefore(tencament) && fiVisita.isAfter(obertura) && iniciVisita.isAfter(obertura); 
+            }
+            return resultat;
         }
         
     }
             
     private boolean llocPas = false;
     private ArrayList<BlocHorari> horari;
-    private HashSet<LocalDate> dies_tancat;
+    private ArrayList<LocalDate> diesExcepcionals;
     private LocalTime tempsRec;
     //potser cal inicialitzar-lo a null
     
@@ -68,7 +92,7 @@ public class Visitable extends PuntInteres{
     public Visitable(String nom, float preu, Coordenada pos, ArrayList<String> Caracteristiques, TimeZone zona, LocalTime tempsRecomenat, ArrayList<ExcepcioHorari> excepcions, ArrayList<BlocHorari> calendari){
         super(nom, preu, pos,Caracteristiques,zona);
 	tempsRec=tempsRecomenat;
-        dies_tancat=new HashSet(festius);
+        diesExcepcionals=new ArrayList(excepcions);
         horari = new ArrayList(calendari);
     }
     /** @brief Crea un Lloc de pass amb els parametres
@@ -78,7 +102,7 @@ public class Visitable extends PuntInteres{
         super(llocDePas.nom(), 0, llocDePas.coordenada(), null, llocDePas.zona());
         llocPas=true;
         tempsRec=null;
-        dies_tancat=null;
+        diesExcepcionals=null;
         horari=null;        
     }
     
@@ -90,13 +114,15 @@ public class Visitable extends PuntInteres{
         int hores = tempsRec.getHour(), minuts = tempsRec.getMinute(), segons = tempsRec.getSecond();
         LocalDateTime fiVisita= dia.plusHours(hores).plusMinutes(minuts).plusSeconds(segons);
         boolean resultat = false;
-        if (!dies_tancat.contains(fiVisita.toLocalDate())){
+        //cal iterarho primer els excepció i despres mirar si va o no
+        
+        /*if (!dies_tancat.contains(fiVisita.toLocalDate())){
             Iterator itr = horari.iterator();
             while (!resultat && itr.hasNext()){
                 BlocHorari franja = (BlocHorari) itr.next();
                 resultat = franja.estaraObert(dia, fiVisita);
             }
-        }
+        }*/
         return resultat;
     }
     
