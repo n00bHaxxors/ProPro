@@ -15,8 +15,8 @@ public class Desplaçament { //aka trasllat
     /** @brief Constructor amb parametres
      @pre cert
      @post Desplaçament amb preu, duracio, mitja, origen i desti creat*/
-    public Desplaçament(int p, LocalTime d, Mitja_Transport m, PuntInteres o, Puntinteres d){
-        preu=p; duracio=d; mitja=m; origen=o; desti=d;
+    public Desplaçament(int p, LocalTime d, Mitja_Transport m, PuntInteres o, PuntInteres de){
+        preu=p; duracio=d; mitja=m; origen=o; desti=de;
     }
  
     /** @brief Consulta la duracio del desplaçament
@@ -35,5 +35,4 @@ public class Desplaçament { //aka trasllat
      @pre cert
      @post Retorna el mitjà de transport usat*/
     public Mitja_Transport mitja_usat(){ return mitja; }
-
 }

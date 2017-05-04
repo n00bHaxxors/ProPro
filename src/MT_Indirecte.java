@@ -19,15 +19,11 @@ public class MT_Indirecte extends Mitja_Transport {
     private int preu[]; //Arraylist?
     private LocalTime durada[];
 
-    /** @brief Constructor per defecte
-     @pre cert
-     @post MT_indirecte buit creat*/
-    public MT_Indirecte(){}
-
     /** @brief Constructor amb paràmetres
      @pre h no buida i p i d tenen la mateixa mida que h
      @post Mitjà de transport indirecte amb horari, preus i duracio creat*/
-    public MT_Indirecte(LocalDateTime h[], int p[], LocalTime d[]){
+    public MT_Indirecte(String n, LocalDateTime h[], int p[], LocalTime d[]){
+        super(n);
         horaris=h; preu=p; durada=d;
     }
 

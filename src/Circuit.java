@@ -33,7 +33,7 @@ public class Circuit {
     /** @brief Consulta el grau de satisfacció (mitja?) que tindràn els clients al fer el circuit
      @pre cert
      @post Retorna el grau de satisfaccio mitjà*/
-    public Float grau_satisfacio(Grupclients c){ return grau_satisfacio; } //grupclients o client?
+    public Float grau_satisfacio(GrupClients c){ return grau_satisfacio; } //grupclients o client?
 
     /** @brief Consulta el preu per persona
      @pre cert
