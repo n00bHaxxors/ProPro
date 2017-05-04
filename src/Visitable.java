@@ -14,12 +14,12 @@ import java.util.TimeZone;
 */
 public class Visitable extends PuntInteres{
     
-   
-    public static class BlocHorari{
         /** @class BlocHorari
             @brief Franja temporal en qué el un lloc visitable está obert.
             @author Ismael El Habri
         */
+    public static class BlocHorari{
+        
         private LocalDate inici, fi;
         private LocalTime horaInici, horaFi;
         
@@ -43,6 +43,19 @@ public class Visitable extends PuntInteres{
         }
     }
     
+        /** @class ExcepcioHorari
+            @brief Dia amb horari excepcional
+            @author Ismael El Habri
+        */
+    public static class ExcepcioHorari{
+        private LocalDate dia;
+        private LocalTime inici, fi;
+        public ExcepcioHorari(LocalDate diaEx, LocalTime hInici, LocalTime hFi){
+            dia=diaEx; inici=hInici; fi=hFi;
+        }
+        
+    }
+            
     private boolean llocPas = false;
     private ArrayList<BlocHorari> horari;
     private HashSet<LocalDate> dies_tancat;
@@ -52,7 +65,7 @@ public class Visitable extends PuntInteres{
     /** @brief Crea un Lloc Visitable amb els parametres
 	@pre cert
 	@post Lloc Visitable amb nom n, preu p, coordenades pos, caracteresitques Carac, zona z, visita recomenada tr, tancat festius i horai calendari creat */
-    public Visitable(String nom, float preu, Coordenada pos, ArrayList<String> Caracteristiques, TimeZone zona, LocalTime tempsRecomenat, ArrayList<LocalDate> festius, ArrayList<BlocHorari> calendari){
+    public Visitable(String nom, float preu, Coordenada pos, ArrayList<String> Caracteristiques, TimeZone zona, LocalTime tempsRecomenat, ArrayList<ExcepcioHorari> excepcions, ArrayList<BlocHorari> calendari){
         super(nom, preu, pos,Caracteristiques,zona);
 	tempsRec=tempsRecomenat;
         dies_tancat=new HashSet(festius);
