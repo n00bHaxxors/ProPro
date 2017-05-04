@@ -47,5 +47,6 @@ public class Client {
         }
         return trobat;
     }
+    public String nom(){return nom;}
     
 }

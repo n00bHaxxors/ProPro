@@ -11,6 +11,8 @@ public class Lloc {
     private String Nom;
     private Coordenada CoordenadaLloc;
     private TimeZone Zona;
+    public void associarPuntInteres(PuntInteres v){}
+    public void associarTransport(MT_Directe d){}
 
     /**
      * @brief Crea un lloc a partir d'una coordenada, un nom i una zona
