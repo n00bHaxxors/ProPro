@@ -6,7 +6,14 @@
 import java.time.*;
 
 public class MT_Indirecte extends Mitja_Transport {
+
+    public static class Partença{
+        public LocalDateTime horari;
+        public LocalTime durada;
+        public int preu;
+    }
     //private Coordenada ubicacio; //ja estarà a lloc origen?
+    private Partença partences[]; //Arraylist?
     private Lloc origen, desti;
 
     private LocalTime temps_recomanat; //temps per arribar fins al mt
@@ -14,10 +21,6 @@ public class MT_Indirecte extends Mitja_Transport {
     private LocalTime temps_trasllat_origen, temps_trasllat_desti;
     //crec que sobra algun temps.... vaia embolic l'enunciat...
 
-    //Aquests són un paquet, potser hauriem de fer una "struct"?
-    private LocalDateTime horaris[]; //Arraylist? //horari ha de ser per cada dia...
-    private int preu[]; //Arraylist?
-    private LocalTime durada[];
 
     /** @brief Constructor amb paràmetres
      @pre h no buida i p i d tenen la mateixa mida que h
