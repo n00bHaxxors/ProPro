@@ -9,20 +9,20 @@ import java.util.TimeZone;
 */
 
 public class Allotjament extends PuntInteres {
-    private int categoria;
+    private String categoria;
     
     /** @brief Crea un punt d'allotjament amb els parametres
 	@pre cert
 	@post Allotjament amb nom n, preu p, coordenades pos, caracteresitques Carac zona z i categoria cat creat */
-    public Allotjament(String nom, float preu, Coordenada pos, ArrayList<String> Caracteristiques, TimeZone zona, int categoriaAllotjament){
+    public Allotjament(String nom, float preu, Coordenada pos, ArrayList<String> Caracteristiques, TimeZone zona, String categoriaAllotjament){
         super(nom, preu, pos, Caracteristiques, zona);
         categoria = categoriaAllotjament;
     }
     
-     /** @brief Consulta la categoria (en estrelles) de l'allotjament
+     /** @brief Consulta la categoria de l'allotjament
 	@pre cert
 	@post retorna la categoria */
-    public int categoria() {
+    public String categoria() {
         return categoria;
     }
 }
