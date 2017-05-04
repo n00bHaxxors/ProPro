@@ -12,10 +12,16 @@ public class Desplaçament { //aka trasllat
     private Mitja_Transport mitja;
     private PuntInteres origen, desti; //npi de quina classe ha de ser
  
+    /** @brief Constructor amb parametres
+     @pre cert
+     @post Desplaçament amb preu, duracio, mitja, origen i desti creat*/
+    public Desplaçament(int p, LocalTime d, Mitja_Transport m, PuntInteres o, Puntinteres d){
+        preu=p; duracio=d; mitja=m; origen=o; desti=d;
+    }
+ 
     /** @brief Consulta la duracio del desplaçament
      @pre cert
      @post Retorna la duració del desplaçament en segons*/
-
     public LocalTime duracio() { return duracio; }
 
     /** @brief Consulta el preu del desplaçament
