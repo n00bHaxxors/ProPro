@@ -3,14 +3,15 @@
  @author Marc Cané Salamià
  */
 
-import java.time;
+import java.time.*;
 
-public class Desplaçament {
+public class Desplaçament { //aka trasllat
 
     private int preu;
     private LocalTime duracio;
     private Mitja_Transport mitja;
-
+    private PuntInteres origen, desti; //npi de quina classe ha de ser
+ 
     /** @brief Consulta la duracio del desplaçament
      @pre cert
      @post Retorna la duració del desplaçament en segons*/
