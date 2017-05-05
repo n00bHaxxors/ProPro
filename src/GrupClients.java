@@ -9,7 +9,7 @@ import java.util.HashSet;
  */
 
 public class GrupClients {
-    private HashSet<Client>
+    private HashSet<Client> clients;
 
     /**
      * @brief Crea un GrupClients

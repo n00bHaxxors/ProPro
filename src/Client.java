@@ -48,5 +48,10 @@ public class Client {
         return trobat;
     }
     public String nom(){return nom;}
+
+    @Override
+    public int hashCode(){
+        return nom.hashCode();
+    }
     
 }
