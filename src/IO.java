@@ -71,7 +71,7 @@ class IO {
                         llistaCaracteristiques.add(caracteristica);
                         caracteristica = scan.next();
                     } while (caracteristica != SEPARADOR);
-                    LlistaAllotjaments.add(new Allotjament(nomAllotjament, preuHabDoble, coordAllotjament, llistaCaracteristiques, TimeZone.getTimeZone(zonaHoraria), categoria));
+                    LlistaAllotjaments.add(new Allotjament(nomAllotjament, (int)(100*preuHabDoble), coordAllotjament, llistaCaracteristiques, TimeZone.getTimeZone(zonaHoraria), categoria));
                     break;
                 }
                 case "lloc visitable":{
@@ -114,7 +114,7 @@ class IO {
                         llistaExcepcions.add(new Visitable.ExcepcioHorari(dia, horaInici, horaFi));
                         excepcio = scan.next();
                     } while (excepcio != SEPARADOR);
-                    Visitable v = new Visitable(nomVisitable, preu, coordVisitable, llistaCaracteristiques, TimeZone.getTimeZone(zonaHoraria), LocalTime.parse(tempsVisita), llistaExcepcions, llistaHoraris);
+                    Visitable v = new Visitable(nomVisitable, (int)(100*preu), coordVisitable, llistaCaracteristiques, TimeZone.getTimeZone(zonaHoraria), LocalTime.parse(tempsVisita), llistaExcepcions, llistaHoraris);
                     break;
                     }
                 case "visita": {
