@@ -233,6 +233,43 @@ class IO {
                     scan.nextLine();
                     break;
                 }
+                case "transport indirecte": {
+                    ArrayList<MT_Indirecte.Partença> partences = new ArrayList<MT_Indirecte.Partença>();
+                    String nomOrigen = scan.nextLine();
+                    String nomDesti = scan.nextLine();
+                    String nomMT = scan.nextLine();
+                    LocalTime tempsAnada = LocalTime.parse(scan.nextLine());
+                    LocalTime tempsTornada = LocalTime.parse(scan.nextLine());
+                    LocalDate data = LocalDate.parse(scan.nextLine());
+                    LocalTime hora = LocalTime.parse(scan.nextLine());
+                    LocalTime durada = LocalTime.parse(scan.nextLine());
+                    Integer preu = (int)(scan.nextFloat()/100);
+                    String entrada = scan.nextLine();
+                    MT_Indirecte.Partença p;
+                    while(entrada != "*"){
+                        if(entrada.contains("-")){
+                            data = LocalDate.parse(entrada);
+                        }
+                        else if(entrada.contains(":")){
+                            hora=LocalTime.parse(entrada);
+                            durada=LocalTime.parse(scan.nextLine());
+                        }
+                        else if(entrada.contains(".")){
+                            preu =(int)(100*Float.parseFloat(entrada));
+                            partences.add(new MT_Indirecte.Partença(data.atTime(hora),durada,preu));
+                        }
+                    }
+
+                    Iterator<Lloc> llocIt = LlistaLlocs.iterator();
+                    boolean trobat = false;
+
+                    Lloc LlocActual = llocIt.next();
+                    while (llocIt.hasNext() && !trobat) {
+                        if (LlocActual.nom() == nomOrigen) trobat = true;
+                        else LlocActual = llocIt.next();
+                    }
+                    MT_Indirecte mt = new MT_Indirecte(nomMT,tempsAnada,tempsTornada,LlocActual,partences);
+                }
             }
         }
     }
