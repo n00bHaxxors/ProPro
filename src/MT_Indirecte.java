@@ -4,6 +4,7 @@
  */
 
 import java.time.*;
+import java.util.ArrayList;
 
 public class MT_Indirecte extends Mitja_Transport {
 
@@ -15,26 +16,16 @@ public class MT_Indirecte extends Mitja_Transport {
         public LocalTime durada;
         public int preu;
     }
-    //private Coordenada ubicacio; //ja estarà a lloc origen?
-    private Partença partences[]; //Arraylist?
-    private Lloc origen, desti;
-
-    private LocalTime temps_recomanat; //temps per arribar fins al mt
-    private LocalTime temps_previst; //trasllat des del mitj`a de transport en el lloc primari de dest´ı fins a qualsevol dels seus llocs secundaris associats (´unic per a tots els llocs secundaris)
     private LocalTime temps_trasllat_origen, temps_trasllat_desti;
-    //crec que sobra algun temps.... vaia embolic l'enunciat...
-
+    private ArrayList<Partença> partences;
+    private Lloc desti;
 
     /** @brief Constructor amb paràmetres
-     @pre h no buida i p i d tenen la mateixa mida que h
-     @post Mitjà de transport indirecte amb horari, preus i duracio creat*/
-    /*public MT_Indirecte(String n, LocalDateTime h[], int p[], LocalTime d[]){
+     @pre WIP
+     @post Mitjà de transport indirecte amb ?? */
+    public MT_Indirecte(String n, LocalTime o, LocalTime d, Lloc de, ArrayList<Partença> part){
         super(n);
-        horaris=h; preu=p; durada=d;
-    }*/
-    public MT_Indirecte(String n, Partença [] part){
-        super(n);
-        partences = part;
+        temps_trasllat_origen=o; temps_trasllat_desti=d; desti=de; partences = part;
     }
 
     /** @brief Consultar horaris
@@ -48,11 +39,11 @@ public class MT_Indirecte extends Mitja_Transport {
      @pre n>=0 i n<mida
      @post Retorna la durada del MT*/
     public LocalTime durada(int n){
-        return partences[n].durada;
+        return partences.get(n).durada;
     }
 
     /** @brief Consulta el preu per utilitzar el mitjà de transport
      @pre n>=0 i n<mida
      @post Retorna el preu per l'ús del MT*/
-    public int preu(int n){ return partences[n].preu; }
+    public int preu(int n){ return partences.get(n).preu; }
 }
