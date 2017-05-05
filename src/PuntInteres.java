@@ -10,7 +10,7 @@ import java.util.TimeZone;
     @author Ismael El Habri
 */
 
-public class PuntInteres {
+public abstract class PuntInteres {
     //Atributs
     private String nom;
     private int preu;
