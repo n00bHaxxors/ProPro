@@ -8,6 +8,9 @@ import java.time.*;
 public class MT_Indirecte extends Mitja_Transport {
 
     public static class Partença{
+        public Partença(LocalDateTime h, LocalTime d, int p){
+            horari=h; durada=d; preu=p;
+        }
         public LocalDateTime horari;
         public LocalTime durada;
         public int preu;
