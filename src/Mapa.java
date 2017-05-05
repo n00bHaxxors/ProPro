@@ -18,14 +18,18 @@ public class Mapa {
 	@pre cert
 	@post crea un Mapa amb els clients i els llocs donats
     */
-    public Mapa(GrupClients gClients, ArrayList<Lloc> llocs){
+    public Mapa(GrupClients gClients, ArrayList<Lloc> llocs) {
         clients = gClients;
         mapa = new HashMap<>();
         Iterator itr = llocs.iterator();
         Lloc aux;
-        while (itr.hasNext()){
+        while (itr.hasNext()) {
             aux = (Lloc) itr.next();
             mapa.put(aux.nom(), aux);
         }
+    }
+
+    public Circuit Dijkstra(Lloc a, Lloc b){
+        return null; //s'ha de fer i ficar la puta pre i post
     }
 }
