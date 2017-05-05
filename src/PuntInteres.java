@@ -13,7 +13,7 @@ import java.util.TimeZone;
 public class PuntInteres {
     //Atributs
     private String nom;
-    private float preu;
+    private int preu;
     private Coordenada ubicacio;
     private HashSet<String> caracteristiques;
     private TimeZone zona;
@@ -24,7 +24,7 @@ public class PuntInteres {
     /** @brief Crea un punt d'interès amb els parametres
 	@pre cert
 	@post PuntInteres amb nom n, preu p, coordenades pos, caracteresitques Carac i zona z creat */
-    PuntInteres(String nomPunt, float preuVisita, Coordenada pos, ArrayList<String> CaracteristiquesPunt, TimeZone zonaHoraria){
+    PuntInteres(String nomPunt, int preuVisita, Coordenada pos, ArrayList<String> CaracteristiquesPunt, TimeZone zonaHoraria){
         nom=nomPunt; preu=preuVisita; ubicacio=pos;  zona=zonaHoraria;
         caracteristiques=new HashSet(CaracteristiquesPunt);
         transportsDirectes= new ArrayList();

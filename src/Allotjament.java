@@ -14,7 +14,7 @@ public class Allotjament extends PuntInteres {
     /** @brief Crea un punt d'allotjament amb els parametres
 	@pre cert
 	@post Allotjament amb nom n, preu p, coordenades pos, caracteresitques Carac zona z i categoria cat creat */
-    public Allotjament(String nom, float preu, Coordenada pos, ArrayList<String> Caracteristiques, TimeZone zona, String categoriaAllotjament){
+    public Allotjament(String nom, int preu, Coordenada pos, ArrayList<String> Caracteristiques, TimeZone zona, String categoriaAllotjament){
         super(nom, preu, pos, Caracteristiques, zona);
         categoria = categoriaAllotjament;
     }

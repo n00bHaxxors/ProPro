@@ -89,7 +89,7 @@ public class Visitable extends PuntInteres{
     /** @brief Crea un Lloc Visitable amb els parametres
 	@pre cert
 	@post Lloc Visitable amb nom n, preu p, coordenades pos, caracteresitques Carac, zona z, visita recomenada tr, tancat festius i horai calendari creat */
-    public Visitable(String nom, float preu, Coordenada pos, ArrayList<String> Caracteristiques, TimeZone zona, LocalTime tempsRecomenat, ArrayList<ExcepcioHorari> excepcions, ArrayList<BlocHorari> calendari){
+    public Visitable(String nom, int preu, Coordenada pos, ArrayList<String> Caracteristiques, TimeZone zona, LocalTime tempsRecomenat, ArrayList<ExcepcioHorari> excepcions, ArrayList<BlocHorari> calendari){
         super(nom, preu, pos,Caracteristiques,zona);
 	tempsRec=tempsRecomenat;
         diesExcepcionals=new ArrayList(excepcions);
