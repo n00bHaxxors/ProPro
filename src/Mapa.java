@@ -28,7 +28,10 @@ public class Mapa {
             mapa.put(aux.nom(), aux);
         }
     }
-
+    /** @brief busca el circuit optim entre dos llocs.
+	@pre cert
+	@post retorna el circit optim entre dos llocs.
+    */
     public Circuit Dijkstra(Lloc a, Lloc b){
         return null; //s'ha de fer i ficar la puta pre i post
     }
