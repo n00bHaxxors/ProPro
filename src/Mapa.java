@@ -21,10 +21,10 @@ public class Mapa {
     public Mapa(GrupClients gClients, ArrayList<Lloc> llocs) {
         clients = gClients;
         mapa = new HashMap<>();
-        Iterator itr = llocs.iterator();
+        Iterator<Lloc> itr = llocs.iterator();
         Lloc aux;
         while (itr.hasNext()) {
-            aux = (Lloc) itr.next();
+            aux = itr.next();
             mapa.put(aux.nom(), aux);
         }
     }

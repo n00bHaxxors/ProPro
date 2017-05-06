@@ -82,7 +82,7 @@ public class Visitable extends PuntInteres{
             
     private boolean llocPas = false;
     private ArrayList<BlocHorari> horari;
-    private ArrayList<LocalDate> diesExcepcionals;
+    private ArrayList<ExcepcioHorari> diesExcepcionals;
     private LocalTime tempsRec;
     //potser cal inicialitzar-lo a null
     
@@ -115,14 +115,18 @@ public class Visitable extends PuntInteres{
         LocalDateTime fiVisita= dia.plusHours(hores).plusMinutes(minuts).plusSeconds(segons);
         boolean resultat = false;
         //cal iterarho primer els excepció i despres mirar si va o no
-        
-        /*if (!dies_tancat.contains(fiVisita.toLocalDate())){
-            Iterator itr = horari.iterator();
+        Iterator<ExcepcioHorari> itr = diesExcepcionals.iterator();
+        while (!resultat && itr.hasNext()){
+            ExcepcioHorari excepcio = (ExcepcioHorari) itr.next();
+            resultat = excepcio.esAquestDia(dia, fiVisita);                    
+        }
+        if (!resultat){
+            Iterator<BlocHorari> itr2 = horari.iterator();
             while (!resultat && itr.hasNext()){
-                BlocHorari franja = (BlocHorari) itr.next();
+                BlocHorari franja = itr2.next();
                 resultat = franja.estaraObert(dia, fiVisita);
             }
-        }*/
+        }
         return resultat;
     }
     

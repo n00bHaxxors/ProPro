@@ -32,26 +32,35 @@ public class Client {
         return preferencies.contains(car);
     }
     
+    /** @brief Afageix una visita previa al client
+	@pre cert
+	@post Client amb nova visita */
     public void afegirVisita(Visitable PuntVisita, LocalDate data) {
         Visita temp = new Visita(PuntVisita, data);
         visites.add(temp);
     }
     
+    /** @brief consulta si el client ha visitat anteriorment un visitable o no
+	@pre cert
+	@post retorna cert si si s'ha visitat punt i fals en c.c. */
     public boolean shaVisitat(Visitable punt){
-        Iterator itr = visites.iterator();
+        Iterator<Visita>  itr = visites.iterator();
         boolean trobat = false;
         Visita temp;
         while (itr.hasNext() && !trobat){
-            temp = (Visita) itr.next();
+            temp = itr.next();
             trobat = punt.nom().equals(temp.nom_visitable());
         }
         return trobat;
     }
+    
+    /** @brief Consulta el nom del client
+	@pre cert
+	@post retorna el nom del client */
     public String nom(){return nom;}
-
+    
     @Override
     public int hashCode(){
         return nom.hashCode();
     }
-    
 }
