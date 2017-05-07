@@ -34,14 +34,15 @@ public class Visitable extends PuntInteres{
 	@pre bloc horari diferent de null i temps iniciVisita posterior a fiVisita
 	@post retorna cert si estarà obert durant tota la visita i fals en cas contrari */
         public boolean estaraObert(LocalDateTime iniciVisita, LocalDateTime fiVisita){
-            boolean mateixDia = iniciVisita.toLocalDate().equals(fiVisita.toLocalDate()); //comprovem que son el mateix dia
-            boolean resultat = false;
-            if(!mateixDia){
+            boolean resultat;
+            //boolean mateixDia = iniciVisita.toLocalDate().equals(fiVisita.toLocalDate()); //comprovem que son el mateix dia
+            /*if(!mateixDia){
                 LocalDateTime aux = iniciVisita;
                 iniciVisita = fiVisita;
                 fiVisita = aux;
-            }
-            resultat = iniciVisita.toLocalDate().isAfter(inici) && fiVisita.toLocalDate().isBefore(fi);
+            }*/
+            resultat = (iniciVisita.toLocalDate().isAfter(inici) || iniciVisita.toLocalDate().equals(inici));
+            resultat = resultat && (fiVisita.toLocalDate().isBefore(fi) || fiVisita.toLocalDate().equals(fi));
             if (resultat) {
                 resultat = iniciVisita.toLocalTime().isAfter(horaInici) && iniciVisita.toLocalTime().isBefore(horaFi) && fiVisita.toLocalTime().isAfter(horaInici) && fiVisita.toLocalTime().isBefore(horaFi);
             }
