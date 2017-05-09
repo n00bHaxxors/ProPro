@@ -59,7 +59,7 @@ class IO {
         } while (!caracteristica.equals(SEPARADOR));
         LlistaAllotjaments.add(new Allotjament(nomAllotjament, (int)(100*preuHabDoble), coordAllotjament, llistaCaracteristiques, TimeZone.getTimeZone(zonaHoraria), categoria));
     }
-    private void casVisitable() throws ParseException { //DONE
+    private void casVisitable() throws ParseException {
         String nomVisitable = scan.nextLine();
         String[] parts = scan.nextLine().split(",");
         Coordenada coordVisitable = new Coordenada(Float.parseFloat(parts[0]),Float.parseFloat(parts[1]));
