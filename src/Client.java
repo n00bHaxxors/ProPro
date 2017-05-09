@@ -22,7 +22,8 @@ public class Client {
 	@post Client amb el nom n i les preferencies Pref  */
     public Client(String nomClient, ArrayList<String> Pref){
         nom = nomClient; 
-        preferencies = new HashSet(Pref);        
+        preferencies = new HashSet(Pref);
+        visites = new ArrayList<Visita>();
     }
     
     /** @brief Consulta si el client te una preferencia concreta o no

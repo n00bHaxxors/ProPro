@@ -65,7 +65,7 @@ class IO {
         Coordenada coordVisitable = new Coordenada(Float.parseFloat(parts[0]),Float.parseFloat(parts[1]));
         String zonaHoraria = scan.nextLine();
         String tempsVisita = scan.nextLine();
-        Float preu = scan.nextFloat();
+        Float preu = Float.parseFloat(scan.nextLine());
         String caracteristica = scan.nextLine();
         ArrayList<String> llistaCaracteristiques = new ArrayList<String>();
         do {
@@ -89,18 +89,20 @@ class IO {
         } while (!horari.equals(SEPARADOR) && (horari.length() - horari.replace("-", "").length())== 2);
         String excepcio = horari;
         ArrayList<Visitable.ExcepcioHorari> llistaExcepcions = new ArrayList<Visitable.ExcepcioHorari>();
-        do {
-            MonthDay dia;
-            LocalTime horaInici,horaFi;
-            final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MMMM d");
-            String partsHorari[] = horari.split("-|:|\\s+");
-            dia = MonthDay.parse(partsHorari[0] + " " + partsHorari[1],DATE_FORMAT);
-            horaInici = LocalTime.parse(partsHorari[3]+':'+partsHorari[4]);
-            horaFi = LocalTime.parse(partsHorari[5]+':'+partsHorari[6]);
-            llistaExcepcions.add(new Visitable.ExcepcioHorari(dia, horaInici, horaFi));
-            excepcio = scan.nextLine();
-        } while (!excepcio.equals(SEPARADOR));
-        Visitable v = new Visitable(nomVisitable, (int)(100*preu), coordVisitable, llistaCaracteristiques, TimeZone.getTimeZone(zonaHoraria), LocalTime.parse(tempsVisita), llistaExcepcions, llistaHoraris);
+        if(!excepcio.equals(SEPARADOR)) {
+            do {
+                MonthDay dia;
+                LocalTime horaInici, horaFi;
+                final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MMMM d");
+                String partsHorari[] = horari.split("-|:|\\s+");
+                dia = MonthDay.parse(partsHorari[0] + " " + partsHorari[1], DATE_FORMAT);
+                horaInici = LocalTime.parse(partsHorari[3] + ':' + partsHorari[4]);
+                horaFi = LocalTime.parse(partsHorari[5] + ':' + partsHorari[6]);
+                llistaExcepcions.add(new Visitable.ExcepcioHorari(dia, horaInici, horaFi));
+                excepcio = scan.nextLine();
+            } while (!excepcio.equals(SEPARADOR));
+        }
+        LlistaVisitables.add(new Visitable(nomVisitable, (int)(100*preu), coordVisitable, llistaCaracteristiques, TimeZone.getTimeZone(zonaHoraria), LocalTime.parse(tempsVisita), llistaExcepcions, llistaHoraris));
     }
     private void casVisita(){
         String nom_client = scan.nextLine();
@@ -111,14 +113,14 @@ class IO {
         Client clientActual= it.next();
         Boolean trobat = false;
         while(it.hasNext() && !trobat){
-            if(clientActual.nom()==nom_lloc) trobat = true;
+            if(clientActual.nom().equals(nom_client)) trobat = true;
             else clientActual = it.next();
         }
         Iterator<Visitable> jt = LlistaVisitables.iterator();
         Visitable visitableActual = jt.next();
         trobat = false;
         while(jt.hasNext() && !trobat){
-            if(visitableActual.nom()==nom_lloc) trobat = true;
+            if(visitableActual.nom().equals(nom_lloc)) trobat = true;
             else visitableActual = jt.next();
         }
         clientActual.afegirVisita(visitableActual,data);
