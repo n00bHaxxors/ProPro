@@ -31,7 +31,7 @@ class IO {
         do {
             pref = scan.nextLine();
             preferencies.add(pref);
-        } while (pref != SEPARADOR);
+        } while (!pref.equals(SEPARADOR));
         LlistaClients.add(new Client(nom_client, preferencies));
     }
     private void casLloc(){
