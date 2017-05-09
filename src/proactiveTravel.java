@@ -8,6 +8,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.text.ParseException;
+import java.util.Locale;
+
 /**
  * Created by aula on 5/5/2017.
  */
@@ -38,11 +41,16 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
     @Override
     public void handle(ActionEvent event) {
         if(event.getSource()== btn){
-            visibilitat = !visibilitat;
-            text.setVisible(visibilitat);
+            IO test = new IO();
+            try {
+                test.llegir();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
     }
     public static void main(String[] args){
+        Locale.setDefault(Locale.US);
         launch(args);
     }
 }

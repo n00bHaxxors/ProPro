@@ -1,14 +1,13 @@
 /** @file IO.java
  @brief Classe IO
  */
+
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.MonthDay;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Scanner;
-import java.util.TimeZone;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /** @class IO
@@ -28,9 +27,9 @@ class IO {
     private void casClient(){
         ArrayList<String> preferencies = new ArrayList<String>();
         String nom_client, pref;
-        nom_client = scan.next();
+        nom_client = scan.nextLine();
         do {
-            pref = scan.next();
+            pref = scan.nextLine();
             preferencies.add(pref);
         } while (pref != SEPARADOR);
         LlistaClients.add(new Client(nom_client, preferencies));
@@ -52,61 +51,62 @@ class IO {
         String zonaHoraria = scan.nextLine();
         String categoria = scan.nextLine();
         Float preuHabDoble = scan.nextFloat();
-        String caracteristica = scan.next();
+        String caracteristica = scan.nextLine();
         ArrayList<String> llistaCaracteristiques = new ArrayList<String>();
         do {
             llistaCaracteristiques.add(caracteristica);
-            caracteristica = scan.next();
+            caracteristica = scan.nextLine();
         } while (caracteristica != SEPARADOR);
         LlistaAllotjaments.add(new Allotjament(nomAllotjament, (int)(100*preuHabDoble), coordAllotjament, llistaCaracteristiques, TimeZone.getTimeZone(zonaHoraria), categoria));
     }
-    private void casVisitable(){
-        String nomVisitable = scan.next();scan.useDelimiter(",");
-        Coordenada coordVisitable = new Coordenada(scan.nextFloat(), scan.nextFloat());
-        scan.useDelimiter(Pattern.compile("\\p{javaWhitespace}+"));
-        String zonaHoraria = scan.next();
-        String tempsVisita = scan.next();
+    private void casVisitable() throws ParseException { //DONE
+        String nomVisitable = scan.nextLine();
+        String[] parts = scan.nextLine().split(",");
+        Coordenada coordVisitable = new Coordenada(Float.parseFloat(parts[0]),Float.parseFloat(parts[1]));
+        String zonaHoraria = scan.nextLine();
+        String tempsVisita = scan.nextLine();
         Float preu = scan.nextFloat();
-        String caracteristica = scan.next();
+        String caracteristica = scan.nextLine();
         ArrayList<String> llistaCaracteristiques = new ArrayList<String>();
         do {
             llistaCaracteristiques.add(caracteristica);
-            caracteristica = scan.next();
-        } while (caracteristica != SEPARADOR);
-        String horari = scan.next();
+            caracteristica = scan.nextLine();
+        } while (!caracteristica.equals(SEPARADOR));
+        String horari = scan.nextLine();
         ArrayList<Visitable.BlocHorari> llistaHoraris = new ArrayList<Visitable.BlocHorari>();
         do {
-            LocalDate diaInici, diaFi;
+            MonthDay diaInici, diaFi;
             LocalTime horaInici,horaFi;
-            final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MMMM dd");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d");
+            formatter.withLocale(Locale.US);
             String partsHorari[] = horari.split("-|:|\\s+");
-            diaInici = LocalDate.parse(partsHorari[0] + " " + partsHorari[1],DATE_FORMAT);
-            diaFi = LocalDate.parse(partsHorari[2] + " " + partsHorari[3],DATE_FORMAT);
-            horaInici = LocalTime.parse(partsHorari[4]+':'+partsHorari[5]);
-            horaFi = LocalTime.parse(partsHorari[6]+':'+partsHorari[7]);
+            diaInici = MonthDay.parse(partsHorari[0] + " " + partsHorari[1],formatter);
+            diaFi = MonthDay.parse(partsHorari[4] + " " + partsHorari[5],formatter);
+            horaInici = LocalTime.parse(partsHorari[7]+':'+partsHorari[8]);
+            horaFi = LocalTime.parse(partsHorari[9]+':'+partsHorari[10]);
             llistaHoraris.add(new Visitable.BlocHorari(diaInici,horaInici,diaFi,horaFi));
-            horari = scan.next();
-        } while (horari != SEPARADOR);
-        String excepcio = scan.next();
+            horari = scan.nextLine();
+        } while (!horari.equals(SEPARADOR) && (horari.length() - horari.replace("-", "").length())== 2);
+        String excepcio = horari;
         ArrayList<Visitable.ExcepcioHorari> llistaExcepcions = new ArrayList<Visitable.ExcepcioHorari>();
         do {
-            LocalDate dia;
+            MonthDay dia;
             LocalTime horaInici,horaFi;
-            final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MMMM dd");
+            final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MMMM d");
             String partsHorari[] = horari.split("-|:|\\s+");
-            dia = LocalDate.parse(partsHorari[0] + " " + partsHorari[1],DATE_FORMAT);
-            horaInici = LocalTime.parse(partsHorari[2]+':'+partsHorari[3]);
-            horaFi = LocalTime.parse(partsHorari[4]+':'+partsHorari[5]);
+            dia = MonthDay.parse(partsHorari[0] + " " + partsHorari[1],DATE_FORMAT);
+            horaInici = LocalTime.parse(partsHorari[3]+':'+partsHorari[4]);
+            horaFi = LocalTime.parse(partsHorari[5]+':'+partsHorari[6]);
             llistaExcepcions.add(new Visitable.ExcepcioHorari(dia, horaInici, horaFi));
-            excepcio = scan.next();
-        } while (excepcio != SEPARADOR);
+            excepcio = scan.nextLine();
+        } while (!excepcio.equals(SEPARADOR));
         Visitable v = new Visitable(nomVisitable, (int)(100*preu), coordVisitable, llistaCaracteristiques, TimeZone.getTimeZone(zonaHoraria), LocalTime.parse(tempsVisita), llistaExcepcions, llistaHoraris);
     }
     private void casVisita(){
         String nom_client = scan.nextLine();
         String nom_lloc = scan.nextLine();
         LocalDate data = LocalDate.parse(scan.nextLine()); //data de la visita més recent
-        scan.next(); //llegir separador
+        scan.nextLine(); //llegir separador
         Iterator<Client> it = LlistaClients.iterator();
         Client clientActual= it.next();
         Boolean trobat = false;
@@ -141,7 +141,7 @@ class IO {
             if (visitableActual.nom() == nomAllotjVisitable) trobat = true;
             else visitableActual = jt.next();
         }
-        String lloc = scan.nextLine();
+        String lloc = scan.next();
         trobat = false;
         Lloc LlocActual = llocIt.next();
         while (llocIt.hasNext() && !trobat) {
@@ -158,9 +158,9 @@ class IO {
         scan.nextLine();
     }
     private void casAssociarTransport(){
-        String nomLloc = scan.nextLine();
-        String nomMT=scan.nextLine();
-        LocalTime duradaTrajecte= LocalTime.parse(scan.nextLine());
+        String nomLloc = scan.next();
+        String nomMT=scan.next();
+        LocalTime duradaTrajecte= LocalTime.parse(scan.next());
         Float preu = scan.nextFloat();
         MT_Directe transport = new MT_Directe(nomMT, (int) (preu*100),duradaTrajecte);
 
@@ -172,13 +172,13 @@ class IO {
             else LlocActual = llocIt.next();
         }
         LlocActual.associarTransport(transport);
-        scan.nextLine();
+        scan.next();
     }
     private void casMTDirecte(){
-        String nomOrigen = scan.nextLine();
-        String nomDesti = scan.nextLine();
-        String nomMT=scan.nextLine();
-        LocalTime duradaTrajecte= LocalTime.parse(scan.nextLine());
+        String nomOrigen = scan.next();
+        String nomDesti = scan.next();
+        String nomMT=scan.next();
+        LocalTime duradaTrajecte= LocalTime.parse(scan.next());
         Float preu = scan.nextFloat();
 
 
@@ -198,7 +198,7 @@ class IO {
             if (visitableActual.nom() == nomDesti) trobat = true;
             else visitableActual = jt.next();
         }
-        String lloc = scan.nextLine();
+        String lloc = scan.next();
         trobat = false;
         Lloc LlocActual = llocIt.next();
         while (llocIt.hasNext() && !trobat) {
@@ -212,32 +212,32 @@ class IO {
         } else {
             //excepcio
         }
-        scan.nextLine();
+        scan.next();
     }
     private void casMTIndirecte(){
         ArrayList<MT_Indirecte.Partença> partences = new ArrayList<MT_Indirecte.Partença>();
-        String nomOrigen = scan.nextLine();
-        String nomDesti = scan.nextLine();
-        String nomMT = scan.nextLine();
-        LocalTime tempsAnada = LocalTime.parse(scan.nextLine());
-        LocalTime tempsTornada = LocalTime.parse(scan.nextLine());
-        LocalDate data = LocalDate.parse(scan.nextLine());
-        LocalTime hora = LocalTime.parse(scan.nextLine());
-        LocalTime durada = LocalTime.parse(scan.nextLine());
+        String nomOrigen = scan.next();
+        String nomDesti = scan.next();
+        String nomMT = scan.next();
+        LocalTime tempsAnada = LocalTime.parse(scan.next());
+        LocalTime tempsTornada = LocalTime.parse(scan.next());
+        MonthDay data = MonthDay.parse(scan.next());
+        LocalTime hora = LocalTime.parse(scan.next());
+        LocalTime durada = LocalTime.parse(scan.next());
         Integer preu = (int)(scan.nextFloat()/100);
-        String entrada = scan.nextLine();
+        String entrada = scan.next();
         MT_Indirecte.Partença p;
         while(entrada != "*"){
             if(entrada.contains("-")){
-                data = LocalDate.parse(entrada);
+                data = MonthDay.parse(entrada);
             }
             else if(entrada.contains(":")){
                 hora=LocalTime.parse(entrada);
-                durada=LocalTime.parse(scan.nextLine());
+                durada=LocalTime.parse(scan.next());
             }
             else if(entrada.contains(".")){
                 preu =(int)(100*Float.parseFloat(entrada));
-                partences.add(new MT_Indirecte.Partença(data.atTime(hora),durada,preu));
+                partences.add(new MT_Indirecte.Partença(data,hora,durada,preu));
             }
         }
 
@@ -252,14 +252,12 @@ class IO {
         MT_Indirecte mt = new MT_Indirecte(nomMT,tempsAnada,tempsTornada,LlocActual,partences);
     }
 
-    private void llegir() throws ParseException {
+    public void llegir() throws ParseException {
         LlistaClients = new ArrayList<Client>();
         LlistaLlocs = new ArrayList<Lloc>();
         LlistaAllotjaments = new ArrayList<Allotjament>();
         LlistaVisitables = new ArrayList<Visitable>();
         LlistaVisites = new ArrayList<Visita>();
-
-
         scan = new Scanner(System.in);
         Boolean acabar= false;
         String autor = scan.nextLine();
@@ -301,6 +299,10 @@ class IO {
                 }
                 case "transport indirecte": {
                     casMTIndirecte();
+                    break;
+                }
+                case "*": {
+                    acabar = true;
                     break;
                 }
             }

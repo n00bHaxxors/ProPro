@@ -4,6 +4,7 @@
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.MonthDay;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TimeZone;
@@ -19,13 +20,13 @@ public class Visitable extends PuntInteres{
         */
     public static class BlocHorari{
         
-        private LocalDate inici, fi;
+        private MonthDay inici, fi;
         private LocalTime horaInici, horaFi;
         
         /** @brief Crea una franja amb els parametres
 	@pre cert
 	@post BlocHorari amb la franja corresponent */
-        public BlocHorari(LocalDate diaInici, LocalTime hInici, LocalDate diaFi, LocalTime hFi) {
+        public BlocHorari(MonthDay diaInici, LocalTime hInici, MonthDay diaFi, LocalTime hFi) {
             inici=diaInici; fi=diaFi;
             horaInici=hInici; horaFi=hFi;
         }
@@ -34,18 +35,18 @@ public class Visitable extends PuntInteres{
 	@pre bloc horari diferent de null i temps iniciVisita posterior a fiVisita
 	@post retorna cert si estarà obert durant tota la visita i fals en cas contrari */
         public boolean estaraObert(LocalDateTime iniciVisita, LocalDateTime fiVisita){
-            boolean resultat;
+            boolean resultat = false;
             //boolean mateixDia = iniciVisita.toLocalDate().equals(fiVisita.toLocalDate()); //comprovem que son el mateix dia
             /*if(!mateixDia){
                 LocalDateTime aux = iniciVisita;
                 iniciVisita = fiVisita;
                 fiVisita = aux;
             }*/
-            resultat = (iniciVisita.toLocalDate().isAfter(inici) || iniciVisita.toLocalDate().equals(inici));
-            resultat = resultat && (fiVisita.toLocalDate().isBefore(fi) || fiVisita.toLocalDate().equals(fi));
-            if (resultat) {
-                resultat = iniciVisita.toLocalTime().isAfter(horaInici) && iniciVisita.toLocalTime().isBefore(horaFi) && fiVisita.toLocalTime().isAfter(horaInici) && fiVisita.toLocalTime().isBefore(horaFi);
-            }
+            //resultat = (iniciVisita.toLocalDate().isAfter(inici) || iniciVisita.toLocalDate().equals(inici));
+           // resultat = resultat && (fiVisita.toLocalDate().isBefore(fi) || fiVisita.toLocalDate().equals(fi));
+            //if (resultat) {
+                //resultat = iniciVisita.toLocalTime().isAfter(horaInici) && iniciVisita.toLocalTime().isBefore(horaFi) && fiVisita.toLocalTime().isAfter(horaInici) && fiVisita.toLocalTime().isBefore(horaFi);
+            //}
             return resultat;
         }
     }
@@ -55,14 +56,14 @@ public class Visitable extends PuntInteres{
             @author Ismael El Habri
         */
     public static class ExcepcioHorari{
-        private LocalDate dia;
+        private MonthDay dia;
         private LocalTime inici, fi;
          
         /** @brief Crea una excepció d'horari
             @pre cert
             @post Excepció d'horari el dia diaEx amb nou horari de hInici a hFi per el dia en concret
         */
-        public ExcepcioHorari(LocalDate diaEx, LocalTime hInici, LocalTime hFi){
+        public ExcepcioHorari(MonthDay diaEx, LocalTime hInici, LocalTime hFi){
             dia=diaEx; inici=hInici; fi=hFi;
         }
         
@@ -73,8 +74,8 @@ public class Visitable extends PuntInteres{
         public boolean esAquestDia(LocalDateTime iniciVisita, LocalDateTime fiVisita){
             boolean resultat = iniciVisita.toLocalDate().equals(dia) && fiVisita.toLocalDate().equals(dia);
             if (resultat){
-                LocalDateTime obertura = dia.atTime(inici), tencament = dia.atTime(fi);
-                resultat = fiVisita.isBefore(tencament) && iniciVisita.isBefore(tencament) && fiVisita.isAfter(obertura) && iniciVisita.isAfter(obertura); 
+                //LocalDateTime obertura = dia.atTime(inici), tencament = dia.atTime(fi);
+                //resultat = fiVisita.isBefore(tencament) && iniciVisita.isBefore(tencament) && fiVisita.isAfter(obertura) && iniciVisita.isAfter(obertura);
             }
             return resultat;
         }
