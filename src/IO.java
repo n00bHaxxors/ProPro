@@ -46,18 +46,17 @@ class IO {
     }
     private void casAllotjament(){
         String nomAllotjament = scan.nextLine();
-        scan.useDelimiter(",");
-        Coordenada coordAllotjament = new Coordenada(scan.nextFloat(), scan.nextFloat());
-        scan.useDelimiter(Pattern.compile("\\p{javaWhitespace}+"));
+        String [] stringCoord = scan.nextLine().split(",");
+        Coordenada coordAllotjament = new Coordenada(Float.parseFloat(stringCoord[0]),Float.parseFloat(stringCoord[1]));
         String zonaHoraria = scan.nextLine();
         String categoria = scan.nextLine();
-        Float preuHabDoble = scan.nextFloat();
+        Float preuHabDoble = Float.parseFloat(scan.nextLine());
         String caracteristica = scan.nextLine();
         ArrayList<String> llistaCaracteristiques = new ArrayList<String>();
         do {
             llistaCaracteristiques.add(caracteristica);
             caracteristica = scan.nextLine();
-        } while (caracteristica != SEPARADOR);
+        } while (!caracteristica.equals(SEPARADOR));
         LlistaAllotjaments.add(new Allotjament(nomAllotjament, (int)(100*preuHabDoble), coordAllotjament, llistaCaracteristiques, TimeZone.getTimeZone(zonaHoraria), categoria));
     }
     private void casVisitable() throws ParseException { //DONE
