@@ -38,9 +38,8 @@ class IO {
     }
     private void casLloc(){
         String nom_lloc = scan.nextLine();
-        scan.useDelimiter(",");
-        Coordenada cord_lloc = new Coordenada(scan.nextFloat(), scan.nextFloat());
-        scan.useDelimiter(Pattern.compile("\\p{javaWhitespace}+"));
+        String [] stringCoord = scan.nextLine().split(",");
+        Coordenada cord_lloc = new Coordenada(Float.parseFloat(stringCoord[0]),Float.parseFloat(stringCoord[1]));
         String IDZonaHoraria = scan.nextLine();
         scan.nextLine(); //llegir separador
         LlistaLlocs.add(new Lloc(nom_lloc, cord_lloc, TimeZone.getTimeZone(IDZonaHoraria)));
