@@ -28,9 +28,11 @@ class IO {
         ArrayList<String> preferencies = new ArrayList<String>();
         String nom_client, pref;
         nom_client = scan.nextLine();
+        pref = scan.nextLine();
         do {
+           preferencies.add(pref);
             pref = scan.nextLine();
-            preferencies.add(pref);
+
         } while (!pref.equals(SEPARADOR));
         LlistaClients.add(new Client(nom_client, preferencies));
     }
