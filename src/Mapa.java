@@ -12,17 +12,17 @@ import java.util.Iterator;
 */
 public class Mapa {
     private GrupClients clients;
-    private HashMap<String,Lloc> mapa;
+    private HashMap<String,PuntInteres> mapa;
     
     /** @brief crea un mapa amb el grup de clients i el conjunt de llocs donats
 	@pre cert
 	@post crea un Mapa amb els clients i els llocs donats
     */
-    public Mapa(GrupClients gClients, ArrayList<Lloc> llocs) {
+    public Mapa(GrupClients gClients, ArrayList<PuntInteres> punts) {
         clients = gClients;
         mapa = new HashMap<>();
-        Iterator<Lloc> itr = llocs.iterator();
-        Lloc aux;
+        Iterator<PuntInteres> itr = punts.iterator();
+        PuntInteres aux;
         while (itr.hasNext()) {
             aux = itr.next();
             mapa.put(aux.nom(), aux);
@@ -32,7 +32,7 @@ public class Mapa {
 	@pre cert
 	@post retorna el circit optim entre dos llocs.
     */
-    public Circuit Dijkstra(Lloc a, Lloc b){
+    public Circuit Dijkstra(PuntInteres a, PuntInteres b){
         return null; //s'ha de fer i ficar la puta pre i post
     }
 }
