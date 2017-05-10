@@ -160,21 +160,21 @@ class IO {
         scan.nextLine();
     }
     private void casAssociarTransport(){
-        String nomLloc = scan.next();
-        String nomMT=scan.next();
-        LocalTime duradaTrajecte= LocalTime.parse(scan.next());
-        Float preu = scan.nextFloat();
+        String nomLloc = scan.nextLine();
+        String nomMT=scan.nextLine();
+        LocalTime duradaTrajecte= LocalTime.parse(scan.nextLine());
+        Float preu = Float.parseFloat(scan.nextLine());
         MT_Directe transport = new MT_Directe(nomMT, (int) (preu*100),duradaTrajecte);
 
         Iterator<Lloc> llocIt = LlistaLlocs.iterator();
         boolean trobat = false;
         Lloc LlocActual = llocIt.next();
         while (llocIt.hasNext() && !trobat) {
-            if (LlocActual.nom() == nomLloc) trobat = true;
+            if (LlocActual.nom().equals(nomLloc)) trobat = true;
             else LlocActual = llocIt.next();
         }
         LlocActual.associarTransport(transport);
-        scan.next();
+        scan.nextLine();
     }
     private void casMTDirecte(){
         String nomOrigen = scan.next();
