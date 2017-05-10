@@ -13,7 +13,7 @@ public class EstadaHotel extends Activitat {
     /** @brief Constructor de una Estadia a un Hotel
      @pre cert
      @post Crea una estadia amb les dades donades*/
-    public EstadaHotel(Allotjament h, MonthDay dia, LocalTime hora){
+    public EstadaHotel(Allotjament h, LocalDate dia, LocalTime hora){
         super(dia, hora);
         hotel = h;
     }
