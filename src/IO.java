@@ -134,20 +134,20 @@ class IO {
 
         Allotjament allotjamentActual = it.next();
         while (it.hasNext() && !trobat) {
-            if (allotjamentActual.nom() == nomAllotjVisitable) trobat = true;
+            if (allotjamentActual.nom().equals(nomAllotjVisitable)) trobat = true;
             else allotjamentActual = it.next();
         }
         trobat = false;
         Visitable visitableActual = jt.next();
         while (jt.hasNext() && !trobat) {
-            if (visitableActual.nom() == nomAllotjVisitable) trobat = true;
+            if (visitableActual.nom().equals(nomAllotjVisitable)) trobat = true;
             else visitableActual = jt.next();
         }
-        String lloc = scan.next();
+        String lloc = scan.nextLine();
         trobat = false;
         Lloc LlocActual = llocIt.next();
         while (llocIt.hasNext() && !trobat) {
-            if (LlocActual.nom() == lloc) trobat = true;
+            if (LlocActual.nom().equals(lloc)) trobat = true;
             else LlocActual = llocIt.next();
         }
         if (jt.hasNext()) {
