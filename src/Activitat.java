@@ -8,11 +8,11 @@ import java.time.*;
     @author Ismael El Habri
 */
 public class Activitat {
-    private MonthDay dia;
+    private LocalDate dia;
     private LocalTime hora;
     
     
-    public Activitat(MonthDay d, LocalTime h){
+    public Activitat(LocalDate d, LocalTime h){
         dia=d;hora=h;
     }
     /** @brief Consulta la hora en que s'ha fet l'activitat
@@ -22,5 +22,5 @@ public class Activitat {
     /** @brief Consulta el dia en que s'ha fet una activitat
      @pre cert
      @post Retorna el dia en que sha fet l'activitat*/   
-    public MonthDay diaActivitat() { return dia; }
+    public LocalDate diaActivitat() { return dia; }
 }

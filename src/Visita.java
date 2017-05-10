@@ -16,7 +16,7 @@ public class Visita extends Activitat{
     /** @brief Constructor amb paràmetres
      @pre cert
      @post Visita amb lloc visitat i data de visita creada*/
-    public Visita(Visitable v, MonthDay data, LocalTime hora){
+    public Visita(Visitable v, LocalDate data, LocalTime hora){
         super(data,hora);
         visitat=v;
     }

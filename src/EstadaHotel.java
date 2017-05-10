@@ -1,19 +1,19 @@
-/** @file EstadiaHotel.java
-    @brief Classe EstadiaHotel
+/** @file EstadaHotel.java
+    @brief Classe EstadaHotel
 */
 import java.time.*;
 
-/** @class EstadiaHotel
-    @brief Classe que representa una Estadia en un Allotjament
+/** @class EstadaHotel
+    @brief Classe que representa una Estada en un Allotjament
     @author Ismael El Habri
 */
-public class EstadiaHotel extends Activitat {
+public class EstadaHotel extends Activitat {
     private Allotjament hotel;
     
     /** @brief Constructor de una Estadia a un Hotel
      @pre cert
      @post Crea una estadia amb les dades donades*/
-    public EstadiaHotel(Allotjament h, MonthDay dia, LocalTime hora){
+    public EstadaHotel(Allotjament h, LocalDate dia, LocalTime hora){
         super(dia, hora);
         hotel = h;
     }

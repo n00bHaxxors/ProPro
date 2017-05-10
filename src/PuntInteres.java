@@ -18,6 +18,7 @@ public abstract class PuntInteres {
     private HashSet<String> caracteristiques;
     private TimeZone zona;
     private ArrayList<MT_Directe> transportsDirectes;
+    private String LlocPrincipal;
     
     //Mètodes
     
@@ -50,6 +51,13 @@ public abstract class PuntInteres {
 	@post retorna cert si el punt d'interès té la característica i fals en c.c.*/
     public boolean conteCaracteristica(String car){ return caracteristiques.contains(car); }
     
-    
+    /** @brief Afageix un transportDirecte
+	@pre cert
+	@post transport afegit a la llista de tranpsorts Directes*/
     public void afegirTransportDirecte(MT_Directe transport){ transportsDirectes.add(transport); }
+    
+    /** @brief Assigna un Lloc Principal al Punt d'Interes 
+	@pre cert
+	@post Lloc Principal es el nou lloc Principal del punt d'Interes*/
+    public void assignarLlocPrincipal(String nom){ LlocPrincipal = nom; }
 }
