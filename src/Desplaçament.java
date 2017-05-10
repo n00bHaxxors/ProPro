@@ -5,24 +5,24 @@
 
 import java.time.*;
 
-public class Desplaçament { //aka trasllat
+public class Desplaçament extends Activitat { //aka trasllat
 
     private int preu;
-    private LocalTime duracio;
     private Mitja_Transport mitja;
     private PuntInteres origen, desti; //npi de quina classe ha de ser
  
     /** @brief Constructor amb parametres
      @pre cert
      @post Desplaçament amb preu, duracio, mitja, origen i desti creat*/
-    public Desplaçament(int p, LocalTime d, Mitja_Transport m, PuntInteres o, PuntInteres de){
-        preu=p; duracio=d; mitja=m; origen=o; desti=de;
+    public Desplaçament(int p, MonthDay d, LocalTime s, Mitja_Transport m, PuntInteres o, PuntInteres de){
+        super(d,s);
+        preu=p; mitja=m; origen=o; desti=de;
     }
  
     /** @brief Consulta la duracio del desplaçament
      @pre cert
      @post Retorna la duració del desplaçament en segons*/
-    public LocalTime duracio() { return duracio; }
+    //public LocalTime duracio() { return duracio; }
 
     /** @brief Consulta el preu del desplaçament
      @pre cert
