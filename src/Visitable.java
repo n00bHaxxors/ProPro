@@ -1,8 +1,6 @@
 /** @file Visitable.java
     @brief Classe Visitable
 */
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.MonthDay;
 import java.util.ArrayList;
@@ -34,19 +32,10 @@ public class Visitable extends PuntInteres{
         /** @brief Indica si en el bloc del horari actual el lloc estarà obert durant una visita
 	@pre bloc horari diferent de null i temps iniciVisita posterior a fiVisita
 	@post retorna cert si estarà obert durant tota la visita i fals en cas contrari */
-        public boolean estaraObert(LocalDateTime iniciVisita, LocalDateTime fiVisita){
-            boolean resultat = false;
-            //boolean mateixDia = iniciVisita.toLocalDate().equals(fiVisita.toLocalDate()); //comprovem que son el mateix dia
-            /*if(!mateixDia){
-                LocalDateTime aux = iniciVisita;
-                iniciVisita = fiVisita;
-                fiVisita = aux;
-            }*/
-            //resultat = (iniciVisita.toLocalDate().isAfter(inici) || iniciVisita.toLocalDate().equals(inici));
-           // resultat = resultat && (fiVisita.toLocalDate().isBefore(fi) || fiVisita.toLocalDate().equals(fi));
-            //if (resultat) {
-                //resultat = iniciVisita.toLocalTime().isAfter(horaInici) && iniciVisita.toLocalTime().isBefore(horaFi) && fiVisita.toLocalTime().isAfter(horaInici) && fiVisita.toLocalTime().isBefore(horaFi);
-            //}
+        public boolean estaraObert(MonthDay visita, LocalTime iniciVisita, LocalTime fiVisita){
+            
+            boolean resultat = !visita.isBefore(inici) && !visita.isAfter(fi);
+            resultat = resultat && !iniciVisita.isBefore(horaInici) && !iniciVisita.isAfter(horaFi) && !fiVisita.isBefore(horaInici) && !fiVisita.isAfter(horaFi);
             return resultat;
         }
     }
@@ -71,13 +60,8 @@ public class Visitable extends PuntInteres{
             @pre cert
             @post cert si estara obert i el dia en concret i fals en c.c.
         */
-        public boolean esAquestDia(LocalDateTime iniciVisita, LocalDateTime fiVisita){
-            boolean resultat = iniciVisita.toLocalDate().equals(dia) && fiVisita.toLocalDate().equals(dia);
-            if (resultat){
-                //LocalDateTime obertura = dia.atTime(inici), tencament = dia.atTime(fi);
-                //resultat = fiVisita.isBefore(tencament) && iniciVisita.isBefore(tencament) && fiVisita.isAfter(obertura) && iniciVisita.isAfter(obertura);
-            }
-            return resultat;
+        public boolean esAquestDia(MonthDay Visita, LocalTime iniciVisita, LocalTime fiVisita){
+            return Visita.equals(dia) &&  iniciVisita.isAfter(inici) && iniciVisita.isBefore(fi) && fiVisita.isAfter(inici) && fiVisita.isBefore(fi);
         }
         
     }
@@ -112,21 +96,21 @@ public class Visitable extends PuntInteres{
     /** @brief Consulta si en un moment de un dia el Visitable estarà obert
 	@pre el visitable no és lloc de pas
 	@post retorna cert si estarà obert en aquell moment, i fals en c.c.*/
-    public boolean estaraObert(LocalDateTime dia){
+    public boolean estaraObert(MonthDay dia, LocalTime hora){
         int hores = tempsRec.getHour(), minuts = tempsRec.getMinute(), segons = tempsRec.getSecond();
-        LocalDateTime fiVisita= dia.plusHours(hores).plusMinutes(minuts).plusSeconds(segons);
+        LocalTime fiVisita = hora.plusHours(tempsRec.getHour()).plusMinutes(tempsRec.getMinute()).plusSeconds(tempsRec.getSecond());
         boolean resultat = false;
         //cal iterarho primer els excepció i despres mirar si va o no
         Iterator<ExcepcioHorari> itr = diesExcepcionals.iterator();
         while (!resultat && itr.hasNext()){
             ExcepcioHorari excepcio = (ExcepcioHorari) itr.next();
-            resultat = excepcio.esAquestDia(dia, fiVisita);                    
+            resultat = excepcio.esAquestDia(dia, hora, fiVisita);                    
         }
         if (!resultat){
             Iterator<BlocHorari> itr2 = horari.iterator();
             while (!resultat && itr.hasNext()){
                 BlocHorari franja = itr2.next();
-                resultat = franja.estaraObert(dia, fiVisita);
+                resultat = franja.estaraObert(dia, hora, fiVisita);
             }
         }
         return resultat;
