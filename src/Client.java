@@ -12,8 +12,13 @@ import java.util.Iterator;
 
 
 public class Client {
+    private class VisitaAnterior{
+        private Visitable v; private LocalDate data;
+        public VisitaAnterior (Visitable visitat, LocalDate d){ v=visitat; data=d; }
+        public String nom_visitable(){ return v.nom(); }
+    }
     private String nom;
-    private ArrayList<Visita> visites;
+    private ArrayList<VisitaAnterior> visites;
     
     private HashSet<String> preferencies;
     
@@ -23,7 +28,7 @@ public class Client {
     public Client(String nomClient, ArrayList<String> Pref){
         nom = nomClient; 
         preferencies = new HashSet(Pref);
-        visites = new ArrayList<Visita>();
+        visites = new ArrayList<VisitaAnterior>();
     }
     
     /** @brief Consulta si el client te una preferencia concreta o no
@@ -37,7 +42,7 @@ public class Client {
 	@pre cert
 	@post Client amb nova visita */
     public void afegirVisita(Visitable PuntVisita, LocalDate data) {
-        Visita temp = new Visita(PuntVisita, data);
+        VisitaAnterior temp = new VisitaAnterior(PuntVisita, data);
         visites.add(temp);
     }
     
@@ -45,9 +50,9 @@ public class Client {
 	@pre cert
 	@post retorna cert si si s'ha visitat punt i fals en c.c. */
     public boolean shaVisitat(Visitable punt){
-        Iterator<Visita>  itr = visites.iterator();
+        Iterator<VisitaAnterior>  itr = visites.iterator();
         boolean trobat = false;
-        Visita temp;
+        VisitaAnterior temp;
         while (itr.hasNext() && !trobat){
             temp = itr.next();
             trobat = punt.nom().equals(temp.nom_visitable());

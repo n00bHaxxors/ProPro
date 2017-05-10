@@ -5,21 +5,20 @@
 
 import java.time.*;
 
-public class Visita {
+public class Visita extends Activitat{
     private Visitable visitat;
-    private LocalDate data_visita; //cal?
-    //ajudeume a posar atributs aqui
 
     /** @brief Constructor per defecte
      @pre cert
      @post Visita buida creada*/
-    public Visita(){}
+    //public Visita(){}
 
     /** @brief Constructor amb paràmetres
      @pre cert
      @post Visita amb lloc visitat i data de visita creada*/
-    public Visita(Visitable v, LocalDate data){
-        visitat=v; data_visita=data;
+    public Visita(Visitable v, MonthDay data, LocalTime hora){
+        super(data,hora);
+        visitat=v;
     }
 
     /** @brief Consulta el nom del lloc visitat
