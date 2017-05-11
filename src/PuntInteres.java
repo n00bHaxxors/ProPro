@@ -3,6 +3,7 @@
 */
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.TimeZone;
 
 /** @class PuntInteres
@@ -53,11 +54,25 @@ public abstract class PuntInteres {
     
     /** @brief Afageix un transportDirecte
 	@pre cert
-	@post transport afegit a la llista de tranpsorts Directes*/
+	@post transport afegit al conjunt de tranpsorts Directes*/
     public void afegirTransportDirecte(MT_Directe transport){ transportsDirectes.add(transport); }
+    
+     /** @brief Consulta els transports Directes
+	@pre cert
+	@post retorna un iterador als transports directes que hi ha*/
+    public Iterator<MT_Directe> TransportsDirectes(){
+        return transportsDirectes.iterator();
+    }
     
     /** @brief Assigna un Lloc Principal al Punt d'Interes 
 	@pre cert
 	@post Lloc Principal es el nou lloc Principal del punt d'Interes*/
     public void assignarLlocPrincipal(String nom){ LlocPrincipal = nom; }
+    
+    /** @brief Consulta el nom del lloc Principal al que esta associat
+	@pre cert
+	@post retorna el nom del Lloc Principal*/
+    public String nomLloc(){ return LlocPrincipal; }
+    
+    
 }
