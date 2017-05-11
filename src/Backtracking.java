@@ -70,8 +70,7 @@ public abstract class Backtracking {
         boolean empatPreu = solucio_optima.preu_persona()==solucio_actual.preu_persona(), empatSatisfaccio = solucio_optima.grau_satisfacio()==solucio_actual.grau_satisfacio();
         if (solucio_optima.preu_persona()>solucio_actual.preu_persona()) return true;
         else if (empatPreu && solucio_optima.grau_satisfacio()<solucio_actual.grau_satisfacio()) return true;
-        else if (empatPreu && empatSatisfaccio && solucio_optima.dies_total()>solucio_actual.dies_total()) return true;
-        else return false;
+        else return empatPreu && empatSatisfaccio && solucio_optima.dies_total()>solucio_actual.dies_total();
     }
 
 }
