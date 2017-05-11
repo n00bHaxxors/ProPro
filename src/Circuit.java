@@ -14,13 +14,13 @@ public class Circuit {
     private int preu_per_persona;
     private Float grau_satisfacio;
     private LocalTime sumatori_temps;
-    private ArrayList<Lloc> llocs;
+    private ArrayList<Activitat> activitats;
 
     /** @brief Constructor circuit amb paràmetres
      @pre cert
      @post Circuit amb preu,grau,temps i llocs creat*/
-    public Circuit(int preu, Float grau, LocalTime t, ArrayList<Lloc> l){
-        preu_per_persona=preu; grau_satisfacio=grau; sumatori_temps=t; llocs=l;
+    public Circuit(int preu, Float grau, LocalTime t, ArrayList<Activitat> a){
+        preu_per_persona=preu; grau_satisfacio=grau; sumatori_temps=t; activitats=a
     }
 
     /** @brief Consulta el temps total
