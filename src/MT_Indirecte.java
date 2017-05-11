@@ -9,10 +9,10 @@ import java.util.ArrayList;
 public class MT_Indirecte extends Mitja_Transport {
 
     public static class Partença{
-        public Partença(MonthDay h,LocalTime hora, LocalTime d, int p){
-            horariDia=h; hora=hora;durada=d; preu=p;
+        public Partença(LocalDate h,LocalTime hora, LocalTime d, int p){
+            dia=h; hora=hora;durada=d; preu=p;
         }
-        public MonthDay horariDia;
+        public LocalDate dia;
         public LocalTime hora;
         public LocalTime durada;
         public int preu;
