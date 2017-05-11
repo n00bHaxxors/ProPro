@@ -12,28 +12,36 @@ import java.util.ArrayList;
 
 public class Circuit {
     private int preu_per_persona;
-    private Float grau_satisfacio;
-    private LocalTime sumatori_temps;
+    private int grau_satisfacio;
+    private int dies;
     private ArrayList<Activitat> activitats;
 
     /** @brief Constructor circuit amb paràmetres
      @pre cert
-     @post Circuit amb preu,grau,temps i llocs creat*/
-    public Circuit(int preu, Float grau, LocalTime t, ArrayList<Activitat> a){
-        preu_per_persona=preu; grau_satisfacio=grau; sumatori_temps=t; activitats=a;
+     @post Circuit amb preu,grau,temps i Activitats creat*/
+    public Circuit(int preu, int grau, int d, ArrayList<Activitat> a){
+        preu_per_persona=preu; grau_satisfacio=grau; dies = d; activitats=a;
     }
+    /** @brief Constructor circuit buit
+     @pre cert
+     @post Circuit buit*/
+    public Circuit(){
+        activitats = new ArrayList();
+        preu_per_persona = 0; grau_satisfacio=0;
+    }
+    
 
     /** @brief Consulta el temps total
      @pre cert
-     @post Retorna el temps total que durarà el circuit*/
-    public LocalTime temps_total() {
-        return sumatori_temps;
+     @post Retorna el temps total, en dies, que durarà el circuit*/
+    public int dies_total() {
+        return dies;
     }
 
     /** @brief Consulta el grau de satisfacció (mitja?) que tindràn els clients al fer el circuit
      @pre cert
      @post Retorna el grau de satisfaccio mitjà*/
-    public Float grau_satisfacio(GrupClients c){ return grau_satisfacio; } //grupclients o client?
+    public int grau_satisfacio(){ return grau_satisfacio; }
 
     /** @brief Consulta el preu per persona
      @pre cert
@@ -43,7 +51,3 @@ public class Circuit {
     }
 
 }
-
-/** @brief
- @pre cert
- @post */

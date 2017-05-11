@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
@@ -15,7 +16,14 @@ import java.util.TreeSet;
 public abstract class Backtracking {
     private static Circuit solucio_optima, solucio_actual;
     
-    public static Circuit AlgBTPreu(Mapa g, PuntInteres a, PuntInteres b, Set<PuntInteres> c){
+    public static Circuit CircuitMesBarat(Mapa g, PuntInteres a, PuntInteres b, Set<PuntInteres> c){
+        solucio_optima = new Circuit(); solucio_actual = new Circuit();
+        AlgBTPreu(g,a,b,c);
+        return solucio_optima;
+    }
+    
+    
+    private static void AlgBTPreu(Mapa g, PuntInteres a, PuntInteres b, Set<PuntInteres> c){
         Iterator<Activitat> itr = inicialitzarCandidats(solucio_actual.ultimaActivitat());
         while (itr.hasNext()){
             Activitat act = itr.next();
@@ -28,7 +36,6 @@ public abstract class Backtracking {
                 DesanotarCandidat();
             }
         }
-        return null;
     }
     
     private static Iterator<Activitat> inicialitzarCandidats(PuntInteres a){
@@ -36,7 +43,6 @@ public abstract class Backtracking {
     }
     
     private static boolean Acceptable(Activitat a){
-        
     }
     
     private static boolean EsPotTrobarMillor(Activitat a){
