@@ -218,20 +218,20 @@ class IO {
     }
     private void casMTIndirecte(){
         ArrayList<MT_Indirecte.Partença> partences = new ArrayList<MT_Indirecte.Partença>();
-        String nomOrigen = scan.next();
-        String nomDesti = scan.next();
-        String nomMT = scan.next();
-        LocalTime tempsAnada = LocalTime.parse(scan.next());
-        LocalTime tempsTornada = LocalTime.parse(scan.next());
-        MonthDay data = MonthDay.parse(scan.next());
-        LocalTime hora = LocalTime.parse(scan.next());
-        LocalTime durada = LocalTime.parse(scan.next());
-        Integer preu = (int)(scan.nextFloat()/100);
-        String entrada = scan.next();
+        String nomOrigen = scan.nextLine();
+        String nomDesti = scan.nextLine();
+        String nomMT = scan.nextLine();
+        LocalTime tempsAnada = LocalTime.parse(scan.nextLine());
+        LocalTime tempsTornada = LocalTime.parse(scan.nextLine());
+        LocalDate data = LocalDate.parse(scan.nextLine());
+        LocalTime hora = LocalTime.parse(scan.nextLine());
+        LocalTime durada = LocalTime.parse(scan.nextLine());
+        Integer preu = (int)(Float.parseFloat(scan.nextLine())/100);
+        String entrada = scan.nextLine();
         MT_Indirecte.Partença p;
-        while(entrada != "*"){
+        while(!entrada.equals("*")){
             if(entrada.contains("-")){
-                data = MonthDay.parse(entrada);
+                data = LocalDate.parse(entrada);
             }
             else if(entrada.contains(":")){
                 hora=LocalTime.parse(entrada);
@@ -241,6 +241,7 @@ class IO {
                 preu =(int)(100*Float.parseFloat(entrada));
                 partences.add(new MT_Indirecte.Partença(data,hora,durada,preu));
             }
+            entrada = scan.nextLine();
         }
 
         Iterator<Lloc> llocIt = LlistaLlocs.iterator();
@@ -248,7 +249,7 @@ class IO {
 
         Lloc LlocActual = llocIt.next();
         while (llocIt.hasNext() && !trobat) {
-            if (LlocActual.nom() == nomOrigen) trobat = true;
+            if (LlocActual.nom().equals(nomOrigen)) trobat = true;
             else LlocActual = llocIt.next();
         }
         MT_Indirecte mt = new MT_Indirecte(nomMT,tempsAnada,tempsTornada,LlocActual,partences);
