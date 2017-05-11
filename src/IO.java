@@ -134,20 +134,20 @@ class IO {
 
         Allotjament allotjamentActual = it.next();
         while (it.hasNext() && !trobat) {
-            if (allotjamentActual.nom() == nomAllotjVisitable) trobat = true;
+            if (allotjamentActual.nom().equals(nomAllotjVisitable)) trobat = true;
             else allotjamentActual = it.next();
         }
         trobat = false;
         Visitable visitableActual = jt.next();
         while (jt.hasNext() && !trobat) {
-            if (visitableActual.nom() == nomAllotjVisitable) trobat = true;
+            if (visitableActual.nom().equals(nomAllotjVisitable)) trobat = true;
             else visitableActual = jt.next();
         }
-        String lloc = scan.next();
+        String lloc = scan.nextLine();
         trobat = false;
         Lloc LlocActual = llocIt.next();
         while (llocIt.hasNext() && !trobat) {
-            if (LlocActual.nom() == lloc) trobat = true;
+            if (LlocActual.nom().equals(lloc)) trobat = true;
             else LlocActual = llocIt.next();
         }
         if (jt.hasNext()) {
@@ -160,28 +160,28 @@ class IO {
         scan.nextLine();
     }
     private void casAssociarTransport(){
-        String nomLloc = scan.next();
-        String nomMT=scan.next();
-        LocalTime duradaTrajecte= LocalTime.parse(scan.next());
-        Float preu = scan.nextFloat();
+        String nomLloc = scan.nextLine();
+        String nomMT=scan.nextLine();
+        LocalTime duradaTrajecte= LocalTime.parse(scan.nextLine());
+        Float preu = Float.parseFloat(scan.nextLine());
         MT_Directe transport = new MT_Directe(nomMT, (int) (preu*100),duradaTrajecte);
 
         Iterator<Lloc> llocIt = LlistaLlocs.iterator();
         boolean trobat = false;
         Lloc LlocActual = llocIt.next();
         while (llocIt.hasNext() && !trobat) {
-            if (LlocActual.nom() == nomLloc) trobat = true;
+            if (LlocActual.nom().equals(nomLloc)) trobat = true;
             else LlocActual = llocIt.next();
         }
         LlocActual.associarTransport(transport);
-        scan.next();
+        scan.nextLine();
     }
     private void casMTDirecte(){
-        String nomOrigen = scan.next();
-        String nomDesti = scan.next();
-        String nomMT=scan.next();
-        LocalTime duradaTrajecte= LocalTime.parse(scan.next());
-        Float preu = scan.nextFloat();
+        String nomOrigen = scan.nextLine();
+        String nomDesti = scan.nextLine();
+        String nomMT=scan.nextLine();
+        LocalTime duradaTrajecte= LocalTime.parse(scan.nextLine());
+        Float preu = Float.parseFloat(scan.nextLine());
 
 
         Iterator<Allotjament> it = LlistaAllotjaments.iterator();
@@ -191,20 +191,20 @@ class IO {
 
         Allotjament allotjamentActual = it.next();
         while (it.hasNext() && !trobat) {
-            if (allotjamentActual.nom() == nomDesti) trobat = true;
+            if (allotjamentActual.nom().equals(nomDesti)) trobat = true;
             else allotjamentActual = it.next();
         }
         trobat = false;
         Visitable visitableActual = jt.next();
         while (jt.hasNext() && !trobat) {
-            if (visitableActual.nom() == nomDesti) trobat = true;
+            if (visitableActual.nom().equals(nomDesti)) trobat = true;
             else visitableActual = jt.next();
         }
         String lloc = scan.next();
         trobat = false;
         Lloc LlocActual = llocIt.next();
         while (llocIt.hasNext() && !trobat) {
-            if (LlocActual.nom() == lloc) trobat = true;
+            if (LlocActual.nom().equals(lloc)) trobat = true;
             else LlocActual = llocIt.next();
         }
         if (jt.hasNext()) {
@@ -214,24 +214,24 @@ class IO {
         } else {
             //excepcio
         }
-        scan.next();
+        scan.nextLine();
     }
     private void casMTIndirecte(){
         ArrayList<MT_Indirecte.Partença> partences = new ArrayList<MT_Indirecte.Partença>();
-        String nomOrigen = scan.next();
-        String nomDesti = scan.next();
-        String nomMT = scan.next();
-        LocalTime tempsAnada = LocalTime.parse(scan.next());
-        LocalTime tempsTornada = LocalTime.parse(scan.next());
-        MonthDay data = MonthDay.parse(scan.next());
-        LocalTime hora = LocalTime.parse(scan.next());
-        LocalTime durada = LocalTime.parse(scan.next());
-        Integer preu = (int)(scan.nextFloat()/100);
-        String entrada = scan.next();
+        String nomOrigen = scan.nextLine();
+        String nomDesti = scan.nextLine();
+        String nomMT = scan.nextLine();
+        LocalTime tempsAnada = LocalTime.parse(scan.nextLine());
+        LocalTime tempsTornada = LocalTime.parse(scan.nextLine());
+        LocalDate data = LocalDate.parse(scan.nextLine());
+        LocalTime hora = LocalTime.parse(scan.nextLine());
+        LocalTime durada = LocalTime.parse(scan.nextLine());
+        Integer preu = (int)(Float.parseFloat(scan.nextLine())/100);
+        String entrada = scan.nextLine();
         MT_Indirecte.Partença p;
-        while(entrada != "*"){
+        while(!entrada.equals("*")){
             if(entrada.contains("-")){
-                data = MonthDay.parse(entrada);
+                data = LocalDate.parse(entrada);
             }
             else if(entrada.contains(":")){
                 hora=LocalTime.parse(entrada);
@@ -241,6 +241,7 @@ class IO {
                 preu =(int)(100*Float.parseFloat(entrada));
                 partences.add(new MT_Indirecte.Partença(data,hora,durada,preu));
             }
+            entrada = scan.nextLine();
         }
 
         Iterator<Lloc> llocIt = LlistaLlocs.iterator();
@@ -248,7 +249,7 @@ class IO {
 
         Lloc LlocActual = llocIt.next();
         while (llocIt.hasNext() && !trobat) {
-            if (LlocActual.nom() == nomOrigen) trobat = true;
+            if (LlocActual.nom().equals(nomOrigen)) trobat = true;
             else LlocActual = llocIt.next();
         }
         MT_Indirecte mt = new MT_Indirecte(nomMT,tempsAnada,tempsTornada,LlocActual,partences);
