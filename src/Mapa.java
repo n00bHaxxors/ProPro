@@ -13,12 +13,13 @@ import java.util.Iterator;
 public class Mapa {
     private GrupClients clients;
     private HashMap<String,PuntInteres> mapa;
+    private HashMap<String, Lloc> mapaLlocs;
     
     /** @brief crea un mapa amb el grup de clients i el conjunt de llocs donats
 	@pre cert
 	@post crea un Mapa amb els clients i els llocs donats
     */
-    public Mapa(GrupClients gClients, ArrayList<PuntInteres> punts) {
+    public Mapa(GrupClients gClients, ArrayList<PuntInteres> punts, ArrayList<Lloc> llocs) {
         clients = gClients;
         mapa = new HashMap<>();
         Iterator<PuntInteres> itr = punts.iterator();
@@ -26,6 +27,13 @@ public class Mapa {
         while (itr.hasNext()) {
             aux = itr.next();
             mapa.put(aux.nom(), aux);
+        }
+        mapaLlocs = new HashMap<>();
+        Iterator<Lloc> itr2 = llocs.iterator();
+        Lloc aux2;
+        while (itr2.hasNext()) {
+            aux2 = itr2.next();
+            mapaLlocs.put(aux2.nom(), aux2);
         }
     }
     /** @brief busca el circuit optim entre dos llocs.
