@@ -7,7 +7,7 @@ import java.time.*;
     @brief Classe que representa una Activitat
     @author Ismael El Habri
 */
-public class Activitat {
+public abstract class Activitat {
     private LocalDate dia;
     private LocalTime hora;
     private int preu;

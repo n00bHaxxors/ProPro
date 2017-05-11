@@ -116,8 +116,12 @@ public class Visitable extends PuntInteres{
         return resultat;
     }
     
+    /** @brief Consulta si el visitable es lloc de pas
+	@pre cert
+	@post retorna cert si es lloc de pas, i fals en c.c.*/
     public boolean esLlocPas(){ return llocPas; }
     
+    public LocalTime tempsVisitaRec(){ return tempsRec; }
    
     
 }

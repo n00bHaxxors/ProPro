@@ -14,20 +14,21 @@ public class Circuit {
     private int preu_per_persona;
     private int grau_satisfacio;
     private int dies;
+    private int nActivitats;
     private ArrayList<Activitat> activitats;
 
     /** @brief Constructor circuit amb paràmetres
      @pre cert
      @post Circuit amb preu,grau,temps i Activitats creat*/
-    public Circuit(int preu, int grau, int d, ArrayList<Activitat> a){
+    public Circuit(int preu, int grau, int d, ArrayList<Activitat> a){ //aixo cal?
         preu_per_persona=preu; grau_satisfacio=grau; dies = d; activitats=a;
     }
-    /** @brief Constructor circuit buit
+    /** @brief Constructor circuit amb el dia d'inici del circuit
      @pre cert
-     @post Circuit buit*/
+     @post Circuit usant di com a dia inicial i final (está buit)*/
     public Circuit(){
         activitats = new ArrayList();
-        preu_per_persona = 0; grau_satisfacio=0;
+        preu_per_persona = 0; grau_satisfacio=0;nActivitats=0;
     }
     
 
@@ -49,5 +50,18 @@ public class Circuit {
     public int preu_persona(){
         return preu_per_persona;
     }
-
+    
+    public Activitat ultimaActivitat(){
+        return activitats.get(nActivitats);
+    }
+    
+    public void afegirActivitat(Activitat a){
+        activitats.add(a);
+        nActivitats++;
+    }
+    
+    public void treureUltimaActivitat(){
+        activitats.remove(nActivitats);
+        nActivitats--;
+    }
 }
