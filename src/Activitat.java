@@ -10,10 +10,11 @@ import java.time.*;
 public class Activitat {
     private LocalDate dia;
     private LocalTime hora;
+    private int preu;
     
     
-    public Activitat(LocalDate d, LocalTime h){
-        dia=d;hora=h;
+    public Activitat(LocalDate d, LocalTime h, int p){
+        dia=d;hora=h;preu=p;
     }
     /** @brief Consulta la hora en que s'ha fet l'activitat
      @pre cert

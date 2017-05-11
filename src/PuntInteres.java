@@ -40,7 +40,7 @@ public abstract class PuntInteres {
     /** @brief Consulta el preu del punt d'interès
 	@pre cert
 	@post retorna el preu */
-    public float preu(){ return preu; }
+    public int preu(){ return preu; }
     
     /** @brief Consulta la posició del punt d'interès
 	@pre cert

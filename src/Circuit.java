@@ -20,7 +20,7 @@ public class Circuit {
      @pre cert
      @post Circuit amb preu,grau,temps i llocs creat*/
     public Circuit(int preu, Float grau, LocalTime t, ArrayList<Activitat> a){
-        preu_per_persona=preu; grau_satisfacio=grau; sumatori_temps=t; activitats=a
+        preu_per_persona=preu; grau_satisfacio=grau; sumatori_temps=t; activitats=a;
     }
 
     /** @brief Consulta el temps total

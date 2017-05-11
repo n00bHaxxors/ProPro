@@ -17,7 +17,7 @@ public class Visita extends Activitat{
      @pre cert
      @post Visita amb lloc visitat i data de visita creada*/
     public Visita(Visitable v, LocalDate data, LocalTime hora){
-        super(data,hora);
+        super(data,hora,v.preu());
         visitat=v;
     }
 

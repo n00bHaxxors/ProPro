@@ -14,7 +14,7 @@ public class EstadaHotel extends Activitat {
      @pre cert
      @post Crea una estadia amb les dades donades*/
     public EstadaHotel(Allotjament h, LocalDate dia, LocalTime hora){
-        super(dia, hora);
+        super(dia, hora, h.preu());
         hotel = h;
     }
     /** @brief Consulta el nom del Allotjament
