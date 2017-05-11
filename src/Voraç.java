@@ -25,13 +25,13 @@ public abstract class Voraç {
         return res;
     }
 
-    private Activitat Buscar_Prometedor(ArrayList<Activitat> candidats, char tipus) {
+    private Activitat Buscar_Prometedor(ArrayList<Activitat> candidats,  Map<Activitat,boolean> visitats, char tipus) {
         float millor_preu, millor_satisfaccio;
         LocalTime millor_durada;
         Activitat iCan, millor;
 
         while (!iCan.esFi()) {
-            if (iCan) {
+            if (visitats.find(iCan)!=null ) { //falten condicions
                 if (comparar(iCan,millor,tipus)){
                     millor_preu=iCan.preu();
                     millor_satisfaccio=iCan.grau_satisfaccio();
@@ -59,8 +59,8 @@ public abstract class Voraç {
     }
 
     //retorna cert si tenim suficients diners, tenim suficient temps per visitar, està obert,
-    private boolean candidat_valid(Activitat a, Map<Activitat,boolean> visitats, int diners_gastats, int preu_maxim){
-        return !visitats[a] && diners_gastats+a.preu()<preu_maxim;
+    private boolean candidat_valid(Activitat a, Map<Activitat,boolean> visitats, int diners_gastats, int preu_maxim, LocalTime durada, LocalTime durada_max){
+        return visitats.find(a)!=null && diners_gastats+a.preu()<preu_maxim && durada.plus(a.durada()).isBefore(durada_max); //no cal comprovar si esta visitat perquè ja ho haurem fet al buscar_prometedor...
     }
 
     private boolean completa(PuntInteres desti, Set<PuntInteres> a_visitar, ArrayList<Activitat> activitats){
@@ -72,6 +72,7 @@ public abstract class Voraç {
 
     public Circuit veri_voras(Mapa g, PuntInteres origen, PuntInteres desti, Set<PuntInteres> a_visitar, char tipus_voraç){
         int diners_gastats, grau_satisfaccio;
+        Map<Activitat,boolean> visitats;
         LocalTime durada;
         Activitat iCan;
         Circuit resultat=null;
@@ -84,9 +85,10 @@ public abstract class Voraç {
                 diners_gastats+=iCan.preu();
                 //grau_satisfaccio+=iCan.grau_satisfaccio(); //ohshitteee!
                 durada.plus(iCan.durada());
+                visitats.add(iCan);
                 activitats.add(iCan);
             }
-            iCan++;
+            iCan.seguent();
         }
         if(completa())
             resultat=new Circuit(diners_gastats,grau_satisfaccio,durada,activitats);
