@@ -47,11 +47,11 @@ public abstract class Backtracking {
         return null;
     }
     
-    private static boolean Acceptable(Activitat a){
+    private static boolean Acceptable(Activitat a){ return true;
     }
     
     private static boolean EsPotTrobarMillor(Activitat a){
-        
+        return false;
     }
     
     private static void AnotarCandidat(Activitat a){
@@ -63,7 +63,7 @@ public abstract class Backtracking {
     }
     
     private static boolean SolucioCompleta(){
-        
+        return false;
     }
     
     private static boolean MillorQueOptima(){
