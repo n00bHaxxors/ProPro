@@ -27,4 +27,9 @@ public class Visita extends Activitat{
     public String nom_visitable(){
         return visitat.nom();
     }
+    
+    @Override
+    public boolean Acceptable (Circuit c){
+        return true;
+    }
 }

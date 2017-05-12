@@ -28,4 +28,9 @@ public class Desplaçament extends Activitat { //aka trasllat
      @pre cert
      @post Retorna el mitjà de transport usat*/
     public Mitja_Transport mitja_usat(){ return mitja; }
+    
+    @Override
+    public boolean Acceptable (Circuit c){
+        return true;
+    }
 }

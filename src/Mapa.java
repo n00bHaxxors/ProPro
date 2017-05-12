@@ -12,21 +12,29 @@ import java.util.Iterator;
 */
 public class Mapa {
     private GrupClients clients;
-    private HashMap<String,PuntInteres> mapa;
+    private HashMap<String,Visitable> mapaV;
+    private HashMap<String,Allotjament> mapaA;
     private HashMap<String, Lloc> mapaLlocs;
     
     /** @brief crea un mapa amb el grup de clients i el conjunt de llocs donats
 	@pre cert
 	@post crea un Mapa amb els clients i els llocs donats
     */
-    public Mapa(GrupClients gClients, ArrayList<PuntInteres> punts, ArrayList<Lloc> llocs) {
+    public Mapa(GrupClients gClients, ArrayList<Visitable> visitables, ArrayList<Allotjament> hotels, ArrayList<Lloc> llocs) {
         clients = gClients;
-        mapa = new HashMap<>();
-        Iterator<PuntInteres> itr = punts.iterator();
-        PuntInteres aux;
+        mapaV = new HashMap<>();
+        Iterator<Visitable> itr = visitables.iterator();
+        Visitable aux;
         while (itr.hasNext()) {
             aux = itr.next();
-            mapa.put(aux.nom(), aux);
+            mapaV.put(aux.nom(), aux);
+        }
+        mapaA = new HashMap<>();
+        Iterator<Allotjament> itr1 = hotels.iterator();
+        Allotjament aux1;
+        while (itr1.hasNext()) {
+            aux1 = itr1.next();
+            mapaA.put(aux1.nom(), aux1);
         }
         mapaLlocs = new HashMap<>();
         Iterator<Lloc> itr2 = llocs.iterator();
@@ -35,12 +43,5 @@ public class Mapa {
             aux2 = itr2.next();
             mapaLlocs.put(aux2.nom(), aux2);
         }
-    }
-    /** @brief busca el circuit optim entre dos llocs.
-	@pre cert
-	@post retorna el circit optim entre dos llocs.
-    */
-    public Circuit Dijkstra(PuntInteres a, PuntInteres b){
-        return null; //s'ha de fer i ficar la puta pre i post
     }
 }

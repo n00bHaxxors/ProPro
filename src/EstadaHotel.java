@@ -21,4 +21,9 @@ public class EstadaHotel extends Activitat {
      @pre cert
      @post Retorna el nom del Allotjament*/
     public String nomAllotjament(){ return hotel.nom(); }
+    
+    @Override
+    public boolean Acceptable (Circuit c){
+        return true;
+    }
 }
