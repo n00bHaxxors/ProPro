@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * Created by Markus on 10/05/2017.
  */
-
+/*
 public abstract class Voraç {
 
     private boolean comparar(Activitat actual, Activitat millor, char tipus){
@@ -50,9 +50,9 @@ public abstract class Voraç {
         int i;
         boolean trobat=false;
         while(!trobat){
-            /*if(candidat_valid(candidat[i])
-                trobat=true;
-            */
+            //if(candidat_valid(candidat[i])
+                //trobat=true;
+            
             i++;
         }
         return trobat;
@@ -70,7 +70,7 @@ public abstract class Voraç {
         return c1 && c2;
     }
 
-    public Circuit veri_voras(Mapa g, PuntInteres origen, PuntInteres desti, Set<PuntInteres> a_visitar, char tipus_voraç){
+    public Circuit Cami_aproximat(Mapa g, PuntInteres origen, PuntInteres desti, Set<PuntInteres> a_visitar, char tipus_voraç){
         int diners_gastats, grau_satisfaccio;
         Map<Activitat,boolean> visitats;
         LocalTime durada;
@@ -79,11 +79,12 @@ public abstract class Voraç {
         ArrayList<Activitat> activitats;
         Iterator<Activitat> itr; //THIS!!
 
-        while(!completa() && Queden_candidats() /*&& tenimdiners() && tenimtemps()*/){
+        while(!completa() && Queden_candidats() ){ //&& tenimdiners() && tenimtemps()
+            //Actualitzar_candidats();
             iCan=Buscar_Prometedor(Llista_activitats/itr, tipus_voraç);
             if(candidat_valid()){
                 diners_gastats+=iCan.preu();
-                //grau_satisfaccio+=iCan.grau_satisfaccio(); //ohshitteee!
+                grau_satisfaccio+=iCan.grau_satisfaccio(); //com faig aixo?
                 durada.plus(iCan.durada());
                 visitats.add(iCan);
                 activitats.add(iCan);
@@ -95,4 +96,4 @@ public abstract class Voraç {
 
         return resultat;
     }
-}
+}*/
