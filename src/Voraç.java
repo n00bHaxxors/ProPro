@@ -9,7 +9,10 @@ import java.util.Set;
 /*
 public abstract class Voraç {
 
-    private boolean comparar(Activitat actual, Activitat millor, char tipus){
+    /** @brief Fa la comparació corresponent en funcio del tipus de variable a optimitzar
+     @pre actual i millor != null i tipus=p,s,d
+     @post Retorna cert si l'activitat actual és millor que la millor activitat trobada fins el moment*/
+    /*private boolean comparar(Activitat actual, Activitat millor, char tipus){
         boolean res;
         switch(tipus){
             case 'p':
