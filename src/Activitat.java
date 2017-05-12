@@ -26,4 +26,9 @@ public abstract class Activitat {
     public LocalDate diaActivitat() { return dia; }
    
     public abstract boolean Acceptable(Circuit c);
+    
+    /** @brief Consulta la duracio de l'activitat
+     @pre cert
+     @post Retorna la duració de l'activitat*/
+    public abstract LocalTime Duracio();
 }

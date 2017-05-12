@@ -32,4 +32,12 @@ public class Visita extends Activitat{
     public boolean Acceptable (Circuit c){
         return true;
     }
+    
+    /** @brief Consulta la duracio de la visita
+     @pre cert
+     @post Retorna la duració de la visita*/
+    @Override
+    public LocalTime Duracio(){
+        return visitat.tempsVisitaRec();
+    }
 }

@@ -1,9 +1,9 @@
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.TreeSet;
 
 /** @file PuntInteres.java
     @brief Classe PuntInteres
@@ -16,13 +16,11 @@ import java.util.TreeSet;
 
 public abstract class Backtracking {
     private static Circuit solucio_optima, solucio_actual;
-    LocalDateTime diaHora;
-    int dies; //duracio
-    ArrayList<Visita> visitesFetes;
+    HashMap<String, Visita> visitesFetes;
     
     
     public static Circuit CircuitMesBarat(Mapa g, PuntInteres a, PuntInteres b, Set<PuntInteres> c, LocalDateTime diaInici){
-        solucio_optima = new Circuit(); solucio_actual = new Circuit();
+        solucio_optima = new Circuit(diaInici); solucio_actual = new Circuit(diaInici);
         AlgBTPreu(g,a,b,c);
         return solucio_optima;
     }
@@ -47,7 +45,8 @@ public abstract class Backtracking {
         return null;
     }
     
-    private static boolean Acceptable(Activitat a){ return true;
+    private static boolean Acceptable(Activitat a){
+        return a.Acceptable(solucio_optima); //podem necessitar més parametres en futur, amés sembla que la funció no es necessaria, son pres i post de regal
     }
     
     private static boolean EsPotTrobarMillor(Activitat a){

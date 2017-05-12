@@ -26,4 +26,12 @@ public class EstadaHotel extends Activitat {
     public boolean Acceptable (Circuit c){
         return true;
     }
+    
+    /** @brief Consulta la duracio de la estada al hotel
+     @pre cert
+     @post Retorna la duració de la estada*/
+    @Override
+    public LocalTime Duracio(){
+        return null; // aixo probablament merexi una redifinició de la classe (a inicialitzar Candidat s'haurà de tenir en compte
+    }
 }

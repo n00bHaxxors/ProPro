@@ -17,13 +17,7 @@ public class Desplaçament extends Activitat { //aka trasllat
         super(d,s,p);
         mitja=m; origen=o; desti=de;
     }
- 
-    /** @brief Consulta la duracio del desplaçament
-     @pre cert
-     @post Retorna la duració del desplaçament en segons*/
-    //public LocalTime duracio() { return duracio; }
-
-
+    
     /** @brief Consulta el mitjà de transport usat en el desplaçament
      @pre cert
      @post Retorna el mitjà de transport usat*/
@@ -32,5 +26,13 @@ public class Desplaçament extends Activitat { //aka trasllat
     @Override
     public boolean Acceptable (Circuit c){
         return true;
+    }
+    
+    /** @brief Consulta la duracio del desplaçament
+     @pre cert
+     @post Retorna la duració del desplaçament*/
+    @Override
+    public LocalTime Duracio(){
+        return null; //estic esperant en cané
     }
 }
