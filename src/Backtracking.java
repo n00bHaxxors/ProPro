@@ -1,5 +1,7 @@
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -46,9 +48,15 @@ public abstract class Backtracking {
         TreeSet<Activitat> arbre = new TreeSet();
         PuntInteres pActual = a.UbicacioActual();
         String llocActual = pActual.nomLloc();
-        arbre.add(pActual.ActivitatCorresponent(solucio_actual.acabamentCircuit())); //opcio de fer l'activitat on estem ara
+        LocalDateTime ara = solucio_actual.acabamentCircuit();
+        arbre.add(pActual.ActivitatCorresponent(ara)); //opcio de fer l'activitat on estem ara
         //activitats x desplaçament directe desde el PI actual;
-        //...
+        Iterator<MT_Directe> itr1 = pActual.TransportsDirectes();
+        while (itr1.hasNext()){
+            MT_Directe mtd = itr1.next();
+            Activitat aux = mtd.desplaçament(ara.toLocalDate(), ara.toLocalTime(), pActual);
+        }
+        //Transports directes amb el transport default del lloc
         //Activitats x desplaçament indirecte desde el lloc actual
         //...
         return null;
