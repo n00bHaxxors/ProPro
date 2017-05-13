@@ -65,6 +65,13 @@ public class Client {
 	@post retorna el nom del client */
     public String nom(){return nom;}
     
+    /** @brief consulta les preferencies d'un clint
+	@pre cert
+	@post retorna un iterador a les seves preferencies */
+    public Iterator <String> IteradorPreferencies(){
+        return preferencies.iterator();
+    }
+    
     @Override
     public int hashCode(){
         return nom.hashCode();

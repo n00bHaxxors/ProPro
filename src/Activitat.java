@@ -31,4 +31,9 @@ public abstract class Activitat {
      @pre cert
      @post Retorna la duració de l'activitat*/
     public abstract LocalTime Duracio();
+    
+    /** @brief Calcula la Satisfaccio que afageix l'activitat
+     @pre cert
+     @post Retorna la satisfaccio calculada*/
+    public abstract int Satisfaccio(GrupClients g);
 }

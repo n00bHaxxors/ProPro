@@ -2,6 +2,7 @@
  @brief Classe GrupClients
  */
 import java.util.HashSet;
+import java.util.Iterator;
 
 /** @class GrupClients
  @brief GrupClients
@@ -17,4 +18,8 @@ public class GrupClients {
      * @post Crea un GrupClients buit
      */
     public GrupClients(){}
+    
+    public Iterator<Client> iteradorClients(){
+        return clients.iterator();
+    }
 }
