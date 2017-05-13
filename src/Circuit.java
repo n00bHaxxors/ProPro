@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Circuit {
     private LocalDateTime inici_viatge, fi_viatge;
     private int preu_per_persona;
-    private int grau_satisfacio;
+    private int grau_satisfaccio;
     private int dies;
     private int nActivitats;
     private ArrayList<Activitat> activitats;
@@ -23,14 +23,14 @@ public class Circuit {
      @pre cert
      @post Circuit amb preu,grau,temps i Activitats creat*/
     public Circuit(int preu, int grau, int d, ArrayList<Activitat> a){ //aixo cal?
-        preu_per_persona=preu; grau_satisfacio=grau; dies = d; activitats=a;
+        preu_per_persona=preu; grau_satisfaccio=grau; dies = d; activitats=a;
     }
     /** @brief Constructor circuit amb el dia d'inici del circuit
      @pre cert
      @post Circuit usant di com a dia inicial i final (está buit)*/
     public Circuit(LocalDateTime inici){
         activitats = new ArrayList();
-        preu_per_persona = 0; grau_satisfacio=0;nActivitats=0; inici_viatge=inici; fi_viatge=inici;
+        preu_per_persona = 0; grau_satisfaccio=0;nActivitats=0; inici_viatge=inici; fi_viatge=inici;
     }
     
 
@@ -44,7 +44,7 @@ public class Circuit {
     /** @brief Consulta el grau de satisfacció (mitja?) que tindràn els clients al fer el circuit
      @pre cert
      @post Retorna el grau de satisfaccio mitjà*/
-    public int grau_satisfacio(){ return grau_satisfacio; }
+    public int grau_satisfaccio(){ return grau_satisfaccio; }
 
     /** @brief Consulta el preu per persona
      @pre cert
@@ -63,22 +63,28 @@ public class Circuit {
     /** @brief afegeix una activitat al circuit
      @pre a acceptable
      @post a afegida al circuit*/
-    public void afegirActivitat(Activitat a){
+    public void afegirActivitat(Activitat a, GrupClients g){
         activitats.add(a);
         nActivitats++;
         LocalTime temps = a.Duracio();
         fi_viatge.plusHours(temps.getHour()).plusMinutes(temps.getMinute()).plusSeconds(temps.getSecond());
         dies = (int)ChronoUnit.DAYS.between(fi_viatge, inici_viatge);
+        grau_satisfaccio += a.Satisfaccio(g);
     }
     
     /** @brief Treu l'última activitat del circuit
      @pre Circuit no buit
      @post última activitat del circuit treta*/
-    public void treureUltimaActivitat(){
+    public void treureUltimaActivitat(GrupClients g){
         Activitat a = activitats.remove(nActivitats);
         nActivitats--;
         LocalTime temps = a.Duracio();
         fi_viatge.minusHours(temps.getHour()).minusMinutes(temps.getMinute()).minusSeconds(temps.getSecond());
         dies = (int)ChronoUnit.DAYS.between(fi_viatge, inici_viatge);
+        grau_satisfaccio -= a.Satisfaccio(g);
     }
+    /** @brief Consulta el dia i la hora en que acabem el circuit
+     @pre 
+     @post retorna un LocalDateTime amb el dia i la hora en que s'acaba el circuit*/
+    public LocalDateTime acabamentCircuit (){ return fi_viatge; }
 }

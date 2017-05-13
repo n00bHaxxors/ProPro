@@ -35,4 +35,16 @@ public class Desplaçament extends Activitat { //aka trasllat
     public LocalTime Duracio(){
         return null; //estic esperant en cané
     }
+    
+    /** @brief Calcula la Satisfaccio que afageix l'activitat
+     @pre cert
+     @post Retorna la satisfaccio calculada*/
+    @Override
+    public int Satisfaccio(GrupClients g){ return 0; }
+    
+    /** @brief consulta la ubicacio on s'ha acabat la activitat
+     @pre cert
+     @post Retorna el PuntInteres on s'ha acabat la activitat*/
+    @Override
+    public PuntInteres UbicacioActual(){ return desti; }
 }

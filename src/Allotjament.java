@@ -1,6 +1,7 @@
 /** @file Allotjament.java
     @brief Classe Allotjament
 */
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.TimeZone;
 /** @class Allotjament
@@ -24,5 +25,13 @@ public class Allotjament extends PuntInteres {
 	@post retorna la categoria */
     public String categoria() {
         return categoria;
+    }
+    
+    /** @brief Crea l'activitat corresponent al Allotjament
+	@pre cert
+	@post retorna l'activitat creada*/
+    @Override
+    public Activitat ActivitatCorresponent(LocalDateTime ara){
+        return new EstadaHotel(this, ara.toLocalDate(), ara.toLocalTime());
     }
 }

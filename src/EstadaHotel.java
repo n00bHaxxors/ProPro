@@ -2,6 +2,7 @@
     @brief Classe EstadaHotel
 */
 import java.time.*;
+import java.util.Iterator;
 
 /** @class EstadaHotel
     @brief Classe que representa una Estada en un Allotjament
@@ -34,4 +35,28 @@ public class EstadaHotel extends Activitat {
     public LocalTime Duracio(){
         return null; // aixo probablament merexi una redifinició de la classe (a inicialitzar Candidat s'haurà de tenir en compte
     }
+    
+    /** @brief Calcula la Satisfaccio que afageix l'activitat
+     @pre cert
+     @post Retorna la satisfaccio calculada*/
+    @Override
+    public int Satisfaccio(GrupClients g){
+        Iterator<Client> itr = g.iteradorClients();
+        int resultat = 0;
+        while(itr.hasNext()){
+            Client c = itr.next();
+            Iterator<String> itr2= c.IteradorPreferencies();
+            while (itr2.hasNext()){
+                String preferencia = itr2.next();
+                if (hotel.conteCaracteristica(preferencia)) resultat++;
+            }
+        }
+        return resultat;
+    }
+    
+    /** @brief consulta la ubicacio on s'ha acabat la activitat
+     @pre cert
+     @post Retorna el PuntInteres on s'ha acabat la activitat*/
+    @Override
+    public PuntInteres UbicacioActual(){ return hotel; }
 }
