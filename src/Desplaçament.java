@@ -13,8 +13,8 @@ public class Desplaçament extends Activitat { //aka trasllat
     /** @brief Constructor amb parametres
      @pre cert
      @post Desplaçament amb preu, duracio, mitja, origen i desti creat*/
-    public Desplaçament(int p, LocalDate d, LocalTime s, Mitja_Transport m, PuntInteres o, PuntInteres de){
-        super(d,s,p);
+    public Desplaçament(int p, LocalDate d, LocalTime h, Mitja_Transport m, PuntInteres o, PuntInteres de){
+        super(d,h,p);
         mitja=m; origen=o; desti=de;
     }
     

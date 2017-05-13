@@ -10,28 +10,24 @@
 import java.time.*;
 
 public class MT_Directe extends Mitja_Transport {
-    private int preu;
-    private LocalTime durada;
+
     private PuntInteres desti;
 
     /** @brief Constructor amb parametres
      @pre cert
      @post Mitja de transport amb nom, preu, durada creat*/
     public MT_Directe(String n, int p, LocalTime d, PuntInteres dest){ //connexio directe
-        super(n); preu=p; durada=d; desti=dest;
+        super(n,p,d); desti=dest;
     }
  
     /** @brief Constructor amb parametres
      @pre cert
      @post Mitja de transport amb nom, preu i durada creat*/
     public MT_Directe(String n, int p, LocalTime d){ //transport random
-        super(n); preu=p; durada=d; desti=null;  
+        super(n,p,d); desti=null;
     }
- 
-    /** @brief Consulta el preu d'us del mitjà de trasport
-     @pre cert
-     @post Retorna el preu del mitja de transport*/
-    public int preu(){
-        return preu;
+
+    public Desplaçament desplaçament(LocalDate dia, LocalTime hora, PuntInteres origen){
+        return new Desplaçament(preu(),dia,hora,this,origen,desti);
     }
 }

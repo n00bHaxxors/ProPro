@@ -33,12 +33,12 @@ public class Hub {
      @pre n>=0 i n<mida
      @post Retorna la durada del MT*/
     public LocalTime durada(int n){
-        return transports.get(n).durada;
+        return transports.get(n).durada();
     }
 
     /** @brief Consulta el preu per utilitzar el mitjà de transport
      @pre n>=0 i n<mida
      @post Retorna el preu per l'ús del MT*/
-    public int preu(int n){ return transports.get(n).preu; }
+    public int preu(int n){ return transports.get(n).preu(); }
 
 }

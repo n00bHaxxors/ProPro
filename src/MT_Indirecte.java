@@ -8,14 +8,12 @@ import java.util.ArrayList;
 
 public class MT_Indirecte extends Mitja_Transport {
 
-    public LocalDate dia;
-    public LocalTime hora;
-    public LocalTime durada;
-    public int preu; //hauria d'anar a la superclasse
+    private LocalDate dia;
+    private LocalTime hora;
 
-    public MT_Indirecte (String n, LocalDate h, LocalTime hora, LocalTime d, int p){
-        super(n);
-        dia=h; hora=hora; durada=d; preu=p;
+    public MT_Indirecte (String n, LocalDate h, LocalTime hor, LocalTime d, int p){
+        super(n,p,d);
+        dia=h; hora=hor;
     }
 
 }
