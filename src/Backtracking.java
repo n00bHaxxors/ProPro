@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.TreeSet;
 
 /** @file PuntInteres.java
     @brief Classe PuntInteres
@@ -19,7 +20,7 @@ public abstract class Backtracking {
     HashMap<String, Visita> visitesFetes;
     
     
-    public static Circuit CircuitMesBarat(Mapa g, PuntInteres a, PuntInteres b, Set<PuntInteres> c, LocalDateTime diaInici){
+    public static Circuit CircuitMesBarata(Mapa g, PuntInteres a, PuntInteres b, Set<PuntInteres> c, LocalDateTime diaInici){
         solucio_optima = new Circuit(diaInici); solucio_actual = new Circuit(diaInici);
         AlgBTPreu(g,a,b,c);
         return solucio_optima;
@@ -27,7 +28,7 @@ public abstract class Backtracking {
     
     
     private static void AlgBTPreu(Mapa g, PuntInteres a, PuntInteres b, Set<PuntInteres> c){
-        Iterator<Activitat> itr = inicialitzarCandidats();
+        Iterator<Activitat> itr = inicialitzarCandidats(solucio_actual.ultimaActivitat());
         while (itr.hasNext()){
             Activitat act = itr.next();
             if(Acceptable(act) && EsPotTrobarMillor(act)){
@@ -41,7 +42,10 @@ public abstract class Backtracking {
         }
     }
     
-    private static Iterator<Activitat> inicialitzarCandidats(){
+    private static Iterator<Activitat> inicialitzarCandidats(Activitat a){
+        TreeSet<Activitat> arbre = new TreeSet();
+        Activitat aux; Visitable visAux; EstadaHotel allAux; Desplaçament desAux;
+        
         return null;
     }
     

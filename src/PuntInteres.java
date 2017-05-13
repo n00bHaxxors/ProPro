@@ -1,6 +1,7 @@
 /** @file PuntInteres.java
     @brief Classe PuntInteres
 */
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -73,6 +74,11 @@ public abstract class PuntInteres {
 	@pre cert
 	@post retorna el nom del Lloc Principal*/
     public String nomLloc(){ return LlocPrincipal; }
+    
+    /** @brief Crea l'activitat corresponent al punt d'interés
+	@pre cert
+	@post retorna l'activitat creada*/
+    public abstract Activitat ActivitatCorresponent(LocalDateTime ara);
     
     
 }
