@@ -59,4 +59,10 @@ public class Visita extends Activitat{
         }
         return resultat;
     }
+    
+    /** @brief consulta la ubicacio on s'ha acabat la activitat
+     @pre cert
+     @post Retorna el PuntInteres on s'ha acabat la activitat*/
+    @Override
+    public PuntInteres UbicacioActual(){ return visitat; }
 }

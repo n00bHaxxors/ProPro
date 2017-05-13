@@ -41,4 +41,10 @@ public class Desplaçament extends Activitat { //aka trasllat
      @post Retorna la satisfaccio calculada*/
     @Override
     public int Satisfaccio(GrupClients g){ return 0; }
+    
+    /** @brief consulta la ubicacio on s'ha acabat la activitat
+     @pre cert
+     @post Retorna el PuntInteres on s'ha acabat la activitat*/
+    @Override
+    public PuntInteres UbicacioActual(){ return desti; }
 }

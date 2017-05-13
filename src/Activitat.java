@@ -36,4 +36,9 @@ public abstract class Activitat {
      @pre cert
      @post Retorna la satisfaccio calculada*/
     public abstract int Satisfaccio(GrupClients g);
+    
+    /** @brief consulta la ubicacio on s'ha acabat la activitat
+     @pre cert
+     @post Retorna el PuntInteres on s'ha acabat la activitat*/
+    public abstract PuntInteres UbicacioActual();
 }

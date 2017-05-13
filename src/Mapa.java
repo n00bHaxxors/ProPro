@@ -44,4 +44,10 @@ public class Mapa {
             mapaLlocs.put(aux2.nom(), aux2);
         }
     }
+    
+    /** @brief consulta el grup de clients
+	@pre cert
+	@post retorna el grup de clients
+    */
+    public GrupClients clients() { return clients; }
 }

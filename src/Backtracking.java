@@ -6,12 +6,12 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
-/** @file PuntInteres.java
-    @brief Classe PuntInteres
+/** @file Backtracking.java
+    @brief Backtracking
 */
 
-/** @class PuntInteres
-    @brief Punt de Interès en el mapa
+/** @class Backtracking
+    @brief Modul funcional per calcular els camins del Backtracking
     @author Ismael El Habri
 */
 
@@ -32,12 +32,12 @@ public abstract class Backtracking {
         while (itr.hasNext()){
             Activitat act = itr.next();
             if(Acceptable(act) && EsPotTrobarMillor(act)){
-                AnotarCandidat(act);
+                AnotarCandidat(act, g);
                 if (!SolucioCompleta()) AlgBTPreu(g,a,b,c);
                 else{
                     if (MillorQueOptima()) solucio_optima = solucio_actual;
                 }
-                DesanotarCandidat();
+                DesanotarCandidat(g);
             }
         }
     }
@@ -57,12 +57,12 @@ public abstract class Backtracking {
         return false;
     }
     
-    private static void AnotarCandidat(Activitat a){
-        solucio_actual.afegirActivitat(a);
+    private static void AnotarCandidat(Activitat a, Mapa g){
+        solucio_actual.afegirActivitat(a, g.clients());
     }
     
-    private static void DesanotarCandidat(){
-        solucio_actual.treureUltimaActivitat();
+    private static void DesanotarCandidat(Mapa g){
+        solucio_actual.treureUltimaActivitat(g.clients());
     }
     
     private static boolean SolucioCompleta(){
@@ -70,9 +70,9 @@ public abstract class Backtracking {
     }
     
     private static boolean MillorQueOptima(){
-        boolean empatPreu = solucio_optima.preu_persona()==solucio_actual.preu_persona(), empatSatisfaccio = solucio_optima.grau_satisfacio()==solucio_actual.grau_satisfacio();
+        boolean empatPreu = solucio_optima.preu_persona()==solucio_actual.preu_persona(), empatSatisfaccio = solucio_optima.grau_satisfaccio()==solucio_actual.grau_satisfaccio();
         if (solucio_optima.preu_persona()>solucio_actual.preu_persona()) return true;
-        else if (empatPreu && solucio_optima.grau_satisfacio()<solucio_actual.grau_satisfacio()) return true;
+        else if (empatPreu && solucio_optima.grau_satisfaccio()<solucio_actual.grau_satisfaccio()) return true;
         else return empatPreu && empatSatisfaccio && solucio_optima.dies_total()>solucio_actual.dies_total();
     }
 
