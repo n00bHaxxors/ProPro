@@ -83,4 +83,8 @@ public class Circuit {
         dies = (int)ChronoUnit.DAYS.between(fi_viatge, inici_viatge);
         grau_satisfaccio -= a.Satisfaccio(g);
     }
+    /** @brief Consulta el dia i la hora en que acabem el circuit
+     @pre 
+     @post retorna un LocalDateTime amb el dia i la hora en que s'acaba el circuit*/
+    public LocalDateTime acabamentCircuit (){ return fi_viatge; }
 }

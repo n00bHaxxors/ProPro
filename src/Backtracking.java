@@ -44,8 +44,13 @@ public abstract class Backtracking {
     
     private static Iterator<Activitat> inicialitzarCandidats(Activitat a){
         TreeSet<Activitat> arbre = new TreeSet();
-        Activitat aux; Visitable visAux; EstadaHotel allAux; Desplaçament desAux;
-        
+        PuntInteres pActual = a.UbicacioActual();
+        String llocActual = pActual.nomLloc();
+        arbre.add(pActual.ActivitatCorresponent(solucio_actual.acabamentCircuit())); //opcio de fer l'activitat on estem ara
+        //activitats x desplaçament directe desde el PI actual;
+        //...
+        //Activitats x desplaçament indirecte desde el lloc actual
+        //...
         return null;
     }
     
