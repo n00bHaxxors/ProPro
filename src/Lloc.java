@@ -17,8 +17,8 @@ public class Lloc {
     private ArrayList<MT_Directe> mitjansDirectes;
 
     public void associarPuntInteres(PuntInteres v){puntsInteres.add(v);}
-    public void associarTransport(MT_Directe d){mitjansDirectes.add(d;}
-    public void associarTransportDirecte(MT_Directe d){mitjansDirectes.add(d;}
+    public void associarTransport(MT_Directe d){mitjansDirectes.add(d);}
+    public void associarTransportDirecte(MT_Directe d){mitjansDirectes.add(d);}
     public Iterator<PuntInteres> puntsInteres(){
         return puntsInteres.iterator();
     } public Iterator<MT_Directe> mitjansDirectes(){
