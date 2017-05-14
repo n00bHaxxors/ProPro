@@ -1,6 +1,8 @@
 /** @file Lloc.java
  @brief Classe Lloc
  */
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.TimeZone;
 /** @class Lloc
  @brief Lloc
@@ -11,9 +13,17 @@ public class Lloc {
     private String Nom;
     private Coordenada CoordenadaLloc;
     private TimeZone Zona;
-    public void associarPuntInteres(PuntInteres v){}
-    public void associarTransport(MT_Directe d){}
-    public void associarTransportDirecte(MT_Directe d){}
+    private ArrayList<PuntInteres> puntsInteres;
+    private ArrayList<MT_Directe> mitjansDirectes;
+
+    public void associarPuntInteres(PuntInteres v){puntsInteres.add(v);}
+    public void associarTransport(MT_Directe d){mitjansDirectes.add(d;}
+    public void associarTransportDirecte(MT_Directe d){mitjansDirectes.add(d;}
+    public Iterator<PuntInteres> puntsInteres(){
+        return puntsInteres.iterator();
+    } public Iterator<MT_Directe> mitjansDirectes(){
+        return mitjansDirectes.iterator();
+    }
 
     /**
      * @brief Crea un lloc a partir d'una coordenada, un nom i una zona
@@ -24,7 +34,8 @@ public class Lloc {
         Nom=n;
         CoordenadaLloc = c;
         Zona = z;
-        
+        puntsInteres = new ArrayList<PuntInteres>();
+        mitjansDirectes = new ArrayList<MT_Directe>();
     }
 
     /** @brief Retorna el nom del lloc
