@@ -21,14 +21,19 @@ public abstract class Backtracking {
     private static Circuit solucio_optima, solucio_actual;
     HashMap<String, Visita> visitesFetes;
     
-    
+    /** @brief Calcula el circuit més Barat
+     @pre parametres no buits i a, b i els PuntInteres de c existents a g 
+     @post Retorna el Circuit més barat*/
     public static Circuit CircuitMesBarata(Mapa g, PuntInteres a, PuntInteres b, Set<PuntInteres> c, LocalDateTime diaInici){
-        solucio_optima = new Circuit(diaInici); solucio_actual = new Circuit(diaInici);
+        solucio_optima = new Circuit(diaInici); 
+        solucio_actual = new Circuit(diaInici);
         AlgBTPreu(g,a,b,c);
         return solucio_optima;
     }
     
-    
+    /** @brief Algoritme Backtracking (per preu[temp])
+     @pre parametres no buits i a, b i els PuntInteres de c existents a g 
+     @post solucio_optima passa amb el circuit demanat*/
     private static void AlgBTPreu(Mapa g, PuntInteres a, PuntInteres b, Set<PuntInteres> c){
         Iterator<Activitat> itr = inicialitzarCandidats(solucio_actual.ultimaActivitat());
         while (itr.hasNext()){
@@ -44,6 +49,9 @@ public abstract class Backtracking {
         }
     }
     
+    /** @brief Inicialitza els candidats possibles en funció de la activitat anterior
+     @pre a != null
+     @post retorna un iterador a un conjunt amb els candidats possibles*/
     private static Iterator<Activitat> inicialitzarCandidats(Activitat a){
         TreeSet<Activitat> arbre = new TreeSet();
         PuntInteres pActual = a.UbicacioActual();
@@ -62,26 +70,44 @@ public abstract class Backtracking {
         return null;
     }
     
+    /** @brief consulta si una activitat es acceptable
+     @pre a != null
+     @post retorna cert si la activitat compleix amb les condicions corresponents i fals en c.c.*/
     private static boolean Acceptable(Activitat a){
         return a.Acceptable(solucio_optima); //podem necessitar més parametres en futur, amés sembla que la funció no es necessaria, son pres i post de regal
     }
     
+    /** @brief consulta si el circuit actual encara podrà millorar el circuit_optim afegint la activitat a
+     @pre a != null
+     @post retorna cert si amb l'activitat encara es podrà millorar i fals en c.c.*/
     private static boolean EsPotTrobarMillor(Activitat a){
         return false;
     }
     
+    /** @brief Afegeix l'activitat a solucio_actual
+     @pre a i g != null
+     @post solució actual actualitzada amb la nova activitat*/
     private static void AnotarCandidat(Activitat a, Mapa g){
         solucio_actual.afegirActivitat(a, g.clients());
     }
     
+    /** @brief treu l'última activitat 
+     @pre g != null
+     @post solució actual actualitzada treient l'úlitma activitat */
     private static void DesanotarCandidat(Mapa g){
         solucio_actual.treureUltimaActivitat(g.clients());
     }
     
+    /** @brief Consulta si solucio actual es solucioCompleta
+     @pre cert
+     @post retorna cert si la solucio actual es completa i fals en cas contrari*/
     private static boolean SolucioCompleta(){
         return false;
     }
     
+    /** @brief consulta si la solucio actual es millor que la optima
+     @pre solucio actual es completa
+     @post retorna cert si la solucio actual es millor que la optima i fals en c.c.*/
     private static boolean MillorQueOptima(){
         boolean empatPreu = solucio_optima.preu_persona()==solucio_actual.preu_persona(), empatSatisfaccio = solucio_optima.grau_satisfaccio()==solucio_actual.grau_satisfaccio();
         if (solucio_optima.preu_persona()>solucio_actual.preu_persona()) return true;
