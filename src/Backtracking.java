@@ -35,7 +35,7 @@ public abstract class Backtracking {
      @pre parametres no buits i a, b i els PuntInteres de c existents a g 
      @post solucio_optima passa amb el circuit demanat*/
     private static void AlgBTPreu(Mapa g, PuntInteres a, PuntInteres b, Set<PuntInteres> c){
-        Iterator<Activitat> itr = inicialitzarCandidats(solucio_actual.ultimaActivitat());
+        Iterator<Activitat> itr = inicialitzarCandidats(solucio_actual.ultimaActivitat(), g);
         while (itr.hasNext()){
             Activitat act = itr.next();
             if(Acceptable(act) && EsPotTrobarMillor(act)){
@@ -52,10 +52,10 @@ public abstract class Backtracking {
     /** @brief Inicialitza els candidats possibles en funció de la activitat anterior
      @pre a != null
      @post retorna un iterador a un conjunt amb els candidats possibles*/
-    private static Iterator<Activitat> inicialitzarCandidats(Activitat a){
+    private static Iterator<Activitat> inicialitzarCandidats(Activitat a, Mapa g){
         TreeSet<Activitat> arbre = new TreeSet();
         PuntInteres pActual = a.UbicacioActual();
-        String llocActual = pActual.nomLloc();
+        Lloc llocActual = g.lloc(pActual.nomLloc());
         LocalDateTime ara = solucio_actual.acabamentCircuit();
         arbre.add(pActual.ActivitatCorresponent(ara)); //opcio de fer l'activitat on estem ara
         //activitats x desplaçament directe desde el PI actual;
@@ -63,9 +63,21 @@ public abstract class Backtracking {
         while (itr1.hasNext()){
             MT_Directe mtd = itr1.next();
             Activitat aux = mtd.desplaçament(ara.toLocalDate(), ara.toLocalTime(), pActual);
+            arbre.add(aux);
         }
         //Transports directes amb el transport default del lloc
+        itr1 = llocActual.mitjansDirectes();
+        while (itr1.hasNext()){
+            MT_Directe mtd = itr1.next();
+            Iterator<PuntInteres> itr2 = llocActual.puntsInteres();
+            while(itr2.hasNext()){
+                PuntInteres pi = itr2.next();
+                Activitat aux = mtd.desplaçament(ara.toLocalDate(), ara.toLocalTime(), pActual, pi);
+                arbre.add(aux);
+            }
+        }
         //Activitats x desplaçament indirecte desde el lloc actual
+        
         //...
         return null;
     }

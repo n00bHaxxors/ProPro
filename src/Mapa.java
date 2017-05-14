@@ -50,4 +50,10 @@ public class Mapa {
 	@post retorna el grup de clients
     */
     public GrupClients clients() { return clients; }
+    
+    /** @brief Consulta un lloc amb el nom
+	@pre cert
+	@post retorna el lloc amb nom n
+    */
+    public Lloc lloc(String n){ return mapaLlocs.get(n); }
 }
