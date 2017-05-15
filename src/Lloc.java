@@ -15,14 +15,21 @@ public class Lloc {
     private TimeZone Zona;
     private ArrayList<PuntInteres> puntsInteres;
     private ArrayList<MT_Directe> mitjansDirectes;
+    private ArrayList<Hub> hubs;
+
 
     public void associarPuntInteres(PuntInteres v){puntsInteres.add(v);}
     public void associarTransport(MT_Directe d){mitjansDirectes.add(d);}
     public void associarTransportDirecte(MT_Directe d){mitjansDirectes.add(d);}
+    public void associarHub(Hub h){hubs.add(h);}
     public Iterator<PuntInteres> puntsInteres(){
         return puntsInteres.iterator();
-    } public Iterator<MT_Directe> mitjansDirectes(){
+    }
+    public Iterator<MT_Directe> mitjansDirectes(){
         return mitjansDirectes.iterator();
+    }
+    public Iterator<Hub> hubs(){
+        return hubs.iterator();
     }
 
     /**
@@ -36,6 +43,7 @@ public class Lloc {
         Zona = z;
         puntsInteres = new ArrayList<PuntInteres>();
         mitjansDirectes = new ArrayList<MT_Directe>();
+        hubs = new ArrayList<Hub>();
     }
 
     /** @brief Retorna el nom del lloc

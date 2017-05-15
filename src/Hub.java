@@ -3,6 +3,7 @@
  */
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /** @class Hub
  @brief Hub
@@ -14,14 +15,18 @@ public class Hub {
     private LocalTime temps_trasllat_origen, temps_trasllat_desti;
     private ArrayList<MT_Indirecte> transports; //Superclasse??
     private Lloc desti;
+    private String nom;
 
     /** @brief Constructor amb paràmetres
      @pre WIP
      @post Mitjà de transport indirecte amb ?? */
-    public Hub(LocalTime o, LocalTime d, Lloc de, ArrayList<MT_Indirecte> tr){
-        temps_trasllat_origen=o; temps_trasllat_desti=d; desti=de; transports = tr;
+    public Hub(String n,LocalTime o, LocalTime d, Lloc de, ArrayList<MT_Indirecte> tr){
+        temps_trasllat_origen=o; temps_trasllat_desti=d; desti=de; transports = tr; nom=n;
+        transports = new ArrayList<MT_Indirecte>();
     }
-
+    public Iterator<MT_Indirecte> transports(){
+        return transports.iterator();
+    }
     /** @brief Consultar horaris
      @pre cert
      @post Retorna els horaris del Mitjà de transport*/
