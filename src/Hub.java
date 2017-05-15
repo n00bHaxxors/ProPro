@@ -45,5 +45,10 @@ public class Hub {
      @pre n>=0 i n<mida
      @post Retorna el preu per l'ús del MT*/
     public int preu(int n){ return transports.get(n).preu(); }
+    
+    /** @brief Consulta el lloc de desti
+     @pre cert
+     @post Retorna el lloc de desti*/
+    public Lloc destinacio(){ return desti;}
 
 }
