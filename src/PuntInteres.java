@@ -80,5 +80,8 @@ public abstract class PuntInteres {
 	@post retorna l'activitat creada*/
     public abstract Activitat ActivitatCorresponent(LocalDateTime ara);
     
-    
+    /** @brief Consulta si el punt d'interès estarà obert avui
+	@pre this no es lloc de pas
+	@post retorna cert si estarà avui i fals en c.c.*/
+    public abstract boolean obreAvui(LocalDateTime ara);
 }

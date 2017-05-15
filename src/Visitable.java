@@ -162,6 +162,7 @@ public class Visitable extends PuntInteres{
     /** @brief Consulta si el visitable estarà obert avui
 	@pre this no es lloc de pas
 	@post retorna cert si estarà avui i fals en c.c.*/
+    @Override
     public boolean obreAvui(LocalDateTime ara){
         boolean resultat = false, casEspecial = false; MonthDay avui = MonthDay.of(ara.getMonth(), ara.getDayOfMonth());
         Iterator<ExcepcioHorari> itr = diesExcepcionals.iterator();

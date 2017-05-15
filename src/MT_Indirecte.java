@@ -15,5 +15,7 @@ public class MT_Indirecte extends Mitja_Transport {
         super(n,p,d);
         dia=h; hora=hor;
     }
+    
+    public LocalDateTime diaHoraSortida(){ return dia.atTime(hora); }
 
 }

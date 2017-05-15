@@ -57,7 +57,8 @@ public abstract class Backtracking {
         PuntInteres pActual = a.UbicacioActual();
         Lloc llocActual = g.lloc(pActual.nomLloc());
         LocalDateTime ara = solucio_actual.acabamentCircuit();
-        arbre.add(pActual.ActivitatCorresponent(ara)); //opcio de fer l'activitat on estem ara
+        Activitat actPActual = pActual.ActivitatCorresponent(ara);
+        if (pActual.obreAvui(ara) && actPActual.Satisfaccio(g.clients())> 0) arbre.add(actPActual); 
         //activitats x desplaçament directe desde el PI actual;
         Iterator<MT_Directe> itr1 = pActual.TransportsDirectes();
         while (itr1.hasNext()){
@@ -77,9 +78,23 @@ public abstract class Backtracking {
             }
         }
         //Activitats x desplaçament indirecte desde el lloc actual
-        
-        //...
-        return null;
+        Iterator<Hub> itr2 = llocActual.hubs();
+        while (itr2.hasNext()){
+            Hub h = itr2.next();
+            Lloc l = h.destinacio();
+            Iterator<MT_Indirecte> itr3 = h.transports();
+             while(itr3.hasNext()){
+                MT_Indirecte mti = itr3.next();
+                Iterator<PuntInteres> itr4 = l.puntsInteres();
+                while (itr4.hasNext()){
+                    PuntInteres pi = itr4.next();
+                    Desplaçament aux = new Desplaçament(mti.preu(),mti.diaHoraSortida().toLocalDate(),mti.diaHoraSortida().toLocalTime(),
+                    mti, pActual, pi);
+                    arbre.add(aux);
+                }
+            }
+        }
+        return arbre.iterator();
     }
     
     /** @brief consulta si una activitat es acceptable

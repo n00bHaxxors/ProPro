@@ -2,6 +2,7 @@
     @brief Classe Allotjament
 */
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.TimeZone;
 /** @class Allotjament
@@ -33,5 +34,13 @@ public class Allotjament extends PuntInteres {
     @Override
     public Activitat ActivitatCorresponent(LocalDateTime ara){
         return new EstadaHotel(this, ara.toLocalDate(), ara.toLocalTime());
+    }
+    
+    /** @brief Consulta si l'Allotjament estarà obert avui
+	@pre this no es lloc de pas
+	@post retorna cert si estarà avui i fals en c.c.*/
+    @Override
+    public boolean obreAvui(LocalDateTime ara){
+        return ara.toLocalTime().isBefore(LocalTime.of(0, 0)) || ara.toLocalTime().isAfter(LocalTime.of(4, 0));
     }
 }
