@@ -30,4 +30,8 @@ public class MT_Directe extends Mitja_Transport {
     public Desplaçament desplaçament(LocalDate dia, LocalTime hora, PuntInteres origen){
         return new Desplaçament(preu(),dia,hora,this,origen,desti);
     }
+    
+    public Desplaçament desplaçament(LocalDate dia, LocalTime hora, PuntInteres origen, PuntInteres d){
+        return new Desplaçament(preu(),dia,hora,this,origen,d);
+    }
 }
