@@ -1,6 +1,7 @@
 /** @file GrupClients.java
  @brief Classe GrupClients
  */
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -10,14 +11,14 @@ import java.util.Iterator;
  */
 
 public class GrupClients {
-    private HashSet<Client> clients;
+    private ArrayList<Client> clients;
 
     /**
      * @brief Crea un GrupClients
      * @pre cert
      * @post Crea un GrupClients buit
      */
-    public GrupClients(){}
+    public GrupClients(ArrayList<Client> aC){clients=aC;}
     
     public Iterator<Client> iteradorClients(){
         return clients.iterator();

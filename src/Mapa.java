@@ -15,12 +15,13 @@ public class Mapa {
     private HashMap<String,Visitable> mapaV;
     private HashMap<String,Allotjament> mapaA;
     private HashMap<String, Lloc> mapaLlocs;
-    
+    private ArrayList<Viatge> viatges;
+
     /** @brief crea un mapa amb el grup de clients i el conjunt de llocs donats
 	@pre cert
 	@post crea un Mapa amb els clients i els llocs donats
     */
-    public Mapa(GrupClients gClients, ArrayList<Visitable> visitables, ArrayList<Allotjament> hotels, ArrayList<Lloc> llocs) {
+    public Mapa(GrupClients gClients, ArrayList<Visitable> visitables, ArrayList<Allotjament> hotels, ArrayList<Lloc> llocs, ArrayList<Viatge> arrayViatges) {
         clients = gClients;
         mapaV = new HashMap<>();
         Iterator<Visitable> itr = visitables.iterator();
@@ -43,6 +44,7 @@ public class Mapa {
             aux2 = itr2.next();
             mapaLlocs.put(aux2.nom(), aux2);
         }
+        viatges=arrayViatges;
     }
     
     /** @brief consulta el grup de clients

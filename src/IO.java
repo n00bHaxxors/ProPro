@@ -8,7 +8,6 @@ import java.time.LocalTime;
 import java.time.MonthDay;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.regex.Pattern;
 
 /** @class IO
  @brief Classe que manipula la entrada i sortida del programa, conté el Main() de moment
@@ -23,6 +22,7 @@ class IO {
     ArrayList<Allotjament> LlistaAllotjaments;
     ArrayList<Visitable> LlistaVisitables;
     ArrayList<Visita> LlistaVisites;
+    ArrayList<Viatge> LlistaViatges;
 
     private void casClient(){
         ArrayList<String> preferencies = new ArrayList<String>();
@@ -217,7 +217,7 @@ class IO {
         scan.nextLine();
     }
     private void casMTIndirecte(){
-        ArrayList<MT_Indirecte.Partença> partences = new ArrayList<MT_Indirecte.Partença>();
+        ArrayList<MT_Indirecte> partences = new ArrayList<MT_Indirecte>();
         String nomOrigen = scan.nextLine();
         String nomDesti = scan.nextLine();
         String nomMT = scan.nextLine();
@@ -228,7 +228,6 @@ class IO {
         LocalTime durada = LocalTime.parse(scan.nextLine());
         Integer preu = (int)(Float.parseFloat(scan.nextLine())/100);
         String entrada = scan.nextLine();
-        MT_Indirecte.Partença p;
         while(!entrada.equals("*")){
             if(entrada.contains("-")){
                 data = LocalDate.parse(entrada);
@@ -239,76 +238,118 @@ class IO {
             }
             else if(entrada.contains(".")){
                 preu =(int)(100*Float.parseFloat(entrada));
-                partences.add(new MT_Indirecte.Partença(data,hora,durada,preu));
+                partences.add(new MT_Indirecte(nomMT,data,hora,durada,preu));
             }
             entrada = scan.nextLine();
         }
-
         Iterator<Lloc> llocIt = LlistaLlocs.iterator();
         boolean trobat = false;
 
-        Lloc LlocActual = llocIt.next();
+        Lloc llocOrigen = llocIt.next();
         while (llocIt.hasNext() && !trobat) {
-            if (LlocActual.nom().equals(nomOrigen)) trobat = true;
-            else LlocActual = llocIt.next();
+            if (llocOrigen.nom().equals(nomOrigen)) trobat = true;
+            else llocOrigen = llocIt.next();
         }
-        MT_Indirecte mt = new MT_Indirecte(nomMT,tempsAnada,tempsTornada,LlocActual,partences);
+        Lloc llocDesti = llocIt.next();
+        while (llocIt.hasNext() && !trobat) {
+            if (llocDesti.nom().equals(nomDesti)) trobat = true;
+            else llocDesti = llocIt.next();
+        }
+        llocOrigen.associarHub(new Hub(nomMT,tempsAnada,tempsTornada,llocDesti,partences));
+    }
+    private void casViatge(){
+        LocalDate dataInici = LocalDate.parse(scan.nextLine());
+        LocalTime horaInici = LocalTime.parse(scan.nextLine());
+        Integer nombreDies = Integer.parseInt(scan.nextLine());
+        Integer preuMaxim = Integer.parseInt(scan.nextLine());
+        String categoria = scan.nextLine();
+        ArrayList<Client> clients = new ArrayList<Client>();
+        String nomClient = scan.nextLine();
+        Iterator<Client> clientIt = LlistaClients.iterator();
+        Boolean trobat = new Boolean(false);
+        do{
+            Client client = clientIt.next();
+            while (clientIt.hasNext() && !trobat) {
+                if (client.nom().equals(nomClient)) {
+                    trobat = true;
+                    clients.add(client);
+                }
+                else client = clientIt.next();
+            }
+            nomClient=scan.nextLine();
+        }while(!nomClient.equals("*"));
+        trobat = false;
+        String nomVisitable = scan.nextLine();
+        ArrayList<Visitable> visitables = new ArrayList<Visitable>();
+        Iterator<Visitable> visitableIt = LlistaVisitables.iterator();
+        do{
+           Visitable visitable = visitableIt.next();
+            while (visitableIt.hasNext() && !trobat) {
+                if (visitable.nom().equals(nomVisitable)) {
+                    trobat = true;
+                    visitables.add(visitable);
+                }
+                else visitable = visitableIt.next();
+            }
+            nomVisitable=scan.nextLine();
+        }while(!nomVisitable.equals("*"));
+        String tipusRuta = scan.nextLine();
+        scan.nextLine();
+        LlistaViatges.add(new Viatge(dataInici.atTime(horaInici),nombreDies,preuMaxim,categoria,clients,visitables,tipusRuta));
     }
 
-    public void llegir() throws ParseException {
+    public Mapa llegir() throws ParseException {
         LlistaClients = new ArrayList<Client>();
         LlistaLlocs = new ArrayList<Lloc>();
         LlistaAllotjaments = new ArrayList<Allotjament>();
         LlistaVisitables = new ArrayList<Visitable>();
         LlistaVisites = new ArrayList<Visita>();
+        LlistaViatges = new ArrayList<Viatge>();
         scan = new Scanner(System.in);
         Boolean acabar= false;
         String autor = scan.nextLine();
         while (!acabar) {
             String codi_operacio = scan.nextLine();
             switch (codi_operacio) {
-                case "client": {
+                case "client":
                     casClient();
                     break;
-                }
-                case "lloc": {
+                case "lloc":
                     casLloc();
                     break;
-                }
-
-                case "allotjament": {
+                case "allotjament":
                     casAllotjament();
                     break;
-                }
-                case "lloc visitable":{
+                case "lloc visitable":
                     casVisitable();
                     break;
-                    }
-                case "visita": {
+                case "visita": 
                     casVisita();
                     break;
-                }
-                case "associar lloc": {
+                case "associar lloc": 
                     casAssociarLloc();
                     break;
-                }
-                case "associar transport": {
+                case "associar transport": 
                     casAssociarTransport();
                     break;
-                }
-                case "transport directe": {
+                case "transport directe": 
                     casMTDirecte();
                     break;
-                }
-                case "transport indirecte": {
+                case "transport indirecte": 
                     casMTIndirecte();
                     break;
-                }
-                case "*": {
+                case "viatge":
+                    casViatge();
+                    break;
+                case "*": 
                     acabar = true;
                     break;
-                }
+                default:
+                    break;
             }
         }
+        GrupClients gc = new GrupClients(LlistaClients);
+        Mapa mapa = new Mapa(gc,LlistaVisitables,LlistaAllotjaments,LlistaLlocs,LlistaViatges);
+        return mapa;
     }
 }
