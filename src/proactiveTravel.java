@@ -8,6 +8,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -69,6 +70,7 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
 
             root = FXMLLoader.load(getClass().getResource("proactiveTravel.fxml"));
             scene = new Scene(root, 750, 500);
+            primaryStage.getIcons().add(new Image("/java9.png"));
             primaryStage.setScene(scene);
             primaryStage.show();
         }
