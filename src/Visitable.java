@@ -152,6 +152,7 @@ public class Visitable extends PuntInteres{
     /** @brief Consulta si el visitable es lloc de pas
 	@pre cert
 	@post retorna cert si es lloc de pas, i fals en c.c.*/
+    @Override
     public boolean esLlocPas(){ return llocPas; }
     
     /** @brief Consulta el temps de visita recomenat

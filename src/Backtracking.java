@@ -26,7 +26,12 @@ public abstract class Backtracking {
     public static HashMap<String,Circuit> CircuitExacte(Mapa g, Viatge v){
         solucio_optima = new Circuit(v.dataHoraInici()); 
         solucio_actual = new Circuit(v.dataHoraInici());
-        TreeSet<PuntInteres> c = new TreeSet();
+        TreeSet<Visitable> c = new TreeSet();
+        Iterator<Visitable> itr = v.iteradorVisitables();
+        while(itr.hasNext()){
+            Visitable aux = itr.next();
+            c.add(aux);
+        }
         HashMap<String,Circuit> resultat = new HashMap();
         if (v.RutaBarata()){
             AlgBT(g,v.origen(),v.desti(),c,v,'b');
@@ -53,7 +58,7 @@ public abstract class Backtracking {
     /** @brief Algoritme Backtracking (per preu[temp])
      @pre parametres no buits i a, b i els PuntInteres de c existents a g 
      @post solucio_optima passa amb el circuit demanat*/
-    private static void AlgBT(Mapa g, PuntInteres a, PuntInteres b, Set<PuntInteres> c, Viatge v, char o){
+    private static void AlgBT(Mapa g, Visitable a, Visitable b, Set<Visitable> c, Viatge v, char o){
         Iterator<Activitat> itr = inicialitzarCandidats(solucio_actual.ultimaActivitat(), g, a);
         while (itr.hasNext()){
             Activitat act = itr.next();
@@ -71,17 +76,16 @@ public abstract class Backtracking {
     /** @brief Inicialitza els candidats possibles en funció de la activitat anterior
      @pre a != null
      @post retorna un iterador a un conjunt amb els candidats possibles*/
-    private static Iterator<Activitat> inicialitzarCandidats(Activitat a, Mapa g, PuntInteres inici){
+    private static Iterator<Activitat> inicialitzarCandidats(Activitat a, Mapa g, Visitable inici){
         TreeSet<Activitat> arbre = new TreeSet();
         PuntInteres pActual;
         if (a!=null) pActual = a.UbicacioActual();
         else pActual = inici;
         Lloc llocActual = g.lloc(pActual.nomLloc());
         LocalDateTime ara = solucio_actual.acabamentCircuit();
-        Activitat actPActual = pActual.ActivitatCorresponent(ara);
-        if (pActual.obreAvui(ara) && actPActual.Satisfaccio(g.clients())> 0) ;
-        else if(actPActual.Satisfaccio(g.clients())> 0) actPActual = pActual.ActivitatCorresponent(pActual.ProximaObertura(ara));
-        arbre.add(actPActual); 
+        Activitat actPActual = null;
+        if (pActual.obreAvui(ara) && !pActual.esLlocPas()) actPActual = pActual.ActivitatCorresponent(pActual.ProximaObertura(ara));
+        if(actPActual != null &&actPActual.Satisfaccio(g.clients())> 0) arbre.add(actPActual); 
         //activitats x desplaçament directe desde el PI actual;
         Iterator<MT_Directe> itr1 = pActual.TransportsDirectes();
         while (itr1.hasNext()){

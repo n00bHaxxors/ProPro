@@ -41,4 +41,11 @@ public abstract class Activitat {
      @pre cert
      @post Retorna el PuntInteres on s'ha acabat la activitat*/
     public abstract PuntInteres UbicacioActual();
+    
+    /** @brief consulta el nom de l'activitat
+     @pre cert
+     @post Retorna el nom de l'activitat*/
+    public abstract String nomAct();
+    
+    
 }

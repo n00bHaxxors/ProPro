@@ -47,4 +47,9 @@ public class Desplaçament extends Activitat { //aka trasllat
      @post Retorna el PuntInteres on s'ha acabat la activitat*/
     @Override
     public PuntInteres UbicacioActual(){ return desti; }
+    
+    /** @brief Consulta el nom del Mitja usat
+     @pre cert
+     @post Retorna el nom del MitjaTransport usat*/
+    public String nomAct(){ return mitja.nom(); }
 }

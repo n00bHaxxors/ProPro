@@ -49,5 +49,11 @@ public class Allotjament extends PuntInteres {
         if(ara.toLocalTime().isBefore(LocalTime.of(0, 0))) return ara;
         else return ara.toLocalDate().atTime(LocalTime.of(4, 0));
     }
+    
+    /** @brief Consulta si l'Allotjament es lloc de pas
+	@pre cert
+	@post retorna fals*/
+    @Override
+    public boolean esLlocPas(){ return false;}
 
 }

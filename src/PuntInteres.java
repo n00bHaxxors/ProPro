@@ -86,5 +86,10 @@ public abstract class PuntInteres {
     public abstract boolean obreAvui(LocalDateTime ara);
 
     public abstract LocalDateTime ProximaObertura(LocalDateTime ara);
+    
+    /** @brief Consulta si el Punt d'Interes es lloc de pas
+	@pre cert
+	@post retorna cert si es lloc de pas, i fals en c.c.*/
+    public abstract boolean esLlocPas();
 
 }

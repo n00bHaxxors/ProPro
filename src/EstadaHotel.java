@@ -18,10 +18,6 @@ public class EstadaHotel extends Activitat {
         super(dia, hora, h.preu());
         hotel = h;
     }
-    /** @brief Consulta el nom del Allotjament
-     @pre cert
-     @post Retorna el nom del Allotjament*/
-    public String nomAllotjament(){ return hotel.nom(); }
     
     @Override
     public boolean Acceptable (Circuit c){
@@ -59,4 +55,10 @@ public class EstadaHotel extends Activitat {
      @post Retorna el PuntInteres on s'ha acabat la activitat*/
     @Override
     public PuntInteres UbicacioActual(){ return hotel; }
+    
+    /** @brief Consulta el nom del Allotjament
+     @pre cert
+     @post Retorna el nom del Allotjament*/
+    @Override
+    public String nomAct(){ return hotel.nom(); }
 }

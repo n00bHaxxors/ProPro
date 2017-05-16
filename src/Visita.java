@@ -25,7 +25,8 @@ public class Visita extends Activitat{
     /** @brief Consulta el nom del lloc visitat
      @pre cert
      @post Retorna el nom del lloc visitat*/
-    public String nom_visitable(){
+    @Override
+    public String nomAct(){
         return visitat.nom();
     }
     
