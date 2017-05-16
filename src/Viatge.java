@@ -8,11 +8,11 @@ import java.util.Iterator;
 public class Viatge {
     private LocalDateTime dataHoraInici;
     private Integer nombreDies, preuMaxim;
-    Visitable origen, desti;
-    String categoria;
-    GrupClients clients;
-    ArrayList<Visitable> llistaVisitables;
-    Boolean rutaBarata = false, rutaCurta = false, rutaSatisfactoria = false;
+    private Visitable origen, desti;
+    private String categoria;
+    private GrupClients clients;
+    private ArrayList<Visitable> llistaVisitables;
+    private Boolean rutaBarata = false, rutaCurta = false, rutaSatisfactoria = false;
     public Viatge(LocalDateTime data, Integer n, Integer p, String c, GrupClients cl, ArrayList<Visitable> visitables, ArrayList<String> t) {
         dataHoraInici=data;
         nombreDies=n;

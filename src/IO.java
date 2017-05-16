@@ -15,6 +15,14 @@ import java.util.*;
  */
 
 class IO {
+    public static class MapaViatge{
+        public ArrayList<Viatge> viatges;
+        public Mapa mapa;
+        public MapaViatge(Mapa m, ArrayList<Viatge> v){
+            mapa = m;
+            viatges = v;
+        }
+    }
     private static final String SEPARADOR = "*";
     private Scanner scan;
     ArrayList<Client> LlistaClients;
@@ -302,7 +310,7 @@ class IO {
         LlistaViatges.add(new Viatge(dataInici.atTime(horaInici),nombreDies,preuMaxim,categoria,new GrupClients(clients),visitables,tipusRuta));
     }
 
-    public Mapa llegir() throws ParseException {
+    public MapaViatge llegir() throws ParseException {
         LlistaClients = new ArrayList<Client>();
         LlistaLlocs = new ArrayList<Lloc>();
         LlistaAllotjaments = new ArrayList<Allotjament>();
@@ -354,6 +362,6 @@ class IO {
         }
         GrupClients gc = new GrupClients(LlistaClients);
         Mapa mapa = new Mapa(gc,LlistaVisitables,LlistaAllotjaments,LlistaLlocs,LlistaViatges);
-        return mapa;
+        return new MapaViatge(mapa,LlistaViatges);
     }
 }
