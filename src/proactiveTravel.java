@@ -9,6 +9,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.text.ParseException;
+import java.util.Iterator;
 import java.util.Locale;
 
 /**
@@ -27,7 +28,13 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
         btn.setText("KEK");
         btn.setTranslateY(20);
         btn.setOnAction(this);
-
+        IO io = new IO();
+        IO.MapaViatge mp = io.llegir();
+        Iterator<Viatge> it = mp.viatges.iterator();
+        while(it.hasNext()){
+            Viatge viatge = it.next();
+            Backtracking.CircuitExacte(mp.mapa,viatge);
+        }
         StackPane root = new StackPane();
         root.getChildren().add(btn);
         root.getChildren().add(text);
