@@ -24,6 +24,11 @@ public abstract class Activitat {
      @pre cert
      @post Retorna el dia en que sha fet l'activitat*/   
     public LocalDate diaActivitat() { return dia; }
+    
+    /** @brief Consulta el preu de una Activitat
+     @pre cert
+     @post Retorna el preu de l'activitat*/
+    public int preuAct(){ return preu;}
    
     public abstract boolean Acceptable(Circuit c);
     

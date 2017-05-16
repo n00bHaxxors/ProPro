@@ -62,7 +62,7 @@ public abstract class Backtracking {
         Iterator<Activitat> itr = inicialitzarCandidats(solucio_actual.ultimaActivitat(), g, a);
         while (itr.hasNext()){
             Activitat act = itr.next();
-            if(Acceptable(act) && EsPotTrobarMillor(act)){
+            if(Acceptable(act) && EsPotMillorar(act, o, v.clients())){
                 AnotarCandidat(act, v.clients(), g);
                 if (!SolucioCompleta(c,b)) AlgBT(g,a,b,c,v,o);
                 else{
@@ -134,8 +134,18 @@ public abstract class Backtracking {
     /** @brief consulta si el circuit actual encara podrà millorar el circuit_optim afegint la activitat a
      @pre a != null
      @post retorna cert si amb l'activitat encara es podrà millorar i fals en c.c.*/
-    private static boolean EsPotTrobarMillor(Activitat a){
-        return false;
+    private static boolean EsPotMillorar(Activitat a, char o, GrupClients g){
+        boolean resultat = false;
+         switch (o){
+            case 'b' : //barata
+                resultat = a.preuAct()+solucio_actual.preu_persona() < solucio_optima.preu_persona();
+            case 'c' : //curta
+                resultat = a.horaActivitat().plusHours(a.Duracio().getHour()).plusMinutes(a.Duracio().getMinute()).isBefore(solucio_optima.acabamentCircuit().toLocalTime());
+            case 's' : //satisfactoria
+                resultat = a.Satisfaccio(g) + solucio_actual.grau_satisfaccio() < solucio_optima.grau_satisfaccio();
+                
+        }
+        return resultat;
     }
     
     /** @brief Afegeix l'activitat a solucio_actual
