@@ -63,12 +63,12 @@ public abstract class Backtracking {
         while (itr.hasNext()){
             Activitat act = itr.next();
             if(Acceptable(act) && EsPotTrobarMillor(act)){
-                AnotarCandidat(act, v.clients());
-                if (!SolucioCompleta()) AlgBT(g,a,b,c,v,o);
+                AnotarCandidat(act, v.clients(), g);
+                if (!SolucioCompleta(c,b)) AlgBT(g,a,b,c,v,o);
                 else{
                     if (MillorQueOptima(o)) solucio_optima = solucio_actual;
                 }
-                DesanotarCandidat(v.clients());
+                DesanotarCandidat(v.clients(), g);
             }
         }
     }
@@ -141,22 +141,22 @@ public abstract class Backtracking {
     /** @brief Afegeix l'activitat a solucio_actual
      @pre a i g != null
      @post solució actual actualitzada amb la nova activitat*/
-    private static void AnotarCandidat(Activitat a, GrupClients g){
-        solucio_actual.afegirActivitat(a, g);
+    private static void AnotarCandidat(Activitat a, GrupClients g, Mapa m){
+        solucio_actual.afegirActivitat(a, g, m);
     }
     
     /** @brief treu l'última activitat 
      @pre g != null
      @post solució actual actualitzada treient l'úlitma activitat */
-    private static void DesanotarCandidat(GrupClients g){
-        solucio_actual.treureUltimaActivitat(g);
+    private static void DesanotarCandidat(GrupClients g, Mapa m){
+        solucio_actual.treureUltimaActivitat(g, m);
     }
     
     /** @brief Consulta si solucio actual es solucioCompleta
      @pre cert
      @post retorna cert si la solucio actual es completa i fals en cas contrari*/
-    private static boolean SolucioCompleta(){
-        return false;
+    private static boolean SolucioCompleta(Set<Visitable> c, PuntInteres desti){
+        return solucio_actual.solucioCompleta(c, desti);
     }
     
     /** @brief consulta si la solucio actual es millor que la optima

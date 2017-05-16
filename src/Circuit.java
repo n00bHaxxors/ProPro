@@ -10,7 +10,9 @@
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.TreeSet;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 public class Circuit {
     private LocalDateTime inici_viatge, fi_viatge;
@@ -20,7 +22,7 @@ public class Circuit {
     private int nActivitats;
     private ArrayList<Activitat> activitats;
     //metodes que no se si calen aquí!
-    TreeSet<Visita> visitesFetes;
+    HashMap<String, Visita> visitesFetes;
 
     /** @brief Constructor circuit amb paràmetres
      @pre cert
@@ -67,28 +69,40 @@ public class Circuit {
     /** @brief afegeix una activitat al circuit
      @pre a acceptable
      @post a afegida al circuit*/
-    public void afegirActivitat(Activitat a, GrupClients g){
+    public void afegirActivitat(Activitat a, GrupClients g, Mapa m){
         activitats.add(a);
         nActivitats++;
         LocalTime temps = a.Duracio();
         fi_viatge.plusHours(temps.getHour()).plusMinutes(temps.getMinute()).plusSeconds(temps.getSecond());
         dies = (int)ChronoUnit.DAYS.between(fi_viatge, inici_viatge);
         grau_satisfaccio += a.Satisfaccio(g);
+        if (m.conteVisitable(a.nomAct())) visitesFetes.put(a.nomAct(),(Visita)a);
     }
     
     /** @brief Treu l'última activitat del circuit
      @pre Circuit no buit
      @post última activitat del circuit treta*/
-    public void treureUltimaActivitat(GrupClients g){
-        Activitat a = activitats.remove(nActivitats);
+    public void treureUltimaActivitat(GrupClients g, Mapa m){        
         nActivitats--;
+        Activitat a = activitats.remove(nActivitats);
         LocalTime temps = a.Duracio();
         fi_viatge.minusHours(temps.getHour()).minusMinutes(temps.getMinute()).minusSeconds(temps.getSecond());
         dies = (int)ChronoUnit.DAYS.between(fi_viatge, inici_viatge);
         grau_satisfaccio -= a.Satisfaccio(g);
+        if (m.conteVisitable(a.nomAct())) visitesFetes.remove(a.nomAct());
     }
     /** @brief Consulta el dia i la hora en que acabem el circuit
      @pre 
      @post retorna un LocalDateTime amb el dia i la hora en que s'acaba el circuit*/
     public LocalDateTime acabamentCircuit (){ return fi_viatge; }
+    
+    public boolean solucioCompleta(Set<Visitable> c, PuntInteres desti){
+        boolean resultat = activitats.get(nActivitats-1).nomAct().equals(desti.nom());
+        Iterator<Visitable> itr = c.iterator();
+        while (resultat && itr.hasNext()){
+            Visitable aux = itr.next();
+            resultat = visitesFetes.containsKey(aux.nom());
+        }
+        return resultat;
+    }
 }

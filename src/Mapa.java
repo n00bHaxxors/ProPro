@@ -64,4 +64,10 @@ public class Mapa {
 	@post retorna un iterador de Viatges
     */
     public Iterator<Viatge> viatgesDemanats() { return viatges.iterator(); }
+    
+    /** @brief consulta si hi ha un visitable amb el nom donat
+	@pre cert
+	@post retorna cert si existeix un visitable anomenat n i fals en c.c.
+    */
+    public boolean conteVisitable(String n){ return mapaV.containsKey(n); }
 }
