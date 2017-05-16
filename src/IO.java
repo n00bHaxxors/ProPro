@@ -295,7 +295,7 @@ class IO {
         }while(!nomVisitable.equals("*"));
         String tipusRuta = scan.nextLine();
         scan.nextLine();
-        LlistaViatges.add(new Viatge(dataInici.atTime(horaInici),nombreDies,preuMaxim,categoria,clients,visitables,tipusRuta));
+        LlistaViatges.add(new Viatge(dataInici.atTime(horaInici),nombreDies,preuMaxim,categoria,new GrupClients(clients),visitables,tipusRuta));
     }
 
     public Mapa llegir() throws ParseException {

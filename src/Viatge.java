@@ -9,15 +9,15 @@ public class Viatge {
     private LocalDateTime dataHoraInici;
     private Integer nombreDies, preuMaxim;
     String categoria, tipusRuta;
-    ArrayList<Client> llistaClients;
+    GrupClients clients;
     ArrayList<Visitable> llistaVisitables;
-    public Viatge(LocalDateTime data, Integer n, Integer p, String c, ArrayList<Client> clients, ArrayList<Visitable> visitables, String t) {
+    public Viatge(LocalDateTime data, Integer n, Integer p, String c, GrupClients cl, ArrayList<Visitable> visitables, String t) {
         dataHoraInici=data;
         nombreDies=n;
         preuMaxim = p;
         categoria = c;
         tipusRuta = t;
-        llistaClients=clients;
+        clients = cl;
         llistaVisitables=visitables;
     }
     public LocalDateTime dataHoraInici(){
@@ -35,8 +35,8 @@ public class Viatge {
     public String tipusRuta(){
         return tipusRuta;
     }
-    public Iterator<Client> iteradorClients(){
-        return llistaClients.iterator();
+    public GrupClients clients(){
+        return clients;
     }
     public Iterator<Visitable> iteradorVisitables(){
         return llistaVisitables.iterator();
