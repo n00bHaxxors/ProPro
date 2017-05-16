@@ -69,5 +69,15 @@ public class Viatge {
     public Iterator<Visitable> iteradorVisitables(){
         return llistaVisitables.iterator();
     }
+    public Boolean RutaCurta(){
+        return rutaCurta;
+    }
+    public Boolean RutaBarata(){
+        return rutaBarata;
+    }
+    public Boolean RutaSatisfactoria(){
+        return rutaSatisfactoria;
+    }
+    
 }
 
