@@ -91,5 +91,22 @@ public abstract class PuntInteres {
 	@pre cert
 	@post retorna cert si es lloc de pas, i fals en c.c.*/
     public abstract boolean esLlocPas();
+    
+    /** @brief Calcula la Satisfaccio que genera a un Grup de Clients aquest Punt d'Interes
+     @pre cert
+     @post Retorna la satisfaccio calculada*/
+    public int grauSatisfaccio(GrupClients g){
+        Iterator<Client> itr = g.iteradorClients();
+        int resultat = 0;
+        while(itr.hasNext()){
+            Client c = itr.next();
+            Iterator<String> itr2= c.IteradorPreferencies();
+            while (itr2.hasNext()){
+                String preferencia = itr2.next();
+                if (conteCaracteristica(preferencia)) resultat++;
+            }
+        }
+        return resultat;
+    }
 
 }

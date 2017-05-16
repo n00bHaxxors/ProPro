@@ -48,17 +48,7 @@ public class Visita extends Activitat{
      @post Retorna la satisfaccio calculada*/
     @Override
     public int Satisfaccio(GrupClients g){
-        Iterator<Client> itr = g.iteradorClients();
-        int resultat = 0;
-        while(itr.hasNext()){
-            Client c = itr.next();
-            Iterator<String> itr2= c.IteradorPreferencies();
-            while (itr2.hasNext()){
-                String preferencia = itr2.next();
-                if (visitat.conteCaracteristica(preferencia)) resultat++;
-            }
-        }
-        return resultat;
+        return visitat.grauSatisfaccio(g);
     }
     
     /** @brief consulta la ubicacio on s'ha acabat la activitat
