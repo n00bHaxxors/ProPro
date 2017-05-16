@@ -54,10 +54,11 @@ public class Circuit {
     }
     
      /** @brief consulta l'última activitat feta
-     @pre circuit no buit
+     @pre cert
      @post retorna a*/
     public Activitat ultimaActivitat(){
-        return activitats.get(nActivitats);
+        if (activitats.isEmpty()) return null;
+        else return activitats.get(nActivitats);
     }
     
     /** @brief afegeix una activitat al circuit

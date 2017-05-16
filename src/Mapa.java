@@ -58,4 +58,10 @@ public class Mapa {
 	@post retorna el lloc amb nom n
     */
     public Lloc lloc(String n){ return mapaLlocs.get(n); }
+    
+    /** @brief consulta els viatges solicitats pel grup de clients
+	@pre cert
+	@post retorna un iterador de Viatges
+    */
+    public Iterator<Viatge> viatgesDemanats() { return viatges.iterator(); }
 }

@@ -24,27 +24,27 @@ public abstract class Backtracking {
     /** @brief Calcula el circuit més Barat
      @pre parametres no buits i a, b i els PuntInteres de c existents a g 
      @post Retorna el Circuit més barat*/
-    public static Circuit CircuitMesBarata(Mapa g, PuntInteres a, PuntInteres b, Set<PuntInteres> c, LocalDateTime diaInici){
-        solucio_optima = new Circuit(diaInici); 
-        solucio_actual = new Circuit(diaInici);
-        AlgBTPreu(g,a,b,c);
+    public static Circuit CircuitExacte(Mapa g, Viatge v){
+        solucio_optima = new Circuit(v.dataHoraInici()); 
+        solucio_actual = new Circuit(v.dataHoraInici());
+        //AlgBT(g,v.origen(),v.desti(),c, v,);
         return solucio_optima;
     }
     
     /** @brief Algoritme Backtracking (per preu[temp])
      @pre parametres no buits i a, b i els PuntInteres de c existents a g 
      @post solucio_optima passa amb el circuit demanat*/
-    private static void AlgBTPreu(Mapa g, PuntInteres a, PuntInteres b, Set<PuntInteres> c){
-        Iterator<Activitat> itr = inicialitzarCandidats(solucio_actual.ultimaActivitat(), g);
+    private static void AlgBT(Mapa g, PuntInteres a, PuntInteres b, Set<PuntInteres> c, Viatge v, char o){
+        Iterator<Activitat> itr = inicialitzarCandidats(solucio_actual.ultimaActivitat(), g, a);
         while (itr.hasNext()){
             Activitat act = itr.next();
             if(Acceptable(act) && EsPotTrobarMillor(act)){
-                AnotarCandidat(act, g);
-                if (!SolucioCompleta()) AlgBTPreu(g,a,b,c);
+                //AnotarCandidat(act, );
+                if (!SolucioCompleta()) ;//AlgBTPreu(g,a,b,c,v,o);
                 else{
-                    if (MillorQueOptima()) solucio_optima = solucio_actual;
+                    if (MillorQueOptima(o)) solucio_optima = solucio_actual;
                 }
-                DesanotarCandidat(g);
+                //DesanotarCandidat();
             }
         }
     }
@@ -52,9 +52,11 @@ public abstract class Backtracking {
     /** @brief Inicialitza els candidats possibles en funció de la activitat anterior
      @pre a != null
      @post retorna un iterador a un conjunt amb els candidats possibles*/
-    private static Iterator<Activitat> inicialitzarCandidats(Activitat a, Mapa g){
+    private static Iterator<Activitat> inicialitzarCandidats(Activitat a, Mapa g, PuntInteres inici){
         TreeSet<Activitat> arbre = new TreeSet();
-        PuntInteres pActual = a.UbicacioActual();
+        PuntInteres pActual;
+        if (a!=null) pActual = a.UbicacioActual();
+        else pActual = inici;
         Lloc llocActual = g.lloc(pActual.nomLloc());
         LocalDateTime ara = solucio_actual.acabamentCircuit();
         Activitat actPActual = pActual.ActivitatCorresponent(ara);
@@ -114,15 +116,15 @@ public abstract class Backtracking {
     /** @brief Afegeix l'activitat a solucio_actual
      @pre a i g != null
      @post solució actual actualitzada amb la nova activitat*/
-    private static void AnotarCandidat(Activitat a, Mapa g){
-        solucio_actual.afegirActivitat(a, g.clients());
+    private static void AnotarCandidat(Activitat a, GrupClients g){
+        solucio_actual.afegirActivitat(a, g);
     }
     
     /** @brief treu l'última activitat 
      @pre g != null
      @post solució actual actualitzada treient l'úlitma activitat */
-    private static void DesanotarCandidat(Mapa g){
-        solucio_actual.treureUltimaActivitat(g.clients());
+    private static void DesanotarCandidat(GrupClients g){
+        solucio_actual.treureUltimaActivitat(g);
     }
     
     /** @brief Consulta si solucio actual es solucioCompleta
@@ -135,11 +137,29 @@ public abstract class Backtracking {
     /** @brief consulta si la solucio actual es millor que la optima
      @pre solucio actual es completa
      @post retorna cert si la solucio actual es millor que la optima i fals en c.c.*/
-    private static boolean MillorQueOptima(){
-        boolean empatPreu = solucio_optima.preu_persona()==solucio_actual.preu_persona(), empatSatisfaccio = solucio_optima.grau_satisfaccio()==solucio_actual.grau_satisfaccio();
-        if (solucio_optima.preu_persona()>solucio_actual.preu_persona()) return true;
-        else if (empatPreu && solucio_optima.grau_satisfaccio()<solucio_actual.grau_satisfaccio()) return true;
-        else return empatPreu && empatSatisfaccio && solucio_optima.dies_total()>solucio_actual.dies_total();
+    private static boolean MillorQueOptima(char o){
+        boolean empatPreu, empatSatisfaccio, empatDies, resultat = false;
+        switch (o){
+            case 'b' : //barata
+                empatPreu = solucio_optima.preu_persona()==solucio_actual.preu_persona(); 
+                empatSatisfaccio = solucio_optima.grau_satisfaccio()==solucio_actual.grau_satisfaccio();
+                if (solucio_optima.preu_persona()>solucio_actual.preu_persona()) resultat = true;
+                else if (empatPreu && solucio_optima.grau_satisfaccio()<solucio_actual.grau_satisfaccio()) resultat = true;
+                else resultat = empatPreu && empatSatisfaccio && solucio_optima.dies_total()>solucio_actual.dies_total();
+            case 'c' : //curta
+                empatDies = solucio_optima.dies_total()==solucio_actual.dies_total();
+                empatSatisfaccio = solucio_optima.grau_satisfaccio()==solucio_actual.grau_satisfaccio();
+                if (solucio_optima.dies_total()>solucio_actual.dies_total()) resultat = true;
+                else if (empatDies && solucio_optima.grau_satisfaccio()<solucio_actual.grau_satisfaccio()) resultat = true;
+                else resultat = empatDies && empatSatisfaccio && solucio_optima.preu_persona() > solucio_actual.preu_persona();
+            case 's' : //satisfactoria
+                empatPreu = solucio_optima.preu_persona()==solucio_actual.preu_persona(); 
+                empatSatisfaccio = solucio_optima.grau_satisfaccio()==solucio_actual.grau_satisfaccio();
+                if (solucio_optima.grau_satisfaccio()>solucio_actual.grau_satisfaccio()) resultat = true;
+                else if (empatSatisfaccio && solucio_optima.grau_satisfaccio()<solucio_actual.grau_satisfaccio()) resultat = true;
+                else resultat = empatSatisfaccio && empatPreu && solucio_optima.dies_total()>solucio_actual.dies_total();
+        }
+        return resultat;
     }
 
 }
