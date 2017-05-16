@@ -2,6 +2,7 @@
  @brief Classe IO
  */
 
+import java.io.*;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -24,7 +25,7 @@ class IO {
         }
     }
     private static final String SEPARADOR = "*";
-    private Scanner scan;
+    private BufferedReader scan;
     ArrayList<Client> LlistaClients;
     ArrayList<Lloc> LlistaLlocs;
     ArrayList<Allotjament> LlistaAllotjaments;
@@ -32,55 +33,55 @@ class IO {
     ArrayList<Visita> LlistaVisites;
     ArrayList<Viatge> LlistaViatges;
 
-    private void casClient(){
+    private void casClient() throws IOException {
         ArrayList<String> preferencies = new ArrayList<String>();
         String nom_client, pref;
-        nom_client = scan.nextLine();
-        pref = scan.nextLine();
+        nom_client = scan.readLine();
+        pref = scan.readLine();
         do {
            preferencies.add(pref);
-            pref = scan.nextLine();
+            pref = scan.readLine();
 
         } while (!pref.equals(SEPARADOR));
         LlistaClients.add(new Client(nom_client, preferencies));
     }
-    private void casLloc(){
-        String nom_lloc = scan.nextLine();
-        String [] stringCoord = scan.nextLine().split(",");
+    private void casLloc() throws IOException {
+        String nom_lloc = scan.readLine();
+        String [] stringCoord = scan.readLine().split(",");
         Coordenada cord_lloc = new Coordenada(Float.parseFloat(stringCoord[0]),Float.parseFloat(stringCoord[1]));
-        String IDZonaHoraria = scan.nextLine();
-        scan.nextLine(); //llegir separador
+        String IDZonaHoraria = scan.readLine();
+        scan.readLine(); //llegir separador
         LlistaLlocs.add(new Lloc(nom_lloc, cord_lloc, TimeZone.getTimeZone(IDZonaHoraria)));
     }
-    private void casAllotjament(){
-        String nomAllotjament = scan.nextLine();
-        String [] stringCoord = scan.nextLine().split(",");
+    private void casAllotjament() throws IOException {
+        String nomAllotjament = scan.readLine();
+        String [] stringCoord = scan.readLine().split(",");
         Coordenada coordAllotjament = new Coordenada(Float.parseFloat(stringCoord[0]),Float.parseFloat(stringCoord[1]));
-        String zonaHoraria = scan.nextLine();
-        String categoria = scan.nextLine();
-        Float preuHabDoble = Float.parseFloat(scan.nextLine());
-        String caracteristica = scan.nextLine();
+        String zonaHoraria = scan.readLine();
+        String categoria = scan.readLine();
+        Float preuHabDoble = Float.parseFloat(scan.readLine());
+        String caracteristica = scan.readLine();
         ArrayList<String> llistaCaracteristiques = new ArrayList<String>();
         do {
             llistaCaracteristiques.add(caracteristica);
-            caracteristica = scan.nextLine();
+            caracteristica = scan.readLine();
         } while (!caracteristica.equals(SEPARADOR));
         LlistaAllotjaments.add(new Allotjament(nomAllotjament, (int)(100*preuHabDoble), coordAllotjament, llistaCaracteristiques, TimeZone.getTimeZone(zonaHoraria), categoria));
     }
-    private void casVisitable() throws ParseException {
-        String nomVisitable = scan.nextLine();
-        String[] parts = scan.nextLine().split(",");
+    private void casVisitable() throws ParseException, IOException {
+        String nomVisitable = scan.readLine();
+        String[] parts = scan.readLine().split(",");
         Coordenada coordVisitable = new Coordenada(Float.parseFloat(parts[0]),Float.parseFloat(parts[1]));
-        String zonaHoraria = scan.nextLine();
-        String tempsVisita = scan.nextLine();
-        Float preu = Float.parseFloat(scan.nextLine());
-        String caracteristica = scan.nextLine();
+        String zonaHoraria = scan.readLine();
+        String tempsVisita = scan.readLine();
+        Float preu = Float.parseFloat(scan.readLine());
+        String caracteristica = scan.readLine();
         ArrayList<String> llistaCaracteristiques = new ArrayList<String>();
         do {
             llistaCaracteristiques.add(caracteristica);
-            caracteristica = scan.nextLine();
+            caracteristica = scan.readLine();
         } while (!caracteristica.equals(SEPARADOR));
-        String horari = scan.nextLine();
+        String horari = scan.readLine();
         ArrayList<Visitable.BlocHorari> llistaHoraris = new ArrayList<Visitable.BlocHorari>();
         do {
             MonthDay diaInici, diaFi;
@@ -93,7 +94,7 @@ class IO {
             horaInici = LocalTime.parse(partsHorari[7]+':'+partsHorari[8]);
             horaFi = LocalTime.parse(partsHorari[9]+':'+partsHorari[10]);
             llistaHoraris.add(new Visitable.BlocHorari(diaInici,horaInici,diaFi,horaFi));
-            horari = scan.nextLine();
+            horari = scan.readLine();
         } while (!horari.equals(SEPARADOR) && (horari.length() - horari.replace("-", "").length())== 2);
         String excepcio = horari;
         ArrayList<Visitable.ExcepcioHorari> llistaExcepcions = new ArrayList<Visitable.ExcepcioHorari>();
@@ -107,16 +108,16 @@ class IO {
                 horaInici = LocalTime.parse(partsHorari[3] + ':' + partsHorari[4]);
                 horaFi = LocalTime.parse(partsHorari[5] + ':' + partsHorari[6]);
                 llistaExcepcions.add(new Visitable.ExcepcioHorari(dia, horaInici, horaFi));
-                excepcio = scan.nextLine();
+                excepcio = scan.readLine();
             } while (!excepcio.equals(SEPARADOR));
         }
         LlistaVisitables.add(new Visitable(nomVisitable, (int)(100*preu), coordVisitable, llistaCaracteristiques, TimeZone.getTimeZone(zonaHoraria), LocalTime.parse(tempsVisita), llistaExcepcions, llistaHoraris));
     }
-    private void casVisita(){
-        String nom_client = scan.nextLine();
-        String nom_lloc = scan.nextLine();
-        LocalDate data = LocalDate.parse(scan.nextLine()); //data de la visita més recent
-        scan.nextLine(); //llegir separador
+    private void casVisita() throws IOException {
+        String nom_client = scan.readLine();
+        String nom_lloc = scan.readLine();
+        LocalDate data = LocalDate.parse(scan.readLine()); //data de la visita més recent
+        scan.readLine(); //llegir separador
         Iterator<Client> it = LlistaClients.iterator();
         Client clientActual= it.next();
         Boolean trobat = false;
@@ -133,8 +134,8 @@ class IO {
         }
         clientActual.afegirVisita(visitableActual,data);
     }
-    private void casAssociarLloc(){
-        String nomAllotjVisitable = scan.nextLine();
+    private void casAssociarLloc() throws IOException {
+        String nomAllotjVisitable = scan.readLine();
         Iterator<Allotjament> it = LlistaAllotjaments.iterator();
         Iterator<Visitable> jt = LlistaVisitables.iterator();
         Iterator<Lloc> llocIt = LlistaLlocs.iterator();
@@ -151,7 +152,7 @@ class IO {
             if (visitableActual.nom().equals(nomAllotjVisitable)) trobat = true;
             else visitableActual = jt.next();
         }
-        String lloc = scan.nextLine();
+        String lloc = scan.readLine();
         trobat = false;
         Lloc LlocActual = llocIt.next();
         while (llocIt.hasNext() && !trobat) {
@@ -165,13 +166,13 @@ class IO {
         } else {
             //excepcio
         }
-        scan.nextLine();
+        scan.readLine();
     }
-    private void casAssociarTransport(){
-        String nomLloc = scan.nextLine();
-        String nomMT=scan.nextLine();
-        LocalTime duradaTrajecte= LocalTime.parse(scan.nextLine());
-        Float preu = Float.parseFloat(scan.nextLine());
+    private void casAssociarTransport() throws IOException {
+        String nomLloc = scan.readLine();
+        String nomMT=scan.readLine();
+        LocalTime duradaTrajecte= LocalTime.parse(scan.readLine());
+        Float preu = Float.parseFloat(scan.readLine());
         MT_Directe transport = new MT_Directe(nomMT, (int) (preu*100),duradaTrajecte);
 
         Iterator<Lloc> llocIt = LlistaLlocs.iterator();
@@ -182,14 +183,14 @@ class IO {
             else LlocActual = llocIt.next();
         }
         LlocActual.associarTransport(transport);
-        scan.nextLine();
+        scan.readLine();
     }
-    private void casMTDirecte(){
-        String nomOrigen = scan.nextLine();
-        String nomDesti = scan.nextLine();
-        String nomMT=scan.nextLine();
-        LocalTime duradaTrajecte= LocalTime.parse(scan.nextLine());
-        Float preu = Float.parseFloat(scan.nextLine());
+    private void casMTDirecte() throws IOException {
+        String nomOrigen = scan.readLine();
+        String nomDesti = scan.readLine();
+        String nomMT=scan.readLine();
+        LocalTime duradaTrajecte= LocalTime.parse(scan.readLine());
+        Float preu = Float.parseFloat(scan.readLine());
 
 
         Iterator<Allotjament> it = LlistaAllotjaments.iterator();
@@ -208,7 +209,7 @@ class IO {
             if (visitableActual.nom().equals(nomDesti)) trobat = true;
             else visitableActual = jt.next();
         }
-        String lloc = scan.next();
+        String lloc = scan.readLine();
         trobat = false;
         Lloc LlocActual = llocIt.next();
         while (llocIt.hasNext() && !trobat) {
@@ -222,33 +223,33 @@ class IO {
         } else {
             //excepcio
         }
-        scan.nextLine();
+        scan.readLine();
     }
-    private void casMTIndirecte(){
+    private void casMTIndirecte() throws IOException {
         ArrayList<MT_Indirecte> partences = new ArrayList<MT_Indirecte>();
-        String nomOrigen = scan.nextLine();
-        String nomDesti = scan.nextLine();
-        String nomMT = scan.nextLine();
-        LocalTime tempsAnada = LocalTime.parse(scan.nextLine());
-        LocalTime tempsTornada = LocalTime.parse(scan.nextLine());
-        LocalDate data = LocalDate.parse(scan.nextLine());
-        LocalTime hora = LocalTime.parse(scan.nextLine());
-        LocalTime durada = LocalTime.parse(scan.nextLine());
-        Integer preu = (int)(Float.parseFloat(scan.nextLine())/100);
-        String entrada = scan.nextLine();
+        String nomOrigen = scan.readLine();
+        String nomDesti = scan.readLine();
+        String nomMT = scan.readLine();
+        LocalTime tempsAnada = LocalTime.parse(scan.readLine());
+        LocalTime tempsTornada = LocalTime.parse(scan.readLine());
+        LocalDate data = LocalDate.parse(scan.readLine());
+        LocalTime hora = LocalTime.parse(scan.readLine());
+        LocalTime durada = LocalTime.parse(scan.readLine());
+        Integer preu = (int)(Float.parseFloat(scan.readLine())/100);
+        String entrada = scan.readLine();
         while(!entrada.equals("*")){
             if(entrada.contains("-")){
                 data = LocalDate.parse(entrada);
             }
             else if(entrada.contains(":")){
                 hora=LocalTime.parse(entrada);
-                durada=LocalTime.parse(scan.next());
+                durada=LocalTime.parse(scan.readLine());
             }
             else if(entrada.contains(".")){
                 preu =(int)(100*Float.parseFloat(entrada));
                 partences.add(new MT_Indirecte(nomMT,data,hora,durada,preu));
             }
-            entrada = scan.nextLine();
+            entrada = scan.readLine();
         }
         Iterator<Lloc> llocIt = LlistaLlocs.iterator();
         boolean trobat = false;
@@ -265,14 +266,14 @@ class IO {
         }
         llocOrigen.associarHub(new Hub(nomMT,tempsAnada,tempsTornada,llocDesti,partences));
     }
-    private void casViatge(){
-        LocalDate dataInici = LocalDate.parse(scan.nextLine());
-        LocalTime horaInici = LocalTime.parse(scan.nextLine());
-        Integer nombreDies = Integer.parseInt(scan.nextLine());
-        Integer preuMaxim = Integer.parseInt(scan.nextLine());
-        String categoria = scan.nextLine();
+    private void casViatge() throws IOException {
+        LocalDate dataInici = LocalDate.parse(scan.readLine());
+        LocalTime horaInici = LocalTime.parse(scan.readLine());
+        Integer nombreDies = Integer.parseInt(scan.readLine());
+        Integer preuMaxim = Integer.parseInt(scan.readLine());
+        String categoria = scan.readLine();
         ArrayList<Client> clients = new ArrayList<Client>();
-        String nomClient = scan.nextLine();
+        String nomClient = scan.readLine();
         Iterator<Client> clientIt = LlistaClients.iterator();
         Boolean trobat = new Boolean(false);
         do{
@@ -284,10 +285,10 @@ class IO {
                 }
                 else client = clientIt.next();
             }
-            nomClient=scan.nextLine();
+            nomClient=scan.readLine();
         }while(!nomClient.equals("*"));
         trobat = false;
-        String nomVisitable = scan.nextLine();
+        String nomVisitable = scan.readLine();
         ArrayList<Visitable> visitables = new ArrayList<Visitable>();
         Iterator<Visitable> visitableIt = LlistaVisitables.iterator();
         do{
@@ -299,66 +300,74 @@ class IO {
                 }
                 else visitable = visitableIt.next();
             }
-            nomVisitable=scan.nextLine();
+            nomVisitable=scan.readLine();
         }while(!nomVisitable.equals("*"));
         ArrayList<String> tipusRuta = new ArrayList<String>();
-        String temp = scan.nextLine();
+        String temp = scan.readLine();
         while(!temp.equals("*")){
             tipusRuta.add(temp);
-            temp=scan.nextLine();
+            temp=scan.readLine();
         }
         LlistaViatges.add(new Viatge(dataInici.atTime(horaInici),nombreDies,preuMaxim,categoria,new GrupClients(clients),visitables,tipusRuta));
     }
 
-    public MapaViatge llegir() throws ParseException {
+    public MapaViatge llegir(String f) throws ParseException {
         LlistaClients = new ArrayList<Client>();
         LlistaLlocs = new ArrayList<Lloc>();
         LlistaAllotjaments = new ArrayList<Allotjament>();
         LlistaVisitables = new ArrayList<Visitable>();
         LlistaVisites = new ArrayList<Visita>();
         LlistaViatges = new ArrayList<Viatge>();
-        scan = new Scanner(System.in);
+        try {
+            scan = new BufferedReader(new FileReader(f));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         Boolean acabar= false;
-        String autor = scan.nextLine();
-        while (!acabar) {
-            String codi_operacio = scan.nextLine();
-            switch (codi_operacio) {
-                case "client":
-                    casClient();
-                    break;
-                case "lloc":
-                    casLloc();
-                    break;
-                case "allotjament":
-                    casAllotjament();
-                    break;
-                case "lloc visitable":
-                    casVisitable();
-                    break;
-                case "visita": 
-                    casVisita();
-                    break;
-                case "associar lloc": 
-                    casAssociarLloc();
-                    break;
-                case "associar transport": 
-                    casAssociarTransport();
-                    break;
-                case "transport directe": 
-                    casMTDirecte();
-                    break;
-                case "transport indirecte": 
-                    casMTIndirecte();
-                    break;
-                case "viatge":
-                    casViatge();
-                    break;
-                case "*": 
-                    acabar = true;
-                    break;
-                default:
-                    break;
+        try {
+            String autor = scan.readLine();
+            while (!acabar) {
+                String codi_operacio = scan.readLine();
+                switch (codi_operacio) {
+                    case "client":
+                        casClient();
+                        break;
+                    case "lloc":
+                        casLloc();
+                        break;
+                    case "allotjament":
+                        casAllotjament();
+                        break;
+                    case "lloc visitable":
+                        casVisitable();
+                        break;
+                    case "visita":
+                        casVisita();
+                        break;
+                    case "associar lloc":
+                        casAssociarLloc();
+                        break;
+                    case "associar transport":
+                        casAssociarTransport();
+                        break;
+                    case "transport directe":
+                        casMTDirecte();
+                        break;
+                    case "transport indirecte":
+                        casMTIndirecte();
+                        break;
+                    case "viatge":
+                        casViatge();
+                        break;
+                    case "*":
+                        acabar = true;
+                        break;
+                    default:
+                        break;
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         GrupClients gc = new GrupClients(LlistaClients);
         Mapa mapa = new Mapa(gc,LlistaVisitables,LlistaAllotjaments,LlistaLlocs,LlistaViatges);

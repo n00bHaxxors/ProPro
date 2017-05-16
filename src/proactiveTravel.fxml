@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="botoObrirArxiu" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proactiveTravel">
+   <children>
+      <HBox layoutX="294.0" layoutY="125.0" prefHeight="350.0" prefWidth="377.0">
+         <children>
+            <ImageView fitHeight="330.0" fitWidth="331.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@hbox.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <Button fx:id="botoExecutar" layoutX="43.0" layoutY="133.0" mnemonicParsing="false" onAction="#handle" text="Button" />
+      <Text fx:id="textPath" layoutX="115.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FILEPATH" />
+      <Button fx:id="botoArxiu" layoutX="32.0" layoutY="27.0" mnemonicParsing="false" onAction="#handle" text="Obrir arxiu" />
+      <RadioButton fx:id="radioBT" layoutX="39.0" layoutY="102.0" mnemonicParsing="false" onAction="#handle" selected="true" text="BT">
+         <toggleGroup>
+            <ToggleGroup fx:id="grupAlgorisme" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="radioGD" layoutX="39.0" layoutY="64.0" mnemonicParsing="false" onAction="#handle" prefHeight="25.0" prefWidth="60.0" text="Greedy" toggleGroup="$grupAlgorisme" />
+   </children>
+</AnchorPane>
