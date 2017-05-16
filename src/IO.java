@@ -293,8 +293,12 @@ class IO {
             }
             nomVisitable=scan.nextLine();
         }while(!nomVisitable.equals("*"));
-        String tipusRuta = scan.nextLine();
-        scan.nextLine();
+        ArrayList<String> tipusRuta = new ArrayList<String>();
+        String temp = scan.nextLine();
+        while(!temp.equals("*")){
+            tipusRuta.add(temp);
+            temp=scan.nextLine();
+        }
         LlistaViatges.add(new Viatge(dataInici.atTime(horaInici),nombreDies,preuMaxim,categoria,new GrupClients(clients),visitables,tipusRuta));
     }
 

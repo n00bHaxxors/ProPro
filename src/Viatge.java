@@ -9,15 +9,15 @@ public class Viatge {
     private LocalDateTime dataHoraInici;
     private Integer nombreDies, preuMaxim;
     Visitable origen, desti;
-    String categoria, tipusRuta;
+    String categoria;
     GrupClients clients;
     ArrayList<Visitable> llistaVisitables;
-    public Viatge(LocalDateTime data, Integer n, Integer p, String c, GrupClients cl, ArrayList<Visitable> visitables, String t) {
+    Boolean rutaBarata = false, rutaCurta = false, rutaSatisfactoria = false;
+    public Viatge(LocalDateTime data, Integer n, Integer p, String c, GrupClients cl, ArrayList<Visitable> visitables, ArrayList<String> t) {
         dataHoraInici=data;
         nombreDies=n;
         preuMaxim = p;
         categoria = c;
-        tipusRuta = t;
         clients = cl;
         llistaVisitables= new ArrayList<Visitable>();
         Iterator<Visitable> it= visitables.iterator();
@@ -26,6 +26,24 @@ public class Viatge {
             desti = it.next();
             if(it.hasNext())llistaVisitables.add(desti);
         }
+        Iterator<String> itTipus = t.iterator();
+        String temp = itTipus.next();
+        do{
+            switch(temp){
+                case "ruta curta":
+                    rutaCurta=true;
+                    break;
+                case "ruta barata":
+                    rutaBarata=true;
+                    break;
+                case "ruta satisfactoria":
+                    rutaSatisfactoria=true;
+                    break;
+                default:
+                    //throw
+                    break;
+            }
+        }while(itTipus.hasNext());
     }
     public LocalDateTime dataHoraInici(){
         return dataHoraInici;
@@ -38,9 +56,6 @@ public class Viatge {
     }
     public String categoria(){
         return categoria;
-    }
-    public String tipusRuta(){
-        return tipusRuta;
     }
     public GrupClients clients(){
         return clients;
