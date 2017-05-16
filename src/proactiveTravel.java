@@ -35,8 +35,9 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
     public void start(Stage primaryStage) throws Exception {
         // DEBUG
 
-        File f = new File("debugBT.txt");
-        if(f.exists() && !f.isDirectory()) {
+        File fileBT = new File("debugBT.txt");
+        File fileGD = new File("debugGD.txt");
+        if(fileBT.exists() && !fileBT.isDirectory()) {
             IO io = new IO();
             IO.MapaViatge mp = io.llegir("debugBT.txt");
             Iterator<Viatge> it = mp.viatges.iterator();
@@ -45,8 +46,7 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
                 Backtracking.CircuitExacte(mp.mapa,viatge);
             }
         }
-        f = new File("debugGD.txt");
-        if(f.exists() && !f.isDirectory()) {
+        else if(fileGD.exists() && !fileGD.isDirectory()) {
             IO io = new IO();
             IO.MapaViatge mp = io.llegir("debugGD.txt");
             Iterator<Viatge> it = mp.viatges.iterator();
@@ -55,21 +55,23 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
                 //AKI VA EL BURÀS
             }
         }
+        else {
 
-        //  /DEBUG
+            //  /DEBUG
 
-        botoArxiu = new Button();
-        botoExecutar = new Button();
-        textPath = new Text();
-        radioBT = new RadioButton();
-        radioBT.setToggleGroup(grupAlgorisme);
-        radioGD = new RadioButton();
-        radioGD.setToggleGroup(grupAlgorisme);
+            botoArxiu = new Button();
+            botoExecutar = new Button();
+            textPath = new Text();
+            radioBT = new RadioButton();
+            radioBT.setToggleGroup(grupAlgorisme);
+            radioGD = new RadioButton();
+            radioGD.setToggleGroup(grupAlgorisme);
 
-        root = FXMLLoader.load(getClass().getResource("proactiveTravel.fxml"));
-        scene = new Scene(root, 750, 500);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+            root = FXMLLoader.load(getClass().getResource("proactiveTravel.fxml"));
+            scene = new Scene(root, 750, 500);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        }
     }
 
     @Override
@@ -77,6 +79,45 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
         if (event.getSource()==botoArxiu){
             FileChooser fc = new FileChooser();
             textPath.setText(fc.showOpenDialog(null).getAbsolutePath());
+        }
+        if(event.getSource()==botoExecutar){
+            if(radioBT.isSelected()){
+                File fileBT = new File(textPath.getText());
+                if(fileBT.exists() && !fileBT.isDirectory()) {
+                    IO io = new IO();
+                    IO.MapaViatge mp = null;
+                    try {
+                        mp = io.llegir(textPath.getText());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Iterator<Viatge> it = mp.viatges.iterator();
+                    while(it.hasNext()){
+                        Viatge viatge = it.next();
+                        Backtracking.CircuitExacte(mp.mapa,viatge);
+                    }
+                }
+            }
+            else if(radioGD.isSelected()){
+                File fileGD = new File(textPath.getText());
+                if(fileGD.exists() && !fileGD.isDirectory()) {
+                    IO io = new IO();
+                    IO.MapaViatge mp = null;
+                    try {
+                        mp = io.llegir(textPath.getText());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Iterator<Viatge> it = mp.viatges.iterator();
+                    while(it.hasNext()){
+                        Viatge viatge = it.next();
+                        //BURAS.CircuitExacte(mp.mapa,viatge);
+                    }
+                }
+            }
+            else{
+                //throu
+            }
         }
     }
     public static void main(String[] args){
