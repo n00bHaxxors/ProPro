@@ -41,6 +41,13 @@ public class Allotjament extends PuntInteres {
 	@post retorna cert si estarà avui i fals en c.c.*/
     @Override
     public boolean obreAvui(LocalDateTime ara){
-        return ara.toLocalTime().isBefore(LocalTime.of(0, 0)) || ara.toLocalTime().isAfter(LocalTime.of(4, 0));
+        return ara.toLocalTime().isBefore(LocalTime.of(0, 0));
     }
+    
+    @Override
+    public LocalDateTime ProximaObertura(LocalDateTime ara){
+        if(ara.toLocalTime().isBefore(LocalTime.of(0, 0))) return ara;
+        else return ara.toLocalDate().atTime(LocalTime.of(4, 0));
+    }
+
 }

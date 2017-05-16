@@ -10,6 +10,7 @@
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 public class Circuit {
     private LocalDateTime inici_viatge, fi_viatge;
@@ -18,6 +19,8 @@ public class Circuit {
     private int dies;
     private int nActivitats;
     private ArrayList<Activitat> activitats;
+    //metodes que no se si calen aquí!
+    TreeSet<Visita> visitesFetes;
 
     /** @brief Constructor circuit amb paràmetres
      @pre cert

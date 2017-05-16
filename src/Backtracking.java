@@ -19,7 +19,6 @@ import java.util.TreeSet;
 
 public abstract class Backtracking {
     private static Circuit solucio_optima, solucio_actual;
-    HashMap<String, Visita> visitesFetes;
     
     /** @brief Calcula el circuit més Barat
      @pre parametres no buits i a, b i els PuntInteres de c existents a g 
@@ -80,7 +79,9 @@ public abstract class Backtracking {
         Lloc llocActual = g.lloc(pActual.nomLloc());
         LocalDateTime ara = solucio_actual.acabamentCircuit();
         Activitat actPActual = pActual.ActivitatCorresponent(ara);
-        if (pActual.obreAvui(ara) && actPActual.Satisfaccio(g.clients())> 0) arbre.add(actPActual); 
+        if (pActual.obreAvui(ara) && actPActual.Satisfaccio(g.clients())> 0) ;
+        else if(actPActual.Satisfaccio(g.clients())> 0) actPActual = pActual.ActivitatCorresponent(pActual.ProximaObertura(ara));
+        arbre.add(actPActual); 
         //activitats x desplaçament directe desde el PI actual;
         Iterator<MT_Directe> itr1 = pActual.TransportsDirectes();
         while (itr1.hasNext()){
@@ -123,7 +124,7 @@ public abstract class Backtracking {
      @pre a != null
      @post retorna cert si la activitat compleix amb les condicions corresponents i fals en c.c.*/
     private static boolean Acceptable(Activitat a){
-        return a.Acceptable(solucio_optima); //podem necessitar més parametres en futur, amés sembla que la funció no es necessaria, son pres i post de regal
+        return a.Acceptable(solucio_actual); //podem necessitar més parametres en futur, amés sembla que la funció no es necessaria, son pres i post de regal
     }
     
     /** @brief consulta si el circuit actual encara podrà millorar el circuit_optim afegint la activitat a
@@ -159,22 +160,19 @@ public abstract class Backtracking {
      @post retorna cert si la solucio actual es millor que la optima i fals en c.c.*/
     private static boolean MillorQueOptima(char o){
         boolean empatPreu, empatSatisfaccio, empatDies, resultat = false;
+        empatPreu = solucio_optima.preu_persona()==solucio_actual.preu_persona(); 
+        empatSatisfaccio = solucio_optima.grau_satisfaccio()==solucio_actual.grau_satisfaccio();
+        empatDies = solucio_optima.dies_total()==solucio_actual.dies_total();
         switch (o){
             case 'b' : //barata
-                empatPreu = solucio_optima.preu_persona()==solucio_actual.preu_persona(); 
-                empatSatisfaccio = solucio_optima.grau_satisfaccio()==solucio_actual.grau_satisfaccio();
                 if (solucio_optima.preu_persona()>solucio_actual.preu_persona()) resultat = true;
                 else if (empatPreu && solucio_optima.grau_satisfaccio()<solucio_actual.grau_satisfaccio()) resultat = true;
                 else resultat = empatPreu && empatSatisfaccio && solucio_optima.dies_total()>solucio_actual.dies_total();
             case 'c' : //curta
-                empatDies = solucio_optima.dies_total()==solucio_actual.dies_total();
-                empatSatisfaccio = solucio_optima.grau_satisfaccio()==solucio_actual.grau_satisfaccio();
                 if (solucio_optima.dies_total()>solucio_actual.dies_total()) resultat = true;
                 else if (empatDies && solucio_optima.grau_satisfaccio()<solucio_actual.grau_satisfaccio()) resultat = true;
                 else resultat = empatDies && empatSatisfaccio && solucio_optima.preu_persona() > solucio_actual.preu_persona();
             case 's' : //satisfactoria
-                empatPreu = solucio_optima.preu_persona()==solucio_actual.preu_persona(); 
-                empatSatisfaccio = solucio_optima.grau_satisfaccio()==solucio_actual.grau_satisfaccio();
                 if (solucio_optima.grau_satisfaccio()>solucio_actual.grau_satisfaccio()) resultat = true;
                 else if (empatSatisfaccio && solucio_optima.grau_satisfaccio()<solucio_actual.grau_satisfaccio()) resultat = true;
                 else resultat = empatSatisfaccio && empatPreu && solucio_optima.dies_total()>solucio_actual.dies_total();

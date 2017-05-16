@@ -185,6 +185,7 @@ public class Visitable extends PuntInteres{
     /** @brief consulta a quina hora obrira avui apartir del moment indicat
 	@pre this no es lloc de pas i obreAvui == true
 	@post retorna una LocalDateTime amb dia i hora d'opertura avui*/
+    @Override
     public LocalDateTime ProximaObertura(LocalDateTime ara){
         if (estaraObert(MonthDay.of(ara.getMonth(), ara.getDayOfMonth()), ara.toLocalTime())) {
             return ara;

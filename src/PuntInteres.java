@@ -84,4 +84,7 @@ public abstract class PuntInteres {
 	@pre this no es lloc de pas
 	@post retorna cert si estarà avui i fals en c.c.*/
     public abstract boolean obreAvui(LocalDateTime ara);
+
+    public abstract LocalDateTime ProximaObertura(LocalDateTime ara);
+
 }
