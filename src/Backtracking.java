@@ -24,11 +24,31 @@ public abstract class Backtracking {
     /** @brief Calcula el circuit més Barat
      @pre parametres no buits i a, b i els PuntInteres de c existents a g 
      @post Retorna el Circuit més barat*/
-    public static Circuit CircuitExacte(Mapa g, Viatge v){
+    public static HashMap<String,Circuit> CircuitExacte(Mapa g, Viatge v){
         solucio_optima = new Circuit(v.dataHoraInici()); 
         solucio_actual = new Circuit(v.dataHoraInici());
-        //AlgBT(g,v.origen(),v.desti(),c, v,);
-        return solucio_optima;
+        TreeSet<PuntInteres> c = new TreeSet();
+        HashMap<String,Circuit> resultat = new HashMap();
+        if (v.RutaBarata()){
+            AlgBT(g,v.origen(),v.desti(),c,v,'b');
+            resultat.put("ruta barata", solucio_optima);
+            solucio_optima = new Circuit(v.dataHoraInici()); 
+            solucio_actual = new Circuit(v.dataHoraInici());
+        }
+        if (v.RutaBarata()){
+            AlgBT(g,v.origen(),v.desti(),c,v,'c');
+            resultat.put("ruta curta", solucio_optima);
+            solucio_optima = new Circuit(v.dataHoraInici()); 
+            solucio_actual = new Circuit(v.dataHoraInici());
+        }
+        
+        if (v.RutaSatisfactoria()){
+            AlgBT(g,v.origen(),v.desti(),c,v,'c');
+            resultat.put("ruta satisfactoria", solucio_optima);
+            solucio_optima = new Circuit(v.dataHoraInici()); 
+            solucio_actual = new Circuit(v.dataHoraInici());
+        }
+        return resultat;
     }
     
     /** @brief Algoritme Backtracking (per preu[temp])
@@ -39,12 +59,12 @@ public abstract class Backtracking {
         while (itr.hasNext()){
             Activitat act = itr.next();
             if(Acceptable(act) && EsPotTrobarMillor(act)){
-                //AnotarCandidat(act, );
-                if (!SolucioCompleta()) ;//AlgBTPreu(g,a,b,c,v,o);
+                AnotarCandidat(act, v.clients());
+                if (!SolucioCompleta()) AlgBT(g,a,b,c,v,o);
                 else{
                     if (MillorQueOptima(o)) solucio_optima = solucio_actual;
                 }
-                //DesanotarCandidat();
+                DesanotarCandidat(v.clients());
             }
         }
     }
