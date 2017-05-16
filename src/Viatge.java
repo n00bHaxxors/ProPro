@@ -8,10 +8,10 @@ import java.util.Iterator;
 public class Viatge {
     private LocalDateTime dataHoraInici;
     private Integer nombreDies, preuMaxim;
-    Visitable origen, desti;
-    String categoria, tipusRuta;
-    GrupClients clients;
-    ArrayList<Visitable> llistaVisitables;
+    private Visitable origen, desti;
+    private String categoria, tipusRuta;
+    private GrupClients clients;
+    private ArrayList<Visitable> llistaVisitables;
     public Viatge(LocalDateTime data, Integer n, Integer p, String c, GrupClients cl, ArrayList<Visitable> visitables, String t) {
         dataHoraInici=data;
         nombreDies=n;
