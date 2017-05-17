@@ -24,6 +24,9 @@ public class Desplaçament extends Activitat { //aka trasllat
      @post Retorna el mitjà de transport usat*/
     public Mitja_Transport mitja_usat(){ return mitja; }
     
+    /** @brief Consulta si l'Activitat és acceptable
+     @pre circuit i viatge no buits
+     @post retorna cert si és acceptable i fals en c.c.*/
     @Override
     public boolean Acceptable (Circuit c, Viatge v){
         return true;

@@ -16,10 +16,13 @@ public abstract class Activitat {
     public Activitat(LocalDate d, LocalTime h, int p){
         dia=d;hora=h;preu=p;
     }
+    
     /** @brief Consulta la hora en que s'ha fet l'activitat
      @pre cert
      @post Retorna l'hora en que sha fet l'activitat*/
+    
     public LocalTime horaActivitat(){ return hora; }
+    
     /** @brief Consulta el dia en que s'ha fet una activitat
      @pre cert
      @post Retorna el dia en que sha fet l'activitat*/   
@@ -30,6 +33,9 @@ public abstract class Activitat {
      @post Retorna el preu de l'activitat*/
     public int preuAct(){ return preu;}
    
+    /** @brief Consulta si l'Activitat és acceptable
+     @pre circuit i viatge no buits
+     @post retorna cert si és acceptable i fals en c.c.*/
     public abstract boolean Acceptable(Circuit c, Viatge v);
     
     /** @brief Consulta la duracio de l'activitat

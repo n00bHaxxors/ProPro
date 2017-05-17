@@ -30,9 +30,16 @@ public class Visita extends Activitat{
         return visitat.nom();
     }
     
+    /** @brief Consulta si l'Activitat és acceptable
+     @pre circuit i viatge no buits
+     @post retorna cert si és acceptable i fals en c.c.*/
     @Override
     public boolean Acceptable (Circuit c, Viatge v){
-        return true;
+        LocalDateTime inici = diaActivitat().atTime(horaActivitat()), 
+                fi = inici.plusHours(Duracio().getHour()).plusMinutes(Duracio().getMinute());
+        boolean resultat = inici.isBefore(inici.plusDays(1).toLocalDate().atTime(0, 0)) && fi.isBefore(inici.plusDays(1).toLocalDate().atTime(0, 0)) &&
+                c.horesVisites(diaActivitat()).plusHours(Duracio().getHour()).plusMinutes(Duracio().getMinute()).isBefore(LocalTime.of(6, 0));
+        return resultat;
     }
     
     /** @brief Consulta la duracio de la visita

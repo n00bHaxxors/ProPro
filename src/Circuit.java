@@ -92,15 +92,18 @@ public class Circuit {
         if (m.conteVisitable(a.nomAct())) visitesFetes.remove(a.nomAct());
     }
     /** @brief Consulta el dia i la hora en que acabem el circuit
-     @pre 
+     @pre cert
      @post retorna un LocalDateTime amb el dia i la hora en que s'acaba el circuit*/
     public LocalDateTime acabamentCircuit (){ return fi_viatge; }
     
     /** @brief Consulta el dia i la hora en que iniciem el circuit
-     @pre 
+     @pre cert
      @post retorna un LocalDateTime amb el dia i la hora en que es comença el circuit*/
     public LocalDateTime iniciCircuit(){ return inici_viatge; }
     
+    /** @brief Consulta si el circuit actual es una solucio completa
+     @pre c, origen, desti i diesV no nulls
+     @post retorna cert si la solucio es completa i fals en c.c.*/
     public boolean solucioCompleta(Set<Visitable> c, PuntInteres origen, PuntInteres desti, int diesV){
         boolean resultat = activitats.get(nActivitats-1).nomAct().equals(desti.nom()) && activitats.get(0).nomAct().equals(origen.nom())&& diesV==dies;
         Iterator<Visitable> itr = c.iterator();
@@ -109,5 +112,18 @@ public class Circuit {
             resultat = visitesFetes.containsKey(aux.nom());
         }
         return resultat;
+    }
+    
+    /** @brief consulta el temps de visites total que sha fet en un dia
+     @pre dia no null
+     @post retorna el temps invertit en visites en el dia*/
+    public LocalTime horesVisites(LocalDate dia){
+        Iterator<Visita> itr = visitesFetes.values().iterator();
+        LocalTime temps = LocalTime.of(0, 0);
+        while (itr.hasNext()){
+            Visita aux = itr.next();
+            if (aux.diaActivitat().equals(dia)) temps.plusHours(aux.Duracio().getHour()).plusMinutes(aux.Duracio().getMinute());
+        }
+        return temps;
     }
 }

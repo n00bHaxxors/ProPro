@@ -12,16 +12,20 @@ public class EstadaHotel extends Activitat {
     private Allotjament hotel;
     
     /** @brief Constructor de una Estadia a un Hotel
-     @pre cert
+     @pre parametres != null
      @post Crea una estadia amb les dades donades*/
     public EstadaHotel(Allotjament h, LocalDate dia, LocalTime hora){
         super(dia, hora, h.preu());
         hotel = h;
     }
     
+    /** @brief Consulta si l'Activitat és acceptable
+     @pre circuit i viatge no buits
+     @post retorna cert si és acceptable i fals en c.c.*/
     @Override
     public boolean Acceptable (Circuit c, Viatge v){
-        return true;
+        boolean resultat = hotel.categoria().equals(v.categoria());
+        return resultat;
     }
     
     /** @brief Consulta la duracio de la estada al hotel

@@ -127,7 +127,7 @@ public abstract class Backtracking {
     }
     
     /** @brief consulta si una activitat es acceptable
-     @pre a != null
+     @pre a != null && v !=null
      @post retorna cert si la activitat compleix amb les condicions corresponents i fals en c.c.*/
     private static boolean Acceptable(Activitat a, Viatge v){
         LocalDateTime fi = solucio_actual.acabamentCircuit().toLocalDate().atTime(a.horaActivitat()).plusHours(a.Duracio().getHour()).plusMinutes(a.Duracio().getMinute());
