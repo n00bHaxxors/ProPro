@@ -50,5 +50,12 @@ public class Hub {
      @pre cert
      @post Retorna el lloc de desti*/
     public Lloc destinacio(){ return desti;}
+    
+    /** @brief Calcula el que es tardara en trasllat al origen i al destí 
+     @pre cert
+     @post Retorna el temps de trasllat total*/
+    public LocalTime tempsTrasllatTotal(){
+        return temps_trasllat_origen.plusHours(temps_trasllat_desti.getHour()).plusMinutes(temps_trasllat_desti.getMinute());
+    }
 
 }

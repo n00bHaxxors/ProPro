@@ -8,14 +8,15 @@ import java.time.*;
 public class Desplaçament extends Activitat { //aka trasllat
 
     private Mitja_Transport mitja;
-    private PuntInteres origen, desti; //npi de quina classe ha de ser
+    private PuntInteres origen, desti;
+    private LocalTime durada;
  
     /** @brief Constructor amb parametres
      @pre cert
      @post Desplaçament amb preu, duracio, mitja, origen i desti creat*/
-    public Desplaçament(int p, LocalDate d, LocalTime h, Mitja_Transport m, PuntInteres o, PuntInteres de){
+    public Desplaçament(int p, LocalDate d, LocalTime h, Mitja_Transport m, PuntInteres o, PuntInteres de, LocalTime duracio){
         super(d,h,p);
-        mitja=m; origen=o; desti=de;
+        mitja=m; origen=o; desti=de; durada = duracio;
     }
     
     /** @brief Consulta el mitjà de transport usat en el desplaçament
@@ -24,7 +25,7 @@ public class Desplaçament extends Activitat { //aka trasllat
     public Mitja_Transport mitja_usat(){ return mitja; }
     
     @Override
-    public boolean Acceptable (Circuit c){
+    public boolean Acceptable (Circuit c, Viatge v){
         return true;
     }
     
@@ -33,7 +34,7 @@ public class Desplaçament extends Activitat { //aka trasllat
      @post Retorna la duració del desplaçament*/
     @Override
     public LocalTime Duracio(){
-        return null; //estic esperant en cané
+        return durada; //estic esperant en cané
     }
     
     /** @brief Calcula la Satisfaccio que afageix l'activitat

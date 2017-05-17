@@ -30,7 +30,7 @@ public abstract class Activitat {
      @post Retorna el preu de l'activitat*/
     public int preuAct(){ return preu;}
    
-    public abstract boolean Acceptable(Circuit c);
+    public abstract boolean Acceptable(Circuit c, Viatge v);
     
     /** @brief Consulta la duracio de l'activitat
      @pre cert

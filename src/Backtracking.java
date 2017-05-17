@@ -113,11 +113,12 @@ public abstract class Backtracking {
             Iterator<MT_Indirecte> itr3 = h.transports();
              while(itr3.hasNext()){
                 MT_Indirecte mti = itr3.next();
+                LocalTime duradaTotal = mti.durada().plusHours(h.tempsTrasllatTotal().getHour()).plusMinutes(h.tempsTrasllatTotal().getMinute());
                 Iterator<PuntInteres> itr4 = l.puntsInteres();
                 while (itr4.hasNext()){
                     PuntInteres pi = itr4.next();
                     Desplaçament aux = new Desplaçament(mti.preu(),mti.diaHoraSortida().toLocalDate(),mti.diaHoraSortida().toLocalTime(),
-                    mti, pActual, pi);
+                    mti, pActual, pi, duradaTotal);
                     arbre.add(aux);
                 }
             }
@@ -135,7 +136,7 @@ public abstract class Backtracking {
         boolean esHoraDinar = !a.horaActivitat().isBefore(iniciHoraDinar) && 
                 !a.horaActivitat().plusHours(a.Duracio().getHour()).plusMinutes(a.Duracio().getMinute()).isAfter(fiHoraDinar);
         boolean resultatParcial = (solucio_actual.preu_persona() + a.preuAct()) < v.preuMaxim() && dies <= v.nombreDies() && !esHoraDinar;
-        return resultatParcial && a.Acceptable(solucio_actual); 
+        return resultatParcial && a.Acceptable(solucio_actual,v); 
     }
     
     /** @brief consulta si el circuit actual encara podrà millorar el circuit_optim afegint la activitat a

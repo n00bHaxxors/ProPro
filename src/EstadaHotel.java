@@ -20,7 +20,7 @@ public class EstadaHotel extends Activitat {
     }
     
     @Override
-    public boolean Acceptable (Circuit c){
+    public boolean Acceptable (Circuit c, Viatge v){
         return true;
     }
     
