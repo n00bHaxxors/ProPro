@@ -29,7 +29,12 @@ public class Desplaçament extends Activitat { //aka trasllat
      @post retorna cert si és acceptable i fals en c.c.*/
     @Override
     public boolean Acceptable (Circuit c, Viatge v){
-        return true;
+        boolean potSerNocturn = c.dies_total()==v.nombreDies() || c.dies_total() == 0;
+        LocalDateTime inici = diaActivitat().atTime(horaActivitat()), 
+                fi = inici.plusHours(Duracio().getHour()).plusMinutes(Duracio().getMinute());
+        // ! visitat, abans del final del dia, i menys de sis hores de visites totals diaries
+        boolean resultat = potSerNocturn || inici.isBefore(inici.plusDays(1).toLocalDate().atTime(0, 0)) && fi.isBefore(inici.plusDays(1).toLocalDate().atTime(0, 0));
+        return resultat;
     }
     
     /** @brief Consulta la duracio del desplaçament
