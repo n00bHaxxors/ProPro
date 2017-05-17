@@ -126,4 +126,10 @@ public class Circuit {
         }
         return temps;
     }
+    
+    /** @brief consulta si hem visitat un visitable
+     @pre v!=null
+     @post retorna cert si hem visitat v i fals en c.c.*/
+    public boolean visitaFeta(Visitable v){ return visitesFetes.containsKey(v.nom());}
+    
 }
