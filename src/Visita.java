@@ -35,9 +35,11 @@ public class Visita extends Activitat{
      @post retorna cert si és acceptable i fals en c.c.*/
     @Override
     public boolean Acceptable (Circuit c, Viatge v){
+        boolean shaVisitat = c.visitaFeta(visitat);
         LocalDateTime inici = diaActivitat().atTime(horaActivitat()), 
                 fi = inici.plusHours(Duracio().getHour()).plusMinutes(Duracio().getMinute());
-        boolean resultat = inici.isBefore(inici.plusDays(1).toLocalDate().atTime(0, 0)) && fi.isBefore(inici.plusDays(1).toLocalDate().atTime(0, 0)) &&
+        // ! visitat, abans del final del dia, i menys de sis hores de visites totals diaries
+        boolean resultat = !shaVisitat && inici.isBefore(inici.plusDays(1).toLocalDate().atTime(0, 0)) && fi.isBefore(inici.plusDays(1).toLocalDate().atTime(0, 0)) &&
                 c.horesVisites(diaActivitat()).plusHours(Duracio().getHour()).plusMinutes(Duracio().getMinute()).isBefore(LocalTime.of(6, 0));
         return resultat;
     }
