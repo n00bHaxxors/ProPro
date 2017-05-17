@@ -96,8 +96,13 @@ public class Circuit {
      @post retorna un LocalDateTime amb el dia i la hora en que s'acaba el circuit*/
     public LocalDateTime acabamentCircuit (){ return fi_viatge; }
     
-    public boolean solucioCompleta(Set<Visitable> c, PuntInteres desti){
-        boolean resultat = activitats.get(nActivitats-1).nomAct().equals(desti.nom());
+    /** @brief Consulta el dia i la hora en que iniciem el circuit
+     @pre 
+     @post retorna un LocalDateTime amb el dia i la hora en que es comença el circuit*/
+    public LocalDateTime iniciCircuit(){ return inici_viatge; }
+    
+    public boolean solucioCompleta(Set<Visitable> c, PuntInteres origen, PuntInteres desti, int diesV){
+        boolean resultat = activitats.get(nActivitats-1).nomAct().equals(desti.nom()) && activitats.get(0).nomAct().equals(origen.nom())&& diesV==dies;
         Iterator<Visitable> itr = c.iterator();
         while (resultat && itr.hasNext()){
             Visitable aux = itr.next();

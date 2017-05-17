@@ -2,6 +2,7 @@
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -34,20 +35,20 @@ public abstract class Backtracking {
         }
         HashMap<String,Circuit> resultat = new HashMap();
         if (v.RutaBarata()){
-            AlgBT(g,v.origen(),v.desti(),c,v,'b');
+            AlgBT(g,c,v,'b');
             resultat.put("ruta barata", solucio_optima);
             solucio_optima = new Circuit(v.dataHoraInici()); 
             solucio_actual = new Circuit(v.dataHoraInici());
         }
         if (v.RutaBarata()){
-            AlgBT(g,v.origen(),v.desti(),c,v,'c');
+            AlgBT(g,c,v,'c');
             resultat.put("ruta curta", solucio_optima);
             solucio_optima = new Circuit(v.dataHoraInici()); 
             solucio_actual = new Circuit(v.dataHoraInici());
         }
         
         if (v.RutaSatisfactoria()){
-            AlgBT(g,v.origen(),v.desti(),c,v,'c');
+            AlgBT(g,c,v,'c');
             resultat.put("ruta satisfactoria", solucio_optima);
             solucio_optima = new Circuit(v.dataHoraInici()); 
             solucio_actual = new Circuit(v.dataHoraInici());
@@ -58,13 +59,13 @@ public abstract class Backtracking {
     /** @brief Algoritme Backtracking (per preu[temp])
      @pre parametres no buits i a, b i els PuntInteres de c existents a g 
      @post solucio_optima passa amb el circuit demanat*/
-    private static void AlgBT(Mapa g, Visitable a, Visitable b, Set<Visitable> c, Viatge v, char o){
-        Iterator<Activitat> itr = inicialitzarCandidats(solucio_actual.ultimaActivitat(), g, a);
+    private static void AlgBT(Mapa g, Set<Visitable> c, Viatge v, char o){
+        Iterator<Activitat> itr = inicialitzarCandidats(solucio_actual.ultimaActivitat(), g, v.origen());
         while (itr.hasNext()){
             Activitat act = itr.next();
-            if(Acceptable(act) && EsPotMillorar(act, o, v.clients())){
+            if(Acceptable(act,v) && EsPotMillorar(act, o, v.clients())){
                 AnotarCandidat(act, v.clients(), g);
-                if (!SolucioCompleta(c,b)) AlgBT(g,a,b,c,v,o);
+                if (!SolucioCompleta(c,v.origen(),v.desti(),v.nombreDies())) AlgBT(g,c,v,o);
                 else{
                     if (MillorQueOptima(o)) solucio_optima = solucio_actual;
                 }
@@ -127,8 +128,14 @@ public abstract class Backtracking {
     /** @brief consulta si una activitat es acceptable
      @pre a != null
      @post retorna cert si la activitat compleix amb les condicions corresponents i fals en c.c.*/
-    private static boolean Acceptable(Activitat a){
-        return a.Acceptable(solucio_actual); //podem necessitar més parametres en futur, amés sembla que la funció no es necessaria, son pres i post de regal
+    private static boolean Acceptable(Activitat a, Viatge v){
+        LocalDateTime fi = solucio_actual.acabamentCircuit().toLocalDate().atTime(a.horaActivitat()).plusHours(a.Duracio().getHour()).plusMinutes(a.Duracio().getMinute());
+        long dies =ChronoUnit.DAYS.between(fi, solucio_actual.iniciCircuit());
+        LocalTime iniciHoraDinar = (LocalTime.of(12, 0)), fiHoraDinar = (LocalTime.of(14, 0));
+        boolean esHoraDinar = !a.horaActivitat().isBefore(iniciHoraDinar) && 
+                !a.horaActivitat().plusHours(a.Duracio().getHour()).plusMinutes(a.Duracio().getMinute()).isAfter(fiHoraDinar);
+        boolean resultatParcial = (solucio_actual.preu_persona() + a.preuAct()) < v.preuMaxim() && dies <= v.nombreDies() && !esHoraDinar;
+        return resultatParcial && a.Acceptable(solucio_actual); 
     }
     
     /** @brief consulta si el circuit actual encara podrà millorar el circuit_optim afegint la activitat a
@@ -165,8 +172,8 @@ public abstract class Backtracking {
     /** @brief Consulta si solucio actual es solucioCompleta
      @pre cert
      @post retorna cert si la solucio actual es completa i fals en cas contrari*/
-    private static boolean SolucioCompleta(Set<Visitable> c, PuntInteres desti){
-        return solucio_actual.solucioCompleta(c, desti);
+    private static boolean SolucioCompleta(Set<Visitable> c, PuntInteres origen, PuntInteres desti, int dies){
+        return solucio_actual.solucioCompleta(c,origen,desti, dies);
     }
     
     /** @brief consulta si la solucio actual es millor que la optima
