@@ -61,8 +61,10 @@ public class Desplaçament extends Activitat { //aka trasllat
      @pre cert
      @post Retorna el nom del MitjaTransport usat*/
     public String nomAct(){ return mitja.nom(); }
-    
-    
+        
+    /** @brief Passa el desplaçament a format String
+     @pre cert
+     @post Retorna una String amb el desplaçament*/
     @Override
     public String toString(){
         LocalTime horaFinal = horaActivitat().plusHours(Duracio().getHour()).plusMinutes(Duracio().getMinute());

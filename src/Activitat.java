@@ -58,7 +58,9 @@ public abstract class Activitat {
      @post Retorna el nom de l'activitat*/
     public abstract String nomAct();
     
-    
+    /** @brief Passa la activitat a format String
+     @pre cert
+     @post Retorna una String amb l'activitat*/
     @Override
     public abstract String toString();
     

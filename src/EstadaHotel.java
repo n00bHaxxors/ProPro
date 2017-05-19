@@ -55,7 +55,10 @@ public class EstadaHotel extends Activitat {
      @post Retorna el nom del Allotjament*/
     @Override
     public String nomAct(){ return hotel.nom(); }
-    
+        
+    /** @brief Passa l'estada al hotel a format String
+     @pre cert
+     @post Retorna una String amb l'estada al hotel*/
     @Override
     public String toString(){
         LocalTime horaFinal = horaActivitat().plusHours(Duracio().getHour()).plusMinutes(Duracio().getMinute());
