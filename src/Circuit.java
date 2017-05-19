@@ -105,7 +105,7 @@ public class Circuit {
      @pre c, origen, desti i diesV no nulls
      @post retorna cert si la solucio es completa i fals en c.c.*/
     public boolean solucioCompleta(Set<Visitable> c, PuntInteres origen, PuntInteres desti, int diesV){
-        boolean resultat = activitats.get(nActivitats-1).nomAct().equals(desti.nom()) && activitats.get(0).nomAct().equals(origen.nom())&& diesV==dies;
+        boolean resultat = activitats.get(nActivitats-1).nomAct().equals(desti.nom()) && activitats.get(0).nomAct().equals(origen.nom())&& diesV>=dies;
         Iterator<Visitable> itr = c.iterator();
         while (resultat && itr.hasNext()){
             Visitable aux = itr.next();
