@@ -59,4 +59,7 @@ public abstract class Activitat {
     public abstract String nomAct();
     
     
+    @Override
+    public abstract String toString();
+    
 }

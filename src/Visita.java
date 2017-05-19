@@ -65,4 +65,12 @@ public class Visita extends Activitat{
      @post Retorna el PuntInteres on s'ha acabat la activitat*/
     @Override
     public PuntInteres UbicacioActual(){ return visitat; }
+    
+    
+    @Override
+    public String toString(){
+        LocalTime horaFinal = horaActivitat().plusHours(Duracio().getHour()).plusMinutes(Duracio().getMinute());
+        String s = horaActivitat().toString() + " " + horaFinal.toString() + " " + nomAct();
+        return s;
+    }
 }
