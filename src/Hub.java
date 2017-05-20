@@ -57,5 +57,19 @@ public class Hub {
     public LocalTime tempsTrasllatTotal(){
         return temps_trasllat_origen.plusHours(temps_trasllat_desti.getHour()).plusMinutes(temps_trasllat_desti.getMinute());
     }
+    
+    /** @brief Consulta el que es tardara en trasllat al destí 
+     @pre cert
+     @post Retorna el temps de trasllat al desti*/
+    public LocalTime tempsTrasllatDesti(){
+        return temps_trasllat_desti;
+    }
+    
+    /** @brief Consulta el que es tardara en trasllat al origen
+     @pre cert
+     @post Retorna el temps de trasllat al origen*/
+    public LocalTime tempsTrasllatOrigen(){
+        return temps_trasllat_origen;
+    }
 
 }

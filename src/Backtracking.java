@@ -65,7 +65,7 @@ public abstract class Backtracking {
             Activitat act = itr.next();
             if(Acceptable(act,v) && EsPotMillorar(act, o, v.clients())){
                 AnotarCandidat(act, v.clients(), g);
-                if (!SolucioCompleta(c,v.origen(),v.desti(),v.nombreDies())) AlgBT(g,c,v,o);
+                if (!SolucioCompleta(c,v.origen(),v.desti(),v.nombreDies(),g)) AlgBT(g,c,v,o);
                 else{
                     if (MillorQueOptima(o)) solucio_optima = solucio_actual;
                 }
@@ -77,34 +77,39 @@ public abstract class Backtracking {
     /** @brief Inicialitza els candidats possibles en funció de la activitat anterior
      @pre a != null
      @post retorna un iterador a un conjunt amb els candidats possibles*/
-    private static Iterator<Activitat> inicialitzarCandidats(Activitat a, Mapa g, Visitable inici){
+    private static Iterator<Activitat> inicialitzarCandidats(Activitat a, Mapa g, Localitzacio inici){
         TreeSet<Activitat> arbre = new TreeSet();
-        PuntInteres pActual;
-        if (a!=null) pActual = a.UbicacioActual();
-        else pActual = inici;
-        Lloc llocActual = g.lloc(pActual.nomLloc());
-        LocalDateTime ara = solucio_actual.acabamentCircuit();
+        PuntInteres pActual = null;
+        if ((g.conteVisitable(a.UbicacioActual()) || g.conteAllotjament(a.UbicacioActual())) && a != null) pActual = g.puntInteres(a.UbicacioActual());
+        else if (!g.conteVisitable(a.UbicacioActual()) && !g.conteAllotjament(a.UbicacioActual())) return arbre.iterator();
+        else if (g.conteVisitable(inici.nom())) pActual = (PuntInteres) inici;
         Activitat actPActual = null;
-        if (pActual.obreAvui(ara) && !pActual.esLlocPas()) actPActual = pActual.ActivitatCorresponent(pActual.ProximaObertura(ara));
-        if(actPActual != null &&actPActual.Satisfaccio(g.clients())> 0) arbre.add(actPActual); 
-        //activitats x desplaçament directe desde el PI actual;
-        Iterator<MT_Directe> itr1 = pActual.TransportsDirectes();
-        while (itr1.hasNext()){
-            MT_Directe mtd = itr1.next();
-            Activitat aux = mtd.desplaçament(ara.toLocalDate(), ara.toLocalTime(), pActual);
-            arbre.add(aux);
-        }
-        //Transports directes amb el transport default del lloc
-        itr1 = llocActual.mitjansDirectes();
-        while (itr1.hasNext()){
-            MT_Directe mtd = itr1.next();
-            Iterator<PuntInteres> itr2 = llocActual.puntsInteres();
-            while(itr2.hasNext()){
-                PuntInteres pi = itr2.next();
-                Activitat aux = mtd.desplaçament(ara.toLocalDate(), ara.toLocalTime(), pActual, pi);
+        Lloc llocActual;
+        LocalDateTime ara = solucio_actual.acabamentCircuit();
+        if (pActual != null) {
+            llocActual = g.lloc(pActual.nomLloc());
+            if (pActual.obreAvui(ara) && !pActual.esLlocPas()) actPActual = pActual.ActivitatCorresponent(pActual.ProximaObertura(ara));
+            if (actPActual != null && actPActual.Satisfaccio(g.clients()) > 0) arbre.add(actPActual);
+            //activitats x desplaçament directe desde el PI actual;
+            Iterator<MT_Directe> itr1 = pActual.TransportsDirectes();
+            while (itr1.hasNext()){
+                MT_Directe mtd = itr1.next();
+                Activitat aux = mtd.desplaçament(ara.toLocalDate(), ara.toLocalTime(), pActual);
                 arbre.add(aux);
             }
+            //Transports directes amb el transport default del lloc
+            itr1 = llocActual.mitjansDirectes();
+            while (itr1.hasNext()){
+                MT_Directe mtd = itr1.next();
+                Iterator<PuntInteres> itr2 = llocActual.puntsInteres();
+                while(itr2.hasNext()){
+                    PuntInteres pi = itr2.next();
+                    Activitat aux = mtd.desplaçament(ara.toLocalDate(), ara.toLocalTime(), pActual, pi);
+                    arbre.add(aux);
+                }
+            }
         }
+        else llocActual = (Lloc) inici;
         //Activitats x desplaçament indirecte desde el lloc actual
         Iterator<Hub> itr2 = llocActual.hubs();
         while (itr2.hasNext()){
@@ -113,7 +118,12 @@ public abstract class Backtracking {
             Iterator<MT_Indirecte> itr3 = h.transports();
              while(itr3.hasNext()){
                 MT_Indirecte mti = itr3.next();
-                LocalTime duradaTotal = mti.durada().plusHours(h.tempsTrasllatTotal().getHour()).plusMinutes(h.tempsTrasllatTotal().getMinute());
+                LocalTime duradaTotal;
+                if (pActual!=null) duradaTotal = mti.durada().plusHours(h.tempsTrasllatTotal().getHour()).plusMinutes(h.tempsTrasllatTotal().getMinute());
+                else duradaTotal = mti.durada().plusHours(h.tempsTrasllatDesti().getHour()).plusMinutes(h.tempsTrasllatDesti().getMinute());
+                LocalTime duradaTotal2 = mti.durada().plusHours(h.tempsTrasllatOrigen().getHour()).plusMinutes(h.tempsTrasllatOrigen().getMinute());
+                Desplaçament temp = new Desplaçament(mti.preu(),mti.diaHoraSortida().toLocalDate(),mti.diaHoraSortida().toLocalTime(),
+                    mti, pActual, l, duradaTotal2);
                 Iterator<PuntInteres> itr4 = l.puntsInteres();
                 while (itr4.hasNext()){
                     PuntInteres pi = itr4.next();
@@ -123,6 +133,8 @@ public abstract class Backtracking {
                 }
             }
         }
+         
+        
         return arbre.iterator();
     }
     
@@ -173,8 +185,8 @@ public abstract class Backtracking {
     /** @brief Consulta si solucio actual es solucioCompleta
      @pre cert
      @post retorna cert si la solucio actual es completa i fals en cas contrari*/
-    private static boolean SolucioCompleta(Set<Visitable> c, PuntInteres origen, PuntInteres desti, int dies){
-        return solucio_actual.solucioCompleta(c,origen,desti, dies);
+    private static boolean SolucioCompleta(Set<Visitable> c, Localitzacio origen, Localitzacio desti, int dies, Mapa g){
+        return solucio_actual.solucioCompleta(c,origen,desti, dies, g);
     }
     
     /** @brief consulta si la solucio actual es millor que la optima

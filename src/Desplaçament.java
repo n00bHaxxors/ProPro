@@ -8,13 +8,13 @@ import java.time.*;
 public class Desplaçament extends Activitat { //aka trasllat
 
     private Mitja_Transport mitja;
-    private PuntInteres origen, desti;
+    private Localitzacio origen, desti;
     private LocalTime durada;
  
     /** @brief Constructor amb parametres
      @pre cert
      @post Desplaçament amb preu, duracio, mitja, origen i desti creat*/
-    public Desplaçament(int p, LocalDate d, LocalTime h, Mitja_Transport m, PuntInteres o, PuntInteres de, LocalTime duracio){
+    public Desplaçament(int p, LocalDate d, LocalTime h, Mitja_Transport m, Localitzacio o, Localitzacio de, LocalTime duracio){
         super(d,h,p);
         mitja=m; origen=o; desti=de; durada = duracio;
     }
@@ -53,9 +53,9 @@ public class Desplaçament extends Activitat { //aka trasllat
     
     /** @brief consulta la ubicacio on s'ha acabat la activitat
      @pre cert
-     @post Retorna el PuntInteres on s'ha acabat la activitat*/
+     @post Retorna el nom de la Localitzacio on s'ha acabat la activitat*/
     @Override
-    public PuntInteres UbicacioActual(){ return desti; }
+    public String UbicacioActual(){ return desti.nom(); }
     
     /** @brief Consulta el nom del Mitja usat
      @pre cert

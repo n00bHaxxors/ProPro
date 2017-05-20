@@ -9,7 +9,7 @@ import java.util.TimeZone;
  @author Lluís Trilla
  */
 
-public class Lloc {
+public class Lloc extends Localitzacio{
     private String Nom;
     private Coordenada CoordenadaLloc;
     private TimeZone Zona;
@@ -50,6 +50,7 @@ public class Lloc {
      @pre cert
      @post Retorna el nom del lloc
      */
+    @Override
     public String nom(){
         return Nom;
     }
@@ -57,6 +58,7 @@ public class Lloc {
      @pre cert
      @post Retorna la coordenada geogràfica del lloc
      */
+    @Override
     public Coordenada coordenada(){
         return CoordenadaLloc;
     }
@@ -64,6 +66,7 @@ public class Lloc {
      @pre cert
      @post Retorna la zona horària del lloc
      */
+    @Override
     public TimeZone zona(){
         return Zona;
     }

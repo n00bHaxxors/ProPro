@@ -48,7 +48,7 @@ public class EstadaHotel extends Activitat {
      @pre cert
      @post Retorna el PuntInteres on s'ha acabat la activitat*/
     @Override
-    public PuntInteres UbicacioActual(){ return hotel; }
+    public String UbicacioActual(){ return hotel.nom(); }
     
     /** @brief Consulta el nom del Allotjament
      @pre cert

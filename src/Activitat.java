@@ -50,8 +50,8 @@ public abstract class Activitat {
     
     /** @brief consulta la ubicacio on s'ha acabat la activitat
      @pre cert
-     @post Retorna el PuntInteres on s'ha acabat la activitat*/
-    public abstract PuntInteres UbicacioActual();
+     @post Retorna el nom de la Localització on s'ha acabat la activitat*/
+    public abstract String UbicacioActual();
     
     /** @brief consulta el nom de l'activitat
      @pre cert

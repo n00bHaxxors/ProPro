@@ -104,8 +104,13 @@ public class Circuit {
     /** @brief Consulta si el circuit actual es una solucio completa
      @pre c, origen, desti i diesV no nulls
      @post retorna cert si la solucio es completa i fals en c.c.*/
-    public boolean solucioCompleta(Set<Visitable> c, PuntInteres origen, PuntInteres desti, int diesV){
-        boolean resultat = activitats.get(nActivitats-1).nomAct().equals(desti.nom()) && activitats.get(0).nomAct().equals(origen.nom())&& diesV>=dies;
+    public boolean solucioCompleta(Set<Visitable> c, Localitzacio origen, Localitzacio desti, int diesV, Mapa g){
+        //comprovem que origen i desti son visitables
+        boolean oVis = g.conteVisitable(origen.nom()), dVis = g.conteVisitable(desti.nom());
+        boolean resultat = diesV>=dies;
+        if (oVis) resultat = resultat && activitats.get(0).nomAct().equals(origen.nom()) && visitesFetes.containsKey(origen.nom());
+        if (dVis) resultat = resultat && activitats.get(nActivitats-1).nomAct().equals(desti.nom()) && visitesFetes.containsKey(desti.nom());
+        else resultat = resultat && activitats.get(nActivitats-1).UbicacioActual().equals(desti.nom());
         Iterator<Visitable> itr = c.iterator();
         while (resultat && itr.hasNext()){
             Visitable aux = itr.next();

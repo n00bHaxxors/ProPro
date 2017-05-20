@@ -12,7 +12,7 @@ import java.util.TimeZone;
     @author Ismael El Habri
 */
 
-public abstract class PuntInteres {
+public abstract class PuntInteres extends Localitzacio{
     //Atributs
     private String nom;
     private int preu;
@@ -36,6 +36,7 @@ public abstract class PuntInteres {
     /** @brief Consulta el nom del punt d'interès
 	@pre cert
 	@post retorna el nom */
+    @Override
     public String nom(){  return nom; }
     
     /** @brief Consulta el preu del punt d'interès
@@ -46,7 +47,15 @@ public abstract class PuntInteres {
     /** @brief Consulta la posició del punt d'interès
 	@pre cert
 	@post retorna les coordenades del punt d'interès */
-    public Coordenada posicio(){ return ubicacio; }
+    @Override
+    public Coordenada coordenada(){ return ubicacio; }
+    
+    /** @brief Consulta la zona horària del punt d'interes
+     @pre cert
+     @post Retorna la zona horària del punt d'interes
+     */
+    @Override
+    public TimeZone zona(){ return zona; }
     
     /** @brief Pregunta si el punt d'Interès té una característica en concret
 	@pre cert

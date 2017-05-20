@@ -62,9 +62,9 @@ public class Visita extends Activitat{
     
     /** @brief consulta la ubicacio on s'ha acabat la activitat
      @pre cert
-     @post Retorna el PuntInteres on s'ha acabat la activitat*/
+     @post Retorna el nom de la Localització on s'ha acabat la activitat*/
     @Override
-    public PuntInteres UbicacioActual(){ return visitat; }
+    public String UbicacioActual(){ return visitat.nom(); }
      
     /** @brief Passa la visitaa format String
      @pre cert

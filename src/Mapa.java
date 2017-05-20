@@ -70,4 +70,20 @@ public class Mapa {
 	@post retorna cert si existeix un visitable anomenat n i fals en c.c.
     */
     public boolean conteVisitable(String n){ return mapaV.containsKey(n); }
+    
+    /** @brief consulta si hi ha un Allotjament amb el nom donat
+	@pre cert
+	@post retorna cert si existeix un visitable anomenat n i fals en c.c.
+    */
+    public boolean conteAllotjament(String n){ return mapaA.containsKey(n); }
+    
+    /** @brief consulta el Punt d'Interes demanat
+	@pre cert
+	@post retorna el punt d'interes amb nom n i si no existeix retorna nulls
+    */
+    public PuntInteres puntInteres(String n) {
+        if (mapaV.containsKey(n)) return mapaV.get(n);
+        else if (mapaA.containsKey(n)) return mapaA.get(n);
+        else return null;
+    }
 }
