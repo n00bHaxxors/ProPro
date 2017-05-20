@@ -60,7 +60,7 @@ public abstract class Backtracking {
      @pre parametres no buits i a, b i els PuntInteres de c existents a g 
      @post solucio_optima passa amb el circuit demanat*/
     private static void AlgBT(Mapa g, Set<Visitable> c, Viatge v, char o){
-        Iterator<Activitat> itr = inicialitzarCandidats(solucio_actual.ultimaActivitat(), g, v.origen());
+        Iterator<Activitat> itr = inicialitzarCandidats(solucio_actual.ultimaActivitat(), g, v.origen(), v.desti());
         while (itr.hasNext()){
             Activitat act = itr.next();
             if(Acceptable(act,v) && EsPotMillorar(act, o, v.clients())){
@@ -77,7 +77,7 @@ public abstract class Backtracking {
     /** @brief Inicialitza els candidats possibles en funció de la activitat anterior
      @pre a != null
      @post retorna un iterador a un conjunt amb els candidats possibles*/
-    private static Iterator<Activitat> inicialitzarCandidats(Activitat a, Mapa g, Localitzacio inici){
+    private static Iterator<Activitat> inicialitzarCandidats(Activitat a, Mapa g, Localitzacio inici, Localitzacio fi){
         TreeSet<Activitat> arbre = new TreeSet();
         PuntInteres pActual = null;
         if ((g.conteVisitable(a.UbicacioActual()) || g.conteAllotjament(a.UbicacioActual())) && a != null) pActual = g.puntInteres(a.UbicacioActual());
@@ -121,9 +121,12 @@ public abstract class Backtracking {
                 LocalTime duradaTotal;
                 if (pActual!=null) duradaTotal = mti.durada().plusHours(h.tempsTrasllatTotal().getHour()).plusMinutes(h.tempsTrasllatTotal().getMinute());
                 else duradaTotal = mti.durada().plusHours(h.tempsTrasllatDesti().getHour()).plusMinutes(h.tempsTrasllatDesti().getMinute());
-                LocalTime duradaTotal2 = mti.durada().plusHours(h.tempsTrasllatOrigen().getHour()).plusMinutes(h.tempsTrasllatOrigen().getMinute());
-                Desplaçament temp = new Desplaçament(mti.preu(),mti.diaHoraSortida().toLocalDate(),mti.diaHoraSortida().toLocalTime(),
-                    mti, pActual, l, duradaTotal2);
+                if (l.nom().equals(fi)){
+                    LocalTime duradaTotal2 = mti.durada().plusHours(h.tempsTrasllatOrigen().getHour()).plusMinutes(h.tempsTrasllatOrigen().getMinute());
+                    Desplaçament temp = new Desplaçament(mti.preu(),mti.diaHoraSortida().toLocalDate(),mti.diaHoraSortida().toLocalTime(),
+                        mti, pActual, l, duradaTotal2);
+                    arbre.add(temp);
+                }
                 Iterator<PuntInteres> itr4 = l.puntsInteres();
                 while (itr4.hasNext()){
                     PuntInteres pi = itr4.next();
