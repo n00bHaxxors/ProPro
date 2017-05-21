@@ -56,13 +56,16 @@ public abstract class Voraç {
         return res;
     }
 
-    private Activitat Buscar_Prometedor(Circuit resultat, Viatge viatge, Iterator<Activitat> itr_candidats, TreeMap<Activitat,Boolean> visitats, char tipus) {
+    /** @brief Busca l'activitat que maximitza la qualitat (?) del circuit
+     @pre Circuit, viatge, itr i visitats no nulls, tipus=b/c/p
+     @post Retorna l'activitat més prometedora*/
+    private Activitat Buscar_Prometedor(Circuit circuit, Viatge viatge, Iterator<Activitat> itr_candidats, TreeMap<Activitat,Boolean> visitats, char tipus) {
         Activitat iCan, millor = null;
 
         while (itr_candidats.hasNext()) {
             iCan=itr_candidats.next();
             //SI activitat és un lloc per on hem de passar obligatoriament PASSARHI (retornar aquesta activitat ja) (?)
-            if (visitats.get(iCan)!=null && ModulCalculs.Acceptable(iCan,viatge,resultat)) { //falten condicions
+            if (visitats.get(iCan)!=null && ModulCalculs.Acceptable(iCan,viatge,circuit)) { //falten condicions
                 if (comparar(iCan,millor,viatge.clients(),tipus))
                     millor = iCan;
             }
@@ -71,13 +74,12 @@ public abstract class Voraç {
         return millor;
     }
 
-    public Circuit Alg_Voraç(Mapa mapa, Viatge viatge, char tipus_voraç){
-        int diners_gastats = 0, grau_satisfaccio = 0;
-        //PuntInteres origen, PuntInteres desti, Set<PuntInteres> a_visitar,
+    public static Circuit Alg_Voraç(Mapa mapa, Viatge viatge, char tipus_voraç){
+        //int diners_gastats = 0, grau_satisfaccio = 0;
         TreeMap<Activitat,Boolean> visitats=new TreeMap<>();
-        LocalTime durada = null;
-        Activitat iCan= new Visita(); //activitat stub per complir la condicio del while
-        Circuit resultat=new Circuit(viatge.dataHoraInici());
+        //LocalTime durada = null;
+        Activitat iCan = new Visita(); //activitat stub per entrar al while
+        Circuit circuit = new Circuit(viatge.dataHoraInici());
         Iterator<Activitat> itr_candidats;
 
         TreeSet<Visitable> obligatoris = new TreeSet();
@@ -87,22 +89,20 @@ public abstract class Voraç {
             obligatoris.add(aux);
         }
 
-        while(!resultat.solucioCompleta(obligatoris,viatge.origen(),viatge.desti(),viatge.nombreDies(),mapa) && iCan!=null){ //&& tenimdiners() && tenimtemps()
-            //ModulCalculs.Acceptable(iCan,)
-            //ModulCalculs.inicialitzarCandidats(solucio_actual.ultimaActivitat(), g, v.origen(), v.desti(),solucio_actual);
-            itr_candidats=ModulCalculs.inicialitzarCandidats(resultat.ultimaActivitat(), mapa, viatge.origen(), viatge.desti(),resultat);
-            iCan=Buscar_Prometedor(resultat,viatge,itr_candidats,visitats,tipus_voraç);
+        while(!circuit.solucioCompleta(obligatoris,viatge.origen(),viatge.desti(),viatge.nombreDies(),mapa) && iCan!=null){
+            itr_candidats=ModulCalculs.inicialitzarCandidats(circuit.ultimaActivitat(), mapa, viatge.origen(), viatge.desti(),circuit);
+            iCan=Buscar_Prometedor(circuit,viatge,itr_candidats,visitats,tipus_voraç);
             if(iCan!=null){ //???
-                diners_gastats+=iCan.preuAct();
-                grau_satisfaccio+=iCan.Satisfaccio(viatge.clients()); //esta bé?
+                //diners_gastats+=iCan.preuAct();
+                //grau_satisfaccio+=iCan.Satisfaccio(viatge.clients()); //esta bé?
                 //durada.plus(iCan.Duracio()); //WIP
-                visitats.put(iCan,true);
-                resultat.afegirActivitat(iCan, viatge.clients(), mapa);
+                //visitats.put(iCan,true);
+                circuit.afegirActivitat(iCan, viatge.clients(), mapa);
             }
         }
-        //if(completa())resultat=new Circuit(diners_gastats,grau_satisfaccio,durada,activitats);
+        //if(completa())circuit=new Circuit(diners_gastats,grau_satisfaccio,durada,activitats);
 
-        return resultat;
+        return circuit;
     }
 
     public HashMap<String,Circuit> Circuit_Voraç(Mapa m, Viatge v){
