@@ -38,7 +38,7 @@ public abstract class Voraç {
     /** @brief Fa la comparació corresponent en funcio del tipus de variable a optimitzar
      @pre actual i millor != null i tipus=p,s,d
      @post Retorna cert si l'activitat actual és millor que la millor activitat trobada fins el moment*/
-    private Boolean comparar(Activitat actual, Activitat millor, GrupClients gc, char tipus){
+    private static Boolean comparar(Activitat actual, Activitat millor, GrupClients gc, char tipus){
         Boolean res=true;
         if(millor!=null){
             switch(tipus){
@@ -59,7 +59,7 @@ public abstract class Voraç {
     /** @brief Busca l'activitat que maximitza la qualitat (?) del circuit
      @pre Circuit, viatge, itr i visitats no nulls, tipus=b/c/p
      @post Retorna l'activitat més prometedora*/
-    private Activitat Buscar_Prometedor(Circuit circuit, Viatge viatge, Iterator<Activitat> itr_candidats, TreeMap<Activitat,Boolean> visitats, char tipus) {
+    private static Activitat Buscar_Prometedor(Circuit circuit, Viatge viatge, Iterator<Activitat> itr_candidats, TreeMap<Activitat, Boolean> visitats, char tipus) {
         Activitat iCan, millor = null;
 
         while (itr_candidats.hasNext()) {
