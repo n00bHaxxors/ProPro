@@ -135,5 +135,12 @@ public class Circuit {
      @pre v!=null
      @post retorna cert si hem visitat v i fals en c.c.*/
     public boolean visitaFeta(Visitable v){ return visitesFetes.containsKey(v.nom());}
+
+    /** @brief retorna un iterador que recore les activitats que faran els clients
+     @pre cert
+     @post retorna un iterador de les activitats del circuit*/
+    public Iterator<Activitat> Activitats(){
+        return activitats.iterator();
+    }
     
 }
