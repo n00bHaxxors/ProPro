@@ -74,6 +74,9 @@ public abstract class Voraç {
         return millor;
     }
 
+    /** @brief Algoritme voraç que busca una ruta relativament bona
+     @pre mapa i viatge no nuls, tipus=b/c/p
+     @post Retorna un circuit amb la ruta trobada optimitzant en funció del tipus_voraç*/
     public static Circuit Alg_Voraç(Mapa mapa, Viatge viatge, char tipus_voraç){
         //int diners_gastats = 0, grau_satisfaccio = 0;
         TreeMap<Activitat,Boolean> visitats=new TreeMap<>();
@@ -100,12 +103,14 @@ public abstract class Voraç {
                 circuit.afegirActivitat(iCan, viatge.clients(), mapa);
             }
         }
-        //if(completa())circuit=new Circuit(diners_gastats,grau_satisfaccio,durada,activitats);
 
         return circuit;
     }
 
-    public HashMap<String,Circuit> Circuit_Voraç(Mapa m, Viatge v){
+    /** @brief Calcula
+     @pre m i v no nuls
+     @post Retorna un HashMap*/
+    public static HashMap<String,Circuit> Circuit_Voraç(Mapa m, Viatge v){
         final char tipus_voraç[]={'b','c','s'};
         final String tipus_rutes[]={"barata","curta","satisfactoria"};
         final Boolean rutes[]={v.RutaBarata(),v.RutaCurta(),v.RutaSatisfactoria()};
