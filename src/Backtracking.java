@@ -1,4 +1,7 @@
 
+/** @file Backtracking.java
+    @brief Backtracking
+*/
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -9,9 +12,6 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
-/** @file Backtracking.java
-    @brief Backtracking
-*/
 
 /** @class Backtracking
     @brief Modul funcional per calcular els camins del Backtracking
@@ -40,17 +40,15 @@ public abstract class Backtracking {
             solucio_optima = new Circuit(v.dataHoraInici()); 
             solucio_actual = new Circuit(v.dataHoraInici());
         }
-        else if (v.RutaCurta()){
+        if (v.RutaCurta()){
             AlgBT(g,c,v,'c');
             resultat.put("ruta curta", solucio_optima);
             solucio_optima = new Circuit(v.dataHoraInici()); 
             solucio_actual = new Circuit(v.dataHoraInici());
         }
-        else if (v.RutaSatisfactoria()){
+        if (v.RutaSatisfactoria()){
             AlgBT(g,c,v,'s');
             resultat.put("ruta satisfactoria", solucio_optima);
-            solucio_optima = new Circuit(v.dataHoraInici()); 
-            solucio_actual = new Circuit(v.dataHoraInici());
         }
         return resultat;
     }

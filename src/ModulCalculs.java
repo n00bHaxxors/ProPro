@@ -1,15 +1,19 @@
+/** @file ModulCalculs.java
+    @brief ModulCalculs
+*/
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-/** @class
- @brief Modul funcional per
+/** @class ModulCalculs
+ @brief Modul funcional amb calculs comuns tant en el Algoritme de Backtracking com el Greedy
  @author Ismael El Habri
  */
 
-public class ModulCalculs {
+public abstract class ModulCalculs {
     /** @brief Inicialitza els candidats possibles en funció de la activitat anterior
      @pre a != null
      @post retorna un iterador a un conjunt amb els candidats possibles*/
