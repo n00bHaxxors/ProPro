@@ -47,7 +47,6 @@ public abstract class Voraç {
                     break;
                 case 's':
                     res=actual.Satisfaccio(gc)>millor.Satisfaccio(gc);
-                    //??
                     break;
                 case 'd':
                     res=actual.Duracio().isBefore(millor.Duracio());
@@ -63,7 +62,7 @@ public abstract class Voraç {
         while (itr_candidats.hasNext()) {
             iCan=itr_candidats.next();
             //SI activitat és un lloc per on hem de passar obligatoriament PASSARHI (retornar aquesta activitat ja) (?)
-            if (!visitats.get(iCan) && ModulCalculs.Acceptable(iCan,viatge,resultat)) { //falten condicions
+            if (visitats.get(iCan)!=null && ModulCalculs.Acceptable(iCan,viatge,resultat)) { //falten condicions
                 if (comparar(iCan,millor,viatge.clients(),tipus))
                     millor = iCan;
             }
@@ -72,9 +71,8 @@ public abstract class Voraç {
         return millor;
     }
 
-    public Circuit Circuit_voraç(Mapa mapa, Viatge viatge){
+    public Circuit Alg_Voraç(Mapa mapa, Viatge viatge, char tipus_voraç){
         int diners_gastats = 0, grau_satisfaccio = 0;
-        char tipus_voraç=viatge.RutaBarata()?'b':(viatge.RutaCurta()?'c':'s');
         //PuntInteres origen, PuntInteres desti, Set<PuntInteres> a_visitar,
         TreeMap<Activitat,Boolean> visitats=new TreeMap<Activitat,Boolean>();
         LocalTime durada = null;
@@ -104,6 +102,16 @@ public abstract class Voraç {
         }
         //if(completa())resultat=new Circuit(diners_gastats,grau_satisfaccio,durada,activitats);
 
+        return resultat;
+    }
+
+    public HashMap<String,Circuit> Circuit_Voraç(Mapa mapa, Viatge viatge){
+        char tipus_voraç=viatge.RutaBarata()?'b':(viatge.RutaCurta()?'c':'s');
+        String rutes[]={"barata","curta","satisfactoria"}, tipus=null;
+        for(String s: rutes){if(s.charAt(0)==tipus_voraç){tipus=s;break;}}
+        HashMap<String,Circuit> resultat = new HashMap();
+        Circuit circuit=Alg_Voraç(mapa,viatge,tipus_voraç);
+        resultat.put("ruta "+tipus,circuit);
         return resultat;
     }
 }
