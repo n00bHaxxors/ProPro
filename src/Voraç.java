@@ -71,7 +71,7 @@ public abstract class Voraç {
         return millor;
     }
 
-    public Circuit Alg_Voraç(Mapa mapa, Viatge viatge, char tipus_voraç){
+    public static Circuit Alg_Voraç(Mapa mapa, Viatge viatge, char tipus_voraç){
         int diners_gastats = 0, grau_satisfaccio = 0;
         //PuntInteres origen, PuntInteres desti, Set<PuntInteres> a_visitar,
         TreeMap<Activitat,Boolean> visitats=new TreeMap<Activitat,Boolean>();
@@ -79,7 +79,6 @@ public abstract class Voraç {
         Activitat iCan= new Visita(); //activitat stub per complir la condicio del while
         Circuit resultat=new Circuit(viatge.dataHoraInici());
         Iterator<Activitat> itr_candidats;
-
         TreeSet<Visitable> obligatoris = new TreeSet();
         Iterator<Visitable> itr_visitables = viatge.iteradorVisitables();
         while(itr_visitables.hasNext()){
