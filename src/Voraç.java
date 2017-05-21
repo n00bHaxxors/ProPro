@@ -1,29 +1,14 @@
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.*;
 
-/**
- * Created by Markus on 10/05/2017.
+/** @class Voraç
+ @brief Conté l'algoritme que busca una ruta relativament bona
+ @author Marc Cané Salamià
  */
 
 public abstract class Voraç {
-
-    //Post: retorna cert si queden candidats no visitats
-    /*private Boolean Queden_candidats(){
-        int i;
-        Boolean trobat=false;
-        while(!trobat){
-            //if(candidat_valid(candidat[i])
-                //trobat=true;
-            
-            i++;
-        }
-        return trobat;
-    }*/
-
-
 
     private Boolean completa(PuntInteres desti, Set<PuntInteres> a_visitar, ArrayList<Activitat> activitats){
         Boolean c1, c2;
