@@ -38,7 +38,7 @@ public abstract class Voraç {
     /** @brief Fa la comparació corresponent en funcio del tipus de variable a optimitzar
      @pre actual i millor != null i tipus=p,s,d
      @post Retorna cert si l'activitat actual és millor que la millor activitat trobada fins el moment*/
-    private Boolean comparar(Activitat actual, Activitat millor, GrupClients gc, char tipus){
+    private static Boolean comparar(Activitat actual, Activitat millor, GrupClients gc, char tipus){
         Boolean res=true;
         if(millor!=null){
             switch(tipus){
@@ -56,13 +56,16 @@ public abstract class Voraç {
         return res;
     }
 
-    private Activitat Buscar_Prometedor(Circuit resultat, Viatge viatge, Iterator<Activitat> itr_candidats, TreeMap<Activitat,Boolean> visitats, char tipus) {
+    /** @brief Busca l'activitat que maximitza la qualitat (?) del circuit
+     @pre Circuit, viatge, itr i visitats no nulls, tipus=b/c/p
+     @post Retorna l'activitat més prometedora*/
+    private static Activitat Buscar_Prometedor(Circuit circuit, Viatge viatge, Iterator<Activitat> itr_candidats, TreeMap<Activitat, Boolean> visitats, char tipus) {
         Activitat iCan, millor = null;
 
         while (itr_candidats.hasNext()) {
             iCan=itr_candidats.next();
             //SI activitat és un lloc per on hem de passar obligatoriament PASSARHI (retornar aquesta activitat ja) (?)
-            if (visitats.get(iCan)!=null && ModulCalculs.Acceptable(iCan,viatge,resultat)) { //falten condicions
+            if (visitats.get(iCan)!=null && ModulCalculs.Acceptable(iCan,viatge,circuit)) { //falten condicions
                 if (comparar(iCan,millor,viatge.clients(),tipus))
                     millor = iCan;
             }
@@ -72,13 +75,13 @@ public abstract class Voraç {
     }
 
     public static Circuit Alg_Voraç(Mapa mapa, Viatge viatge, char tipus_voraç){
-        int diners_gastats = 0, grau_satisfaccio = 0;
-        //PuntInteres origen, PuntInteres desti, Set<PuntInteres> a_visitar,
-        TreeMap<Activitat,Boolean> visitats=new TreeMap<Activitat,Boolean>();
-        LocalTime durada = null;
-        Activitat iCan= new Visita(); //activitat stub per complir la condicio del while
-        Circuit resultat=new Circuit(viatge.dataHoraInici());
+        //int diners_gastats = 0, grau_satisfaccio = 0;
+        TreeMap<Activitat,Boolean> visitats=new TreeMap<>();
+        //LocalTime durada = null;
+        Activitat iCan = new Visita(); //activitat stub per entrar al while
+        Circuit circuit = new Circuit(viatge.dataHoraInici());
         Iterator<Activitat> itr_candidats;
+
         TreeSet<Visitable> obligatoris = new TreeSet();
         Iterator<Visitable> itr_visitables = viatge.iteradorVisitables();
         while(itr_visitables.hasNext()){
@@ -86,31 +89,32 @@ public abstract class Voraç {
             obligatoris.add(aux);
         }
 
-        while(!resultat.solucioCompleta(obligatoris,viatge.origen(),viatge.desti(),viatge.nombreDies(),mapa) && iCan!=null){ //&& tenimdiners() && tenimtemps()
-            //ModulCalculs.Acceptable(iCan,)
-            //ModulCalculs.inicialitzarCandidats(solucio_actual.ultimaActivitat(), g, v.origen(), v.desti(),solucio_actual);
-            itr_candidats=ModulCalculs.inicialitzarCandidats(resultat.ultimaActivitat(), mapa, viatge.origen(), viatge.desti(),resultat);
-            iCan=Buscar_Prometedor(resultat,viatge,itr_candidats,visitats,tipus_voraç);
+        while(!circuit.solucioCompleta(obligatoris,viatge.origen(),viatge.desti(),viatge.nombreDies(),mapa) && iCan!=null){
+            itr_candidats=ModulCalculs.inicialitzarCandidats(circuit.ultimaActivitat(), mapa, viatge.origen(), viatge.desti(),circuit);
+            iCan=Buscar_Prometedor(circuit,viatge,itr_candidats,visitats,tipus_voraç);
             if(iCan!=null){ //???
-                diners_gastats+=iCan.preuAct();
-                grau_satisfaccio+=iCan.Satisfaccio(viatge.clients()); //esta bé?
+                //diners_gastats+=iCan.preuAct();
+                //grau_satisfaccio+=iCan.Satisfaccio(viatge.clients()); //esta bé?
                 //durada.plus(iCan.Duracio()); //WIP
-                visitats.put(iCan,true);
-                resultat.afegirActivitat(iCan, viatge.clients(), mapa);
+                //visitats.put(iCan,true);
+                circuit.afegirActivitat(iCan, viatge.clients(), mapa);
             }
         }
-        //if(completa())resultat=new Circuit(diners_gastats,grau_satisfaccio,durada,activitats);
+        //if(completa())circuit=new Circuit(diners_gastats,grau_satisfaccio,durada,activitats);
 
-        return resultat;
+        return circuit;
     }
 
-    public HashMap<String,Circuit> Circuit_Voraç(Mapa mapa, Viatge viatge){
-        char tipus_voraç=viatge.RutaBarata()?'b':(viatge.RutaCurta()?'c':'s');
-        String rutes[]={"barata","curta","satisfactoria"}, tipus=null;
-        for(String s: rutes){if(s.charAt(0)==tipus_voraç){tipus=s;break;}}
-        HashMap<String,Circuit> resultat = new HashMap();
-        Circuit circuit=Alg_Voraç(mapa,viatge,tipus_voraç);
-        resultat.put("ruta "+tipus,circuit);
-        return resultat;
+    public HashMap<String,Circuit> Circuit_Voraç(Mapa m, Viatge v){
+        final char tipus_voraç[]={'b','c','s'};
+        final String tipus_rutes[]={"barata","curta","satisfactoria"};
+        final Boolean rutes[]={v.RutaBarata(),v.RutaCurta(),v.RutaSatisfactoria()};
+        HashMap<String,Circuit> res = new HashMap();
+
+        for(int i=0;i<3;i++)
+            if (rutes[i]) 
+                res.put("ruta "+tipus_rutes[i], Alg_Voraç(m, v, tipus_voraç[i]));
+
+        return res;
     }
 }
