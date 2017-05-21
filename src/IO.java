@@ -209,11 +209,10 @@ class IO {
             if (visitableActual.nom().equals(nomDesti)) trobat = true;
             else visitableActual = jt.next();
         }
-        String lloc = scan.readLine();
         trobat = false;
         Lloc LlocActual = llocIt.next();
         while (llocIt.hasNext() && !trobat) {
-            if (LlocActual.nom().equals(lloc)) trobat = true;
+            if (LlocActual.nom().equals(nomOrigen)) trobat = true;
             else LlocActual = llocIt.next();
         }
         if (jt.hasNext()) {
@@ -259,6 +258,8 @@ class IO {
             if (llocOrigen.nom().equals(nomOrigen)) trobat = true;
             else llocOrigen = llocIt.next();
         }
+        trobat = false;
+        llocIt = LlistaLlocs.iterator();
         Lloc llocDesti = llocIt.next();
         while (llocIt.hasNext() && !trobat) {
             if (llocDesti.nom().equals(nomDesti)) trobat = true;
