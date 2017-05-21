@@ -74,7 +74,7 @@ public abstract class Voraç {
     public Circuit Alg_Voraç(Mapa mapa, Viatge viatge, char tipus_voraç){
         int diners_gastats = 0, grau_satisfaccio = 0;
         //PuntInteres origen, PuntInteres desti, Set<PuntInteres> a_visitar,
-        TreeMap<Activitat,Boolean> visitats=new TreeMap<Activitat,Boolean>();
+        TreeMap<Activitat,Boolean> visitats=new TreeMap<>();
         LocalTime durada = null;
         Activitat iCan= new Visita(); //activitat stub per complir la condicio del while
         Circuit resultat=new Circuit(viatge.dataHoraInici());
@@ -105,13 +105,16 @@ public abstract class Voraç {
         return resultat;
     }
 
-    public HashMap<String,Circuit> Circuit_Voraç(Mapa mapa, Viatge viatge){
-        char tipus_voraç=viatge.RutaBarata()?'b':(viatge.RutaCurta()?'c':'s');
-        String rutes[]={"barata","curta","satisfactoria"}, tipus=null;
-        for(String s: rutes){if(s.charAt(0)==tipus_voraç){tipus=s;break;}}
-        HashMap<String,Circuit> resultat = new HashMap();
-        Circuit circuit=Alg_Voraç(mapa,viatge,tipus_voraç);
-        resultat.put("ruta "+tipus,circuit);
-        return resultat;
+    public HashMap<String,Circuit> Circuit_Voraç(Mapa m, Viatge v){
+        final char tipus_voraç[]={'b','c','s'};
+        final String tipus_rutes[]={"barata","curta","satisfactoria"};
+        final Boolean rutes[]={v.RutaBarata(),v.RutaCurta(),v.RutaSatisfactoria()};
+        HashMap<String,Circuit> res = new HashMap();
+
+        for(int i=0;i<3;i++)
+            if (rutes[i]) 
+                res.put("ruta "+tipus_rutes[i], Alg_Voraç(m, v, tipus_voraç[i]));
+
+        return res;
     }
 }
