@@ -16,7 +16,10 @@ public abstract class Activitat {
     public Activitat(LocalDate d, LocalTime h, int p){
         dia=d;hora=h;preu=p;
     }
-    
+
+    protected Activitat() {
+    }
+
     /** @brief Consulta la hora en que s'ha fet l'activitat
      @pre cert
      @post Retorna l'hora en que sha fet l'activitat*/

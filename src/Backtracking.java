@@ -40,15 +40,14 @@ public abstract class Backtracking {
             solucio_optima = new Circuit(v.dataHoraInici()); 
             solucio_actual = new Circuit(v.dataHoraInici());
         }
-        if (v.RutaBarata()){
+        else if (v.RutaCurta()){
             AlgBT(g,c,v,'c');
             resultat.put("ruta curta", solucio_optima);
             solucio_optima = new Circuit(v.dataHoraInici()); 
             solucio_actual = new Circuit(v.dataHoraInici());
         }
-        
-        if (v.RutaSatisfactoria()){
-            AlgBT(g,c,v,'c');
+        else if (v.RutaSatisfactoria()){
+            AlgBT(g,c,v,'s');
             resultat.put("ruta satisfactoria", solucio_optima);
             solucio_optima = new Circuit(v.dataHoraInici()); 
             solucio_actual = new Circuit(v.dataHoraInici());
@@ -60,98 +59,16 @@ public abstract class Backtracking {
      @pre parametres no buits i a, b i els PuntInteres de c existents a g 
      @post solucio_optima passa amb el circuit demanat*/
     private static void AlgBT(Mapa g, Set<Visitable> c, Viatge v, char o){
-        Iterator<Activitat> itr = inicialitzarCandidats(solucio_actual.ultimaActivitat(), g, v.origen(), v.desti());
+        Iterator<Activitat> itr = ModulCalculs.inicialitzarCandidats(solucio_actual.ultimaActivitat(), g, v.origen(), v.desti(),solucio_actual);
         while (itr.hasNext()){
             Activitat act = itr.next();
-            if(Acceptable(act,v) && EsPotMillorar(act, o, v.clients())){
+            if(ModulCalculs.Acceptable(act,v,solucio_actual) && EsPotMillorar(act, o, v.clients())){
                 AnotarCandidat(act, v.clients(), g);
                 if (!SolucioCompleta(c,v.origen(),v.desti(),v.nombreDies(),g)) AlgBT(g,c,v,o);
-                else{
-                    if (MillorQueOptima(o)) solucio_optima = solucio_actual;
-                }
+                else if (MillorQueOptima(o)) solucio_optima = solucio_actual;
                 DesanotarCandidat(v.clients(), g);
             }
         }
-    }
-    
-    /** @brief Inicialitza els candidats possibles en funció de la activitat anterior
-     @pre a != null
-     @post retorna un iterador a un conjunt amb els candidats possibles*/
-    private static Iterator<Activitat> inicialitzarCandidats(Activitat a, Mapa g, Localitzacio inici, Localitzacio fi){
-        TreeSet<Activitat> arbre = new TreeSet();
-        PuntInteres pActual = null;
-        if ((g.conteVisitable(a.UbicacioActual()) || g.conteAllotjament(a.UbicacioActual())) && a != null) pActual = g.puntInteres(a.UbicacioActual());
-        else if (!g.conteVisitable(a.UbicacioActual()) && !g.conteAllotjament(a.UbicacioActual())) return arbre.iterator();
-        else if (g.conteVisitable(inici.nom())) pActual = (PuntInteres) inici;
-        Activitat actPActual = null;
-        Lloc llocActual;
-        LocalDateTime ara = solucio_actual.acabamentCircuit();
-        if (pActual != null) {
-            llocActual = g.lloc(pActual.nomLloc());
-            if (pActual.obreAvui(ara) && !pActual.esLlocPas()) actPActual = pActual.ActivitatCorresponent(pActual.ProximaObertura(ara));
-            if (actPActual != null && actPActual.Satisfaccio(g.clients()) > 0) arbre.add(actPActual);
-            //activitats x desplaçament directe desde el PI actual;
-            Iterator<MT_Directe> itr1 = pActual.TransportsDirectes();
-            while (itr1.hasNext()){
-                MT_Directe mtd = itr1.next();
-                Activitat aux = mtd.desplaçament(ara.toLocalDate(), ara.toLocalTime(), pActual);
-                arbre.add(aux);
-            }
-            //Transports directes amb el transport default del lloc
-            itr1 = llocActual.mitjansDirectes();
-            while (itr1.hasNext()){
-                MT_Directe mtd = itr1.next();
-                Iterator<PuntInteres> itr2 = llocActual.puntsInteres();
-                while(itr2.hasNext()){
-                    PuntInteres pi = itr2.next();
-                    Activitat aux = mtd.desplaçament(ara.toLocalDate(), ara.toLocalTime(), pActual, pi);
-                    arbre.add(aux);
-                }
-            }
-        }
-        else llocActual = (Lloc) inici;
-        //Activitats x desplaçament indirecte desde el lloc actual
-        Iterator<Hub> itr2 = llocActual.hubs();
-        while (itr2.hasNext()){
-            Hub h = itr2.next();
-            Lloc l = h.destinacio();
-            Iterator<MT_Indirecte> itr3 = h.transports();
-             while(itr3.hasNext()){
-                MT_Indirecte mti = itr3.next();
-                LocalTime duradaTotal;
-                if (pActual!=null) duradaTotal = mti.durada().plusHours(h.tempsTrasllatTotal().getHour()).plusMinutes(h.tempsTrasllatTotal().getMinute());
-                else duradaTotal = mti.durada().plusHours(h.tempsTrasllatDesti().getHour()).plusMinutes(h.tempsTrasllatDesti().getMinute());
-                if (l.nom().equals(fi)){
-                    LocalTime duradaTotal2 = mti.durada().plusHours(h.tempsTrasllatOrigen().getHour()).plusMinutes(h.tempsTrasllatOrigen().getMinute());
-                    Desplaçament temp = new Desplaçament(mti.preu(),mti.diaHoraSortida().toLocalDate(),mti.diaHoraSortida().toLocalTime(),
-                        mti, pActual, l, duradaTotal2);
-                    arbre.add(temp);
-                }
-                Iterator<PuntInteres> itr4 = l.puntsInteres();
-                while (itr4.hasNext()){
-                    PuntInteres pi = itr4.next();
-                    Desplaçament aux = new Desplaçament(mti.preu(),mti.diaHoraSortida().toLocalDate(),mti.diaHoraSortida().toLocalTime(),
-                    mti, pActual, pi, duradaTotal);
-                    arbre.add(aux);
-                }
-            }
-        }
-         
-        
-        return arbre.iterator();
-    }
-    
-    /** @brief consulta si una activitat es acceptable
-     @pre a != null && v !=null
-     @post retorna cert si la activitat compleix amb les condicions corresponents i fals en c.c.*/
-    private static boolean Acceptable(Activitat a, Viatge v){
-        LocalDateTime fi = solucio_actual.acabamentCircuit().toLocalDate().atTime(a.horaActivitat()).plusHours(a.Duracio().getHour()).plusMinutes(a.Duracio().getMinute());
-        long dies =ChronoUnit.DAYS.between(fi, solucio_actual.iniciCircuit());
-        LocalTime iniciHoraDinar = (LocalTime.of(12, 0)), fiHoraDinar = (LocalTime.of(14, 0));
-        boolean esHoraDinar = !a.horaActivitat().isBefore(iniciHoraDinar) && 
-                !a.horaActivitat().plusHours(a.Duracio().getHour()).plusMinutes(a.Duracio().getMinute()).isAfter(fiHoraDinar);
-        boolean resultatParcial = (solucio_actual.preu_persona() + a.preuAct()) < v.preuMaxim() && dies <= v.nombreDies() && !esHoraDinar;
-        return resultatParcial && a.Acceptable(solucio_actual,v); 
     }
     
     /** @brief consulta si el circuit actual encara podrà millorar el circuit_optim afegint la activitat a

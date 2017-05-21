@@ -37,7 +37,6 @@ public class Circuit {
         activitats = new ArrayList();
         preu_per_persona = 0; grau_satisfaccio=0;nActivitats=0; inici_viatge=inici; fi_viatge=inici;
     }
-    
 
     /** @brief Consulta el temps total
      @pre cert

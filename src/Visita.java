@@ -12,7 +12,7 @@ public class Visita extends Activitat{
     /** @brief Constructor per defecte
      @pre cert
      @post Visita buida creada*/
-    //public Visita(){}
+    public Visita(){}
 
     /** @brief Constructor amb paràmetres
      @pre cert

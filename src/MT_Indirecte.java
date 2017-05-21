@@ -4,7 +4,6 @@
  */
 
 import java.time.*;
-import java.util.ArrayList;
 
 public class MT_Indirecte extends Mitja_Transport {
 
