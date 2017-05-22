@@ -327,8 +327,8 @@ class IO {
         Boolean acabar= false;
         try {
             String autor = scan.readLine();
-            while (!acabar) {
-                String codi_operacio = scan.readLine();
+            String codi_operacio = scan.readLine();
+            while (codi_operacio!=null) {
                 switch (codi_operacio) {
                     case "client":
                         casClient();
@@ -360,12 +360,10 @@ class IO {
                     case "viatge":
                         casViatge();
                         break;
-                    case "*":
-                        acabar = true;
-                        break;
                     default:
                         break;
                 }
+                codi_operacio = scan.readLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
