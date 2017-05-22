@@ -20,8 +20,8 @@ public abstract class ModulCalculs {
     public static Iterator<Activitat> inicialitzarCandidats(Activitat a, Mapa g, Localitzacio inici, Localitzacio fi, Circuit solucio_actual){
         TreeSet<Activitat> arbre = new TreeSet();
         PuntInteres pActual = null;
-        if ((g.conteVisitable(a.UbicacioActual()) || g.conteAllotjament(a.UbicacioActual())) && a != null) pActual = g.puntInteres(a.UbicacioActual());
-        else if (!g.conteVisitable(a.UbicacioActual()) && !g.conteAllotjament(a.UbicacioActual())) return arbre.iterator();
+        if (a != null && (g.conteVisitable(a.UbicacioActual()) || g.conteAllotjament(a.UbicacioActual())) ) pActual = g.puntInteres(a.UbicacioActual());
+        else if (a != null && !g.conteVisitable(a.UbicacioActual()) && !g.conteAllotjament(a.UbicacioActual())) return arbre.iterator();
         else if (g.conteVisitable(inici.nom())) pActual = (PuntInteres) inici;
         Activitat actPActual = null;
         Lloc llocActual;
