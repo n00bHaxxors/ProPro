@@ -1,32 +1,14 @@
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.*;
 
-/**
- * Created by Markus on 10/05/2017.
+/** @class Voraç
+ @brief Conté l'algoritme que busca una ruta relativament bona
+ @author Marc Cané Salamià
  */
 
 public abstract class Voraç {
-
-    //Post: retorna cert si queden candidats no visitats
-    /*private Boolean Queden_candidats(){
-        int i;
-        Boolean trobat=false;
-        while(!trobat){
-            //if(candidat_valid(candidat[i])
-                //trobat=true;
-            
-            i++;
-        }
-        return trobat;
-    }*/
-
-    //retorna cert si tenim suficients diners, tenim suficient temps per visitar, està obert,
-    /*private Boolean candidat_valid(Activitat a, TreeMap<Activitat,Boolean> visitats, int diners_gastats, int preu_maxim, LocalTime durada, LocalTime durada_max){
-        return visitats.(a)!=null && diners_gastats+a.preu()<preu_maxim && durada.plus(a.Duracio()).isBefore(durada_max); //no cal comprovar si esta visitat perquè ja ho haurem fet al buscar_prometedor...
-    }*/
 
     private Boolean completa(PuntInteres desti, Set<PuntInteres> a_visitar, ArrayList<Activitat> activitats){
         Boolean c1, c2;
@@ -77,10 +59,8 @@ public abstract class Voraç {
     /** @brief Algoritme voraç que busca una ruta relativament bona
      @pre mapa i viatge no nuls, tipus=b/c/p
      @post Retorna un circuit amb la ruta trobada optimitzant en funció del tipus_voraç*/
-    public static Circuit Alg_Voraç(Mapa mapa, Viatge viatge, char tipus_voraç){
-        //int diners_gastats = 0, grau_satisfaccio = 0;
+    private static Circuit Alg_Voraç(Mapa mapa, Viatge viatge, char tipus_voraç){
         TreeMap<Activitat,Boolean> visitats=new TreeMap<>();
-        //LocalTime durada = null;
         Activitat iCan = new Visita(); //activitat stub per entrar al while
         Circuit circuit = new Circuit(viatge.dataHoraInici());
         Iterator<Activitat> itr_candidats;
@@ -96,10 +76,6 @@ public abstract class Voraç {
             itr_candidats=ModulCalculs.inicialitzarCandidats(circuit.ultimaActivitat(), mapa, viatge.origen(), viatge.desti(),circuit);
             iCan=Buscar_Prometedor(circuit,viatge,itr_candidats,visitats,tipus_voraç);
             if(iCan!=null){ //???
-                //diners_gastats+=iCan.preuAct();
-                //grau_satisfaccio+=iCan.Satisfaccio(viatge.clients()); //esta bé?
-                //durada.plus(iCan.Duracio()); //WIP
-                //visitats.put(iCan,true);
                 circuit.afegirActivitat(iCan, viatge.clients(), mapa);
             }
         }
