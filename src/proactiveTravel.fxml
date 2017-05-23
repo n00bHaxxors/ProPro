@@ -8,25 +8,25 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="botoObrirArxiu" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proactiveTravel">
+<AnchorPane fx:id="botoObrirArxiu" prefHeight="294.0" prefWidth="472.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proactiveTravel">
    <children>
-      <HBox layoutX="294.0" layoutY="125.0" prefHeight="350.0" prefWidth="377.0">
-         <children>
-            <ImageView fitHeight="330.0" fitWidth="331.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@hbox.jpg" />
-               </image>
-            </ImageView>
-         </children>
-      </HBox>
-      <Button fx:id="botoExecutar" layoutX="43.0" layoutY="133.0" mnemonicParsing="false" onAction="#handle" text="Button" />
-      <Text fx:id="textPath" layoutX="115.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FILEPATH" />
-      <Button fx:id="botoArxiu" layoutX="32.0" layoutY="27.0" mnemonicParsing="false" onAction="#handle" text="Obrir arxiu" />
-      <RadioButton fx:id="radioBT" layoutX="39.0" layoutY="102.0" mnemonicParsing="false" onAction="#handle" selected="true" text="BT">
+      <Button fx:id="botoExecutar" layoutX="31.0" layoutY="239.0" mnemonicParsing="false" onAction="#handle" text="Executar" />
+      <Text fx:id="textInput" layoutX="104.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Input path" />
+      <Button fx:id="botoInput" layoutX="32.0" layoutY="27.0" mnemonicParsing="false" onAction="#handle" text="Input" />
+      <RadioButton fx:id="radioBT" layoutX="28.0" layoutY="203.0" mnemonicParsing="false" onAction="#handle" selected="true" text="BT">
          <toggleGroup>
             <ToggleGroup fx:id="grupAlgorisme" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="radioGD" layoutX="39.0" layoutY="64.0" mnemonicParsing="false" onAction="#handle" prefHeight="25.0" prefWidth="60.0" text="Greedy" toggleGroup="$grupAlgorisme" />
+      <RadioButton fx:id="radioGD" layoutX="28.0" layoutY="170.0" mnemonicParsing="false" onAction="#handle" prefHeight="25.0" prefWidth="60.0" text="Greedy" toggleGroup="$grupAlgorisme" />
+      <Button fx:id="botoOutput" layoutX="31.0" layoutY="69.0" mnemonicParsing="false" onAction="#handle" text="Output" />
+      <Button fx:id="botoKML" layoutX="31.0" layoutY="111.0" mnemonicParsing="false" onAction="#handle" text="KML" />
+      <Text fx:id="textOutput" layoutX="104.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Output path" />
+      <Text fx:id="textKML" layoutX="104.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="KML path" />
+      <ImageView fitHeight="214.0" fitWidth="196.0" layoutX="203.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@imatgeperlagui.PNG" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

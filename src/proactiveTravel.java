@@ -4,16 +4,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.File;
 import java.text.ParseException;
@@ -25,9 +22,13 @@ import java.util.Locale;
  */
 public class proactiveTravel extends Application implements EventHandler<ActionEvent> {
     public Parent root;
-    public Button botoArxiu;
+    public Button botoInput;
+    public Button botoKML;
+    public Button botoOutput;
     public Button botoExecutar;
-    public Text textPath;
+    public Text textInput;
+    public Text textOutput;
+    public Text textKML;
     public RadioButton radioBT;
     public RadioButton radioGD;
     public Scene scene;
@@ -60,16 +61,20 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
 
             //  /DEBUG
 
-            botoArxiu = new Button();
+            botoInput = new Button();
+            botoOutput = new Button();
+            botoKML = new Button();
             botoExecutar = new Button();
-            textPath = new Text();
+            textInput = new Text();
+            textOutput = new Text();
+            textKML = new Text();
             radioBT = new RadioButton();
             radioBT.setToggleGroup(grupAlgorisme);
             radioGD = new RadioButton();
             radioGD.setToggleGroup(grupAlgorisme);
 
             root = FXMLLoader.load(getClass().getResource("proactiveTravel.fxml"));
-            scene = new Scene(root, 750, 500);
+            scene = new Scene(root, 400, 300);
             primaryStage.getIcons().add(new Image("/java9.png"));
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -78,18 +83,26 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
 
     @Override
     public void handle(ActionEvent event) {
-        if (event.getSource()==botoArxiu){
+        if (event.getSource()== botoInput){
             FileChooser fc = new FileChooser();
-            textPath.setText(fc.showOpenDialog(null).getAbsolutePath());
+            textInput.setText(fc.showOpenDialog(null).getAbsolutePath());
+        }
+        if (event.getSource()== botoOutput){
+            FileChooser fc = new FileChooser();
+            textOutput.setText(fc.showOpenDialog(null).getAbsolutePath());
+        }
+        if (event.getSource()== botoKML){
+            FileChooser fc = new FileChooser();
+            textKML.setText(fc.showOpenDialog(null).getAbsolutePath());
         }
         if(event.getSource()==botoExecutar){
             if(radioBT.isSelected()){
-                File fileBT = new File(textPath.getText());
+                File fileBT = new File(textInput.getText());
                 if(fileBT.exists() && !fileBT.isDirectory()) {
                     IO io = new IO();
                     IO.MapaViatge mp = null;
                     try {
-                        mp = io.llegir(textPath.getText());
+                        mp = io.llegir(textInput.getText());
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -101,12 +114,12 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
                 }
             }
             else if(radioGD.isSelected()){
-                File fileGD = new File(textPath.getText());
+                File fileGD = new File(textInput.getText());
                 if(fileGD.exists() && !fileGD.isDirectory()) {
                     IO io = new IO();
                     IO.MapaViatge mp = null;
                     try {
-                        mp = io.llegir(textPath.getText());
+                        mp = io.llegir(textInput.getText());
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
