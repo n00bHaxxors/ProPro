@@ -45,8 +45,10 @@ public abstract class ModulCalculs {
                 Iterator<PuntInteres> itr2 = llocActual.puntsInteres();
                 while(itr2.hasNext()){
                     PuntInteres pi = itr2.next();
-                    Activitat aux = mtd.desplaçament(ara.toLocalDate(), ara.toLocalTime(), pActual, pi);
-                    arbre.add(aux);
+                    if (! pi.nom().equals(pActual.nom())) {
+                        Activitat aux = mtd.desplaçament(ara.toLocalDate(), ara.toLocalTime(), pActual, pi);
+                        arbre.add(aux);
+                    }
                 }
             }
         }
