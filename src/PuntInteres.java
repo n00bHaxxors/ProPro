@@ -12,7 +12,7 @@ import java.util.TimeZone;
     @author Ismael El Habri
 */
 
-public abstract class PuntInteres extends Localitzacio{
+public abstract class PuntInteres extends Localitzacio implements Comparable<PuntInteres>{
     //Atributs
     private String nom;
     private int preu;
@@ -117,5 +117,11 @@ public abstract class PuntInteres extends Localitzacio{
         }
         return resultat;
     }
+    
+    @Override
+    public int compareTo(PuntInteres o){
+        return nom.compareTo(o.nom);
+    }
+    
 
 }

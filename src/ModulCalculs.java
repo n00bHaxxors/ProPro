@@ -5,8 +5,9 @@
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.TreeSet;
+//import java.util.TreeSet;
 
 /** @class ModulCalculs
  @brief Modul funcional amb calculs comuns tant en el Algoritme de Backtracking com el Greedy
@@ -18,7 +19,7 @@ public abstract class ModulCalculs {
      @pre a != null
      @post retorna un iterador a un conjunt amb els candidats possibles*/
     public static Iterator<Activitat> inicialitzarCandidats(Activitat a, Mapa g, Localitzacio inici, Localitzacio fi, Circuit solucio_actual){
-        TreeSet<Activitat> arbre = new TreeSet();
+        ArrayList<Activitat> arbre = new ArrayList();
         PuntInteres pActual = null;
         if (a != null && (g.conteVisitable(a.UbicacioActual()) || g.conteAllotjament(a.UbicacioActual())) ) pActual = g.puntInteres(a.UbicacioActual());
         else if (a != null && !g.conteVisitable(a.UbicacioActual()) && !g.conteAllotjament(a.UbicacioActual())) return arbre.iterator();
