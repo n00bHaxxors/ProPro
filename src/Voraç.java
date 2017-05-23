@@ -41,7 +41,7 @@ public abstract class Voraç {
     /** @brief Busca l'activitat que maximitza la qualitat (?) del circuit
      @pre Circuit, viatge, itr i visitats no nuls, tipus=b/c/p
      @post Retorna l'activitat més prometedora*/
-    private static Activitat Buscar_Prometedor(Mapa m, Circuit c, Viatge v, Iterator<Activitat> itr_cand, TreeSet<Visitable> oblig, Set<String> obl_fet, char tipus) {
+    private static Activitat Buscar_Prometedor(Mapa m, Circuit c, Viatge v, Iterator<Activitat> itr_cand, Set<Visitable> oblig, char tipus) {
         Activitat iCan, millor = null;
         boolean obligatori=false;
 
@@ -68,25 +68,25 @@ public abstract class Voraç {
      @post Retorna un circuit amb la ruta trobada optimitzant en funció del tipus_voraç*/
     private static Circuit Alg_Voraç(Mapa mapa, Viatge viatge, char tipus_voraç){
         //TreeMap<Activitat,Boolean> visitats=new TreeMap<>();
-        TreeSet<String> obligatoris_visitats=new TreeSet();
+        //TreeSet<String> obligatoris_visitats=new TreeSet();
         Activitat iCan = new Visita(); //activitat stub per entrar al while
         Circuit circuit = new Circuit(viatge.dataHoraInici());
         Iterator<Activitat> itr_candidats;
 
-        TreeSet<Visitable> obligatoris = new TreeSet();
+        Set<Visitable> obligatoris = new HashSet();
         Iterator<Visitable> itr_visitables = viatge.iteradorVisitables();
         while(itr_visitables.hasNext()){
             Visitable aux = itr_visitables.next();
             obligatoris.add(aux);
         }
 
-        while(!circuit.solucioCompleta(obligatoris,viatge.origen(),viatge.desti(),viatge.nombreDies(),mapa) && iCan!=null){
+        do{
             itr_candidats=ModulCalculs.inicialitzarCandidats(circuit.ultimaActivitat(), mapa, viatge.origen(), viatge.desti(),circuit);
-            iCan=Buscar_Prometedor(mapa,circuit,viatge,itr_candidats,obligatoris,obligatoris_visitats,tipus_voraç);
-            if(iCan!=null){ //???
+            iCan=Buscar_Prometedor(mapa,circuit,viatge,itr_candidats,obligatoris,tipus_voraç);
+            if(iCan!=null){
                 circuit.afegirActivitat(iCan, viatge.clients(), mapa);
             }
-        }
+        }while(!circuit.solucioCompleta(obligatoris,viatge.origen(),viatge.desti(),viatge.nombreDies(),mapa) && iCan!=null);
 
         return circuit;
     }
