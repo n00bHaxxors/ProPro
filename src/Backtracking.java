@@ -73,8 +73,8 @@ public abstract class Backtracking {
      @pre a != null
      @post retorna cert si amb l'activitat encara es podrà millorar i fals en c.c.*/
     private static boolean EsPotMillorar(Activitat a, char o, GrupClients g){
-        boolean resultat = solucio_optima.Activitats().hasNext();
-        if (!resultat) return true;
+        if (!solucio_optima.Activitats().hasNext()) return true;
+        boolean resultat = false;
          switch (o){
             case 'b' : //barata
                 resultat = a.preuAct()+solucio_actual.preu_persona() < solucio_optima.preu_persona();
@@ -112,6 +112,7 @@ public abstract class Backtracking {
      @pre solucio actual es completa
      @post retorna cert si la solucio actual es millor que la optima i fals en c.c.*/
     private static boolean MillorQueOptima(char o){
+        if (!solucio_optima.Activitats().hasNext()) return true;
         boolean empatPreu, empatSatisfaccio, empatDies, resultat = false;
         empatPreu = solucio_optima.preu_persona()==solucio_actual.preu_persona(); 
         empatSatisfaccio = solucio_optima.grau_satisfaccio()==solucio_actual.grau_satisfaccio();
