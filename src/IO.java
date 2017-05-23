@@ -303,6 +303,7 @@ class IO {
                     visitables.add(visitableActual);
                 } else visitableActual = visitableIt.next();
             }
+            trobat = false;
             nomVisitable = scan.readLine();
             visitableIt=LlistaVisitables.iterator();
             visitableActual = visitableIt.next();
@@ -378,5 +379,22 @@ class IO {
         return new MapaViatge(mapa,LlistaViatges);
     }
     public void mostrar(Circuit c){
+        try{
+            PrintWriter writer = new PrintWriter("sortida.txt", "UTF-8");
+            writer.println("Preu: " + String.format ("%.2f", c.preu_persona()));
+            writer.close();
+        } catch (IOException e) {
+            // do something
+        }
     }
+    public void crearKML(Circuit c){
+        try{
+            PrintWriter writer = new PrintWriter("sortida.kml", "UTF-8");
+            writer.println("The first line");
+            writer.close();
+        } catch (IOException e) {
+            // do something
+        }
+    }
+
 }
