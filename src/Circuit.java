@@ -35,7 +35,7 @@ public class Circuit {
      @pre cert
      @post Circuit usant di com a dia inicial i final (está buit)*/
     public Circuit(LocalDateTime inici){
-        activitats = new ArrayList();
+        activitats = new ArrayList(); visitesFetes = new HashMap();
         preu_per_persona = 0; grau_satisfaccio=0;nActivitats=0; inici_viatge=inici; fi_viatge=inici;
     }
 
