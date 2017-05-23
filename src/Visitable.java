@@ -37,7 +37,8 @@ public class Visitable extends PuntInteres{
         public boolean estaraObert(MonthDay visita, LocalTime iniciVisita, LocalTime fiVisita){
             
             boolean resultat = !visita.isBefore(inici) && !visita.isAfter(fi);
-            resultat = resultat && !iniciVisita.isBefore(horaInici) && !iniciVisita.isAfter(horaFi) && !fiVisita.isBefore(horaInici) && !fiVisita.isAfter(horaFi);
+            resultat = resultat && !iniciVisita.isBefore(horaInici) && !iniciVisita.isAfter(horaFi) 
+                    && !fiVisita.isBefore(horaInici) && !fiVisita.isAfter(horaFi);
             return resultat;
         }
         
@@ -140,7 +141,7 @@ public class Visitable extends PuntInteres{
         }
         if (!resultat){
             Iterator<BlocHorari> itr2 = horari.iterator();
-            while (!resultat && itr.hasNext()){
+            while (!resultat && itr2.hasNext()){
                 BlocHorari franja = itr2.next();
                 resultat = franja.estaraObert(dia, hora, fiVisita);
             }
