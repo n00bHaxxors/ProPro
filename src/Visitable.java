@@ -174,7 +174,7 @@ public class Visitable extends PuntInteres{
         }
         if (!resultat){
             Iterator<BlocHorari> itr2 = horari.iterator();
-            while (!resultat && itr.hasNext()){
+            while (!resultat && itr2.hasNext()){
                 BlocHorari franja = itr2.next();
                 resultat = franja.esAquestFranja(avui);
                 if (!ara.toLocalTime().isBefore(franja.horaTencament())) casEspecial = true;
@@ -200,7 +200,7 @@ public class Visitable extends PuntInteres{
             }
             if (!fi) {
                 Iterator<BlocHorari> itr2 = horari.iterator();
-                while (!fi && itr.hasNext()) {
+                while (!fi && itr2.hasNext()) {
                     franja = itr2.next();
                     fi = franja.esAquestFranja(MonthDay.of(aux.getMonth(), aux.getDayOfMonth()));
                 }
