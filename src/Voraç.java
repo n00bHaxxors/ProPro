@@ -41,7 +41,7 @@ public abstract class Voraç {
     /** @brief Busca l'activitat que maximitza la qualitat (?) del circuit
      @pre Circuit, viatge, itr i visitats no nuls, tipus=b/c/p
      @post Retorna l'activitat més prometedora*/
-    private static Activitat Buscar_Prometedor(Mapa m, Circuit c, Viatge v, Iterator<Activitat> itr_cand, Set<Visitable> oblig, char tipus) {
+    private static Activitat Buscar_Prometedor(Circuit c, Viatge v, Iterator<Activitat> itr_cand, Set<Visitable> oblig, char tipus) {
         Activitat iCan, millor = null;
         boolean obligatori=false;
 
@@ -81,8 +81,8 @@ public abstract class Voraç {
         }
 
         do{
-            itr_candidats=ModulCalculs.inicialitzarCandidats(circuit.ultimaActivitat(), mapa, viatge.origen(), viatge.desti(),circuit);
-            iCan=Buscar_Prometedor(mapa,circuit,viatge,itr_candidats,obligatoris,tipus_voraç);
+            itr_candidats=ModulCalculs.inicialitzarCandidats(circuit.ultimaActivitat(), mapa,circuit,viatge);
+            iCan=Buscar_Prometedor(circuit,viatge,itr_candidats,obligatoris,tipus_voraç);
             if(iCan!=null){
                 circuit.afegirActivitat(iCan, viatge.clients(), mapa);
             }
