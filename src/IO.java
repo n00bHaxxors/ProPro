@@ -42,7 +42,7 @@ class IO {
            preferencies.add(pref);
             pref = scan.readLine();
 
-        } while (!pref.equals(SEPARADOR));
+        } while (!pref.equals("*"));
         LlistaClients.add(new Client(nom_client, preferencies));
     }
     private void casLloc() throws IOException {
@@ -304,7 +304,7 @@ class IO {
                 } else visitableActual = visitableIt.next();
             }
             nomVisitable = scan.readLine();
-
+            visitableIt=LlistaVisitables.iterator();
             visitableActual = visitableIt.next();
         }
         ArrayList<String> tipusRuta = new ArrayList<String>();
