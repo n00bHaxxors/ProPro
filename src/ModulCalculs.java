@@ -23,7 +23,12 @@ public abstract class ModulCalculs {
         PuntInteres pActual = null;
         if (a != null && (g.conteVisitable(a.UbicacioActual()) || g.conteAllotjament(a.UbicacioActual())) ) pActual = g.puntInteres(a.UbicacioActual());
         else if (a != null && !g.conteVisitable(a.UbicacioActual()) && !g.conteAllotjament(a.UbicacioActual())) return arbre.iterator();
-        else if (g.conteVisitable(v.origen().nom())) pActual = (PuntInteres) v.origen();
+        else if (g.conteVisitable(v.origen().nom())) {
+            pActual = (PuntInteres) v.origen();
+            Activitat aux = pActual.ActivitatCorresponent(pActual.ProximaObertura(solucio_actual.acabamentCircuit()));
+            arbre.add(aux);
+            return arbre.iterator();
+        }
         Activitat actPActual = null;
         Lloc llocActual;
         LocalDateTime ara = solucio_actual.acabamentCircuit();
@@ -47,6 +52,7 @@ public abstract class ModulCalculs {
                     PuntInteres pi = itr2.next();
                     if (! pi.nom().equals(pActual.nom())) {
                         Activitat aux = mtd.desplaçament(ara.toLocalDate(), ara.toLocalTime(), pActual, pi);
+                        String temp = aux.toString();
                         arbre.add(aux);
                     }
                 }
@@ -64,7 +70,7 @@ public abstract class ModulCalculs {
                 LocalTime duradaTotal;
                 if (pActual!=null) duradaTotal = mti.durada().plusHours(h.tempsTrasllatTotal().getHour()).plusMinutes(h.tempsTrasllatTotal().getMinute());
                 else duradaTotal = mti.durada().plusHours(h.tempsTrasllatDesti().getHour()).plusMinutes(h.tempsTrasllatDesti().getMinute());
-                if (l.nom().equals(v.desti())){
+                if (l.nom().equals(v.desti().nom())){
                     LocalTime duradaTotal2 = mti.durada().plusHours(h.tempsTrasllatOrigen().getHour()).plusMinutes(h.tempsTrasllatOrigen().getMinute());
                     Desplaçament temp = new Desplaçament(mti.preu(),mti.diaHoraSortida().toLocalDate(),mti.diaHoraSortida().toLocalTime(),
                             mti, pActual, l, duradaTotal2);
