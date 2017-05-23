@@ -130,8 +130,7 @@ public class Visitable extends PuntInteres{
 	@pre el visitable no és lloc de pas
 	@post retorna cert si estarà obert en aquell moment, i fals en c.c.*/
     public boolean estaraObert(MonthDay dia, LocalTime hora){
-        int hores = tempsRec.getHour(), minuts = tempsRec.getMinute(), segons = tempsRec.getSecond();
-        LocalTime fiVisita = hora.plusHours(tempsRec.getHour()).plusMinutes(tempsRec.getMinute()).plusSeconds(tempsRec.getSecond());
+        LocalTime fiVisita = hora.plusHours(tempsRec.getHour()).plusMinutes(tempsRec.getMinute());
         boolean resultat = false;
         //cal iterarho primer els excepció i despres mirar si va o no
         Iterator<ExcepcioHorari> itr = diesExcepcionals.iterator();

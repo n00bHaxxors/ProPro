@@ -63,7 +63,7 @@ public abstract class Backtracking {
             if(ModulCalculs.Acceptable(act,v,solucio_actual) && EsPotMillorar(act, o, v.clients())){
                 AnotarCandidat(act, v.clients(), g);
                 if (!SolucioCompleta(c,v.origen(),v.desti(),v.nombreDies(),g)) AlgBT(g,c,v,o);
-                else if (MillorQueOptima(o)) solucio_optima = solucio_actual;
+                else if (MillorQueOptima(o)) solucio_optima = solucio_actual; 
                 DesanotarCandidat(v.clients(), g);
             }
         }
@@ -73,6 +73,7 @@ public abstract class Backtracking {
      @pre a != null
      @post retorna cert si amb l'activitat encara es podrà millorar i fals en c.c.*/
     private static boolean EsPotMillorar(Activitat a, char o, GrupClients g){
+        if (!solucio_optima.Activitats().hasNext()) return true;
         boolean resultat = false;
          switch (o){
             case 'b' : //barata
@@ -111,6 +112,7 @@ public abstract class Backtracking {
      @pre solucio actual es completa
      @post retorna cert si la solucio actual es millor que la optima i fals en c.c.*/
     private static boolean MillorQueOptima(char o){
+        if (!solucio_optima.Activitats().hasNext()) return true;
         boolean empatPreu, empatSatisfaccio, empatDies, resultat = false;
         empatPreu = solucio_optima.preu_persona()==solucio_actual.preu_persona(); 
         empatSatisfaccio = solucio_optima.grau_satisfaccio()==solucio_actual.grau_satisfaccio();
