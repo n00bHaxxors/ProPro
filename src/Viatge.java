@@ -26,7 +26,6 @@ public class Viatge {
             desti = it.next();
             if(it.hasNext())llistaVisitables.add(desti);
         }
-        llistaVisitables= visitables;
         Iterator<String> itTipus = t.iterator();
         String temp;
         while(itTipus.hasNext()){
