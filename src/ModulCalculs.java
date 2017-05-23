@@ -22,8 +22,8 @@ public abstract class ModulCalculs {
         ArrayList<Activitat> arbre = new ArrayList();
         PuntInteres pActual = null;
         if (a != null && (g.conteVisitable(a.UbicacioActual()) || g.conteAllotjament(a.UbicacioActual())) ) pActual = g.puntInteres(a.UbicacioActual());
-        else if (a != null && !g.conteVisitable(a.UbicacioActual()) && !g.conteAllotjament(a.UbicacioActual())) return arbre.iterator();
-        else if (g.conteVisitable(v.origen().nom())) {
+        else if (a != null && !g.conteVisitable(a.UbicacioActual()) && !g.conteAllotjament(a.UbicacioActual())) return arbre.iterator(); //hem acabat en un lloc, i no en un PI en concret
+        else if (a == null && g.conteVisitable(v.origen().nom())) {
             pActual = (PuntInteres) v.origen();
             Activitat aux = pActual.ActivitatCorresponent(pActual.ProximaObertura(solucio_actual.acabamentCircuit()));
             arbre.add(aux);
@@ -35,7 +35,7 @@ public abstract class ModulCalculs {
         if (pActual != null) {
             llocActual = g.lloc(pActual.nomLloc());
             if (pActual.obreAvui(ara) && !pActual.esLlocPas()) actPActual = pActual.ActivitatCorresponent(pActual.ProximaObertura(ara));
-            if (actPActual != null && actPActual.Satisfaccio(v.clients()) > 0) arbre.add(actPActual);
+            if (actPActual != null /*&& actPActual.Satisfaccio(v.clients()) > 0*/) arbre.add(actPActual);
             //activitats x desplaçament directe desde el PI actual;
             Iterator<MT_Directe> itr1 = pActual.TransportsDirectes();
             while (itr1.hasNext()){
@@ -50,7 +50,8 @@ public abstract class ModulCalculs {
                 Iterator<PuntInteres> itr2 = llocActual.puntsInteres();
                 while(itr2.hasNext()){
                     PuntInteres pi = itr2.next();
-                    if (! pi.nom().equals(pActual.nom())) {
+                    boolean condicioMTD = !pi.nom().equals(pActual.nom());
+                    if (!pi.nom().equals(pActual.nom())) {
                         Activitat aux = mtd.desplaçament(ara.toLocalDate(), ara.toLocalTime(), pActual, pi);
                         String temp = aux.toString();
                         arbre.add(aux);
