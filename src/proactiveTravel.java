@@ -53,7 +53,7 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
             Iterator<Viatge> it = mp.viatges.iterator();
             while(it.hasNext()){
                 Viatge viatge = it.next();
-                //AKI VA EL BURÀS
+                Voraç.Circuit_Voraç(mp.mapa,viatge);
             }
         }
         else {
