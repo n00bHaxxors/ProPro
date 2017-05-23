@@ -292,24 +292,26 @@ class IO {
         String nomVisitable = scan.readLine();
         ArrayList<Visitable> visitables = new ArrayList<Visitable>();
         Iterator<Visitable> visitableIt = LlistaVisitables.iterator();
-        do{
-           Visitable visitable = visitableIt.next();
+        Localitzacio origen, desti;
+        Visitable visitableActual= visitableIt.next();
+        while(!nomVisitable.equals("*")) {
             while (visitableIt.hasNext() && !trobat) {
-                if (visitable.nom().equals(nomVisitable)) {
+                if (visitableActual.nom().equals(nomVisitable)) {
                     trobat = true;
-                    visitables.add(visitable);
-                }
-                else visitable = visitableIt.next();
+                    visitables.add(visitableActual);
+                } else visitableActual = visitableIt.next();
             }
-            nomVisitable=scan.readLine();
-        }while(!nomVisitable.equals("*"));
+            nomVisitable = scan.readLine();
+
+            visitableActual = visitableIt.next();
+        }
         ArrayList<String> tipusRuta = new ArrayList<String>();
         String temp = scan.readLine();
         while(!temp.equals("*")){
             tipusRuta.add(temp);
             temp=scan.readLine();
         }
-        LlistaViatges.add(new Viatge(dataInici.atTime(horaInici),nombreDies,preuMaxim,categoria,new GrupClients(clients),visitables,tipusRuta));
+        LlistaViatges.add(new Viatge(dataInici.atTime(horaInici),nombreDies,preuMaxim,categoria,new GrupClients(clients),origen,desti,visitables,tipusRuta));
     }
 
     public MapaViatge llegir(String f) throws ParseException {

@@ -8,24 +8,20 @@ import java.util.Iterator;
 public class Viatge {
     private LocalDateTime dataHoraInici;
     private Integer nombreDies, preuMaxim;
-    private Visitable origen, desti;
+    private Localitzacio origen, desti;
     private String categoria;
     private GrupClients clients;
     private ArrayList<Visitable> llistaVisitables;
     private Boolean rutaBarata = false, rutaCurta = false, rutaSatisfactoria = false;
-    public Viatge(LocalDateTime data, Integer n, Integer p, String c, GrupClients cl, ArrayList<Visitable> visitables, ArrayList<String> t) {
+    public Viatge(LocalDateTime data, Integer n, Integer p, String c, GrupClients cl, Localitzacio o,Localitzacio d, ArrayList<Visitable> visitables, ArrayList<String> t) {
         dataHoraInici=data;
         nombreDies=n;
         preuMaxim = p;
         categoria = c;
         clients = cl;
-        llistaVisitables= new ArrayList<Visitable>();
-        Iterator<Visitable> it= visitables.iterator();
-        origen = it.next();
-        while(it.hasNext()){
-            desti = it.next();
-            if(it.hasNext())llistaVisitables.add(desti);
-        }
+        origen=o;
+        desti=d;
+        llistaVisitables= visitables;
         Iterator<String> itTipus = t.iterator();
         String temp = itTipus.next();
         do{
@@ -43,6 +39,7 @@ public class Viatge {
                     //throw
                     break;
             }
+            temp = itTipus.next();
         }while(itTipus.hasNext());
     }
     public LocalDateTime dataHoraInici(){
@@ -60,10 +57,10 @@ public class Viatge {
     public GrupClients clients(){
         return clients;
     }
-    public Visitable origen(){
+    public Localitzacio origen(){
         return origen;
     }
-    public Visitable desti(){
+    public Localitzacio desti(){
         return desti;
     }
     public Iterator<Visitable> iteradorVisitables(){
