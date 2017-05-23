@@ -97,8 +97,11 @@ public class Circuit {
         nActivitats--;
         Activitat a = activitats.remove(nActivitats);
         LocalTime temps = a.Duracio();
-        Activitat b = activitats.get(nActivitats-1);
-        fi_viatge=b.diaActivitat().atTime(b.horaActivitat()).plusHours(temps.getHour()).plusMinutes(temps.getMinute());
+        if (nActivitats != 0){
+            Activitat b = activitats.get(nActivitats-1);
+            fi_viatge=b.diaActivitat().atTime(b.horaActivitat()).plusHours(temps.getHour()).plusMinutes(temps.getMinute());
+        }
+        else fi_viatge = inici_viatge;
         dies = (int)ChronoUnit.DAYS.between(fi_viatge, inici_viatge);
         grau_satisfaccio -= a.Satisfaccio(g);
         if (m.conteVisitable(a.nomAct())) visitesFetes.remove(a.nomAct());
@@ -156,5 +159,13 @@ public class Circuit {
     public Iterator<Activitat> Activitats(){
         return activitats.iterator();
     }
+
+    /** @brief consulta si amb l'activitat a estarem transportant-nos en bucle
+     @pre a existent
+     @post retorna cet si estem tornat a l'origen del desplaçament anterior*/    
+    public boolean transportEnBucle(Activitat a){
+        if (nActivitats<2) return false;
+        return activitats.get(nActivitats-2).UbicacioActual().equals(a.UbicacioActual());
+    } 
     
 }
