@@ -73,7 +73,7 @@ public class Circuit {
         activitats.add(a);
         nActivitats++;
         LocalTime temps = a.Duracio();
-        fi_viatge.plusHours(temps.getHour()).plusMinutes(temps.getMinute()).plusSeconds(temps.getSecond());
+        fi_viatge = fi_viatge.toLocalDate().atTime(a.horaActivitat()).plusHours(temps.getHour()).plusMinutes(temps.getMinute());
         dies = (int)ChronoUnit.DAYS.between(fi_viatge, inici_viatge);
         grau_satisfaccio += a.Satisfaccio(g);
         if (m.conteVisitable(a.nomAct())) visitesFetes.put(a.nomAct(),(Visita)a);
@@ -86,7 +86,8 @@ public class Circuit {
         nActivitats--;
         Activitat a = activitats.remove(nActivitats);
         LocalTime temps = a.Duracio();
-        fi_viatge.minusHours(temps.getHour()).minusMinutes(temps.getMinute()).minusSeconds(temps.getSecond());
+        Activitat b = activitats.get(nActivitats-1);
+        fi_viatge=b.diaActivitat().atTime(b.horaActivitat()).plusHours(temps.getHour()).plusMinutes(temps.getMinute());
         dies = (int)ChronoUnit.DAYS.between(fi_viatge, inici_viatge);
         grau_satisfaccio -= a.Satisfaccio(g);
         if (m.conteVisitable(a.nomAct())) visitesFetes.remove(a.nomAct());
