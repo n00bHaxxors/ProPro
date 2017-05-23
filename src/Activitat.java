@@ -66,5 +66,26 @@ public abstract class Activitat {
      @post Retorna una String amb l'activitat*/
     @Override
     public abstract String toString();
+
+    /** @brief Fa la comparació corresponent en funcio del tipus de variable a optimitzar
+     @pre tipus=b,c,s
+     @post Retorna cert si l'activitat actual és millor que la millor activitat trobada fins el moment*/
+    public Boolean comparar(Activitat millor, GrupClients gc, char tipus){
+        Boolean res=true;
+        if(millor!=null){
+            switch(tipus){
+                case 'b':
+                    res=preu<millor.preu;
+                    break;
+                case 's':
+                    res=Satisfaccio(gc)>millor.Satisfaccio(gc);
+                    break;
+                case 'c':
+                    res=Duracio().isBefore(millor.Duracio());
+                    break;
+            }
+        }
+        return res;
+    }
     
 }

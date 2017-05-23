@@ -7,7 +7,9 @@
     @author Marc Cané Salamià
 */
 
-import java.time.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +23,6 @@ public class Circuit {
     private int dies;
     private int nActivitats;
     private ArrayList<Activitat> activitats;
-    //metodes que no se si calen aquí!
     HashMap<String, Visita> visitesFetes;
 
     /** @brief Constructor circuit amb paràmetres
@@ -126,7 +127,8 @@ public class Circuit {
         LocalTime temps = LocalTime.of(0, 0);
         while (itr.hasNext()){
             Visita aux = itr.next();
-            if (aux.diaActivitat().equals(dia)) temps.plusHours(aux.Duracio().getHour()).plusMinutes(aux.Duracio().getMinute());
+            if (aux.diaActivitat().equals(dia))
+                temps.plusHours(aux.Duracio().getHour()).plusMinutes(aux.Duracio().getMinute());
         }
         return temps;
     }
