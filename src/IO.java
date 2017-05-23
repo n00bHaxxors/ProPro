@@ -42,7 +42,7 @@ class IO {
            preferencies.add(pref);
             pref = scan.readLine();
 
-        } while (!pref.equals(SEPARADOR));
+        } while (!pref.equals("*"));
         LlistaClients.add(new Client(nom_client, preferencies));
     }
     private void casLloc() throws IOException {
@@ -198,29 +198,29 @@ class IO {
         Iterator<Allotjament> it = LlistaAllotjaments.iterator();
         Iterator<Visitable> jt = LlistaVisitables.iterator();
         Iterator<Lloc> llocIt = LlistaLlocs.iterator();
-        boolean trobat = false;
+        boolean trobatA = false;
 
         Allotjament allotjamentActual = it.next();
-        while (it.hasNext() && !trobat) {
-            if (allotjamentActual.nom().equals(nomDesti)) trobat = true;
+        while (it.hasNext() && !trobatA) {
+            if (allotjamentActual.nom().equals(nomDesti)) trobatA = true;
             else allotjamentActual = it.next();
         }
-        trobat = false;
+        boolean trobatV = false;
         Visitable visitableActual = jt.next();
-        while (jt.hasNext() && !trobat) {
-            if (visitableActual.nom().equals(nomDesti)) trobat = true;
+        while (jt.hasNext() && !trobatV) {
+            if (visitableActual.nom().equals(nomDesti)) trobatV = true;
             else visitableActual = jt.next();
         }
-        trobat = false;
+        boolean trobat = false;
         Lloc LlocActual = llocIt.next();
         while (llocIt.hasNext() && !trobat) {
             if (LlocActual.nom().equals(nomOrigen)) trobat = true;
             else LlocActual = llocIt.next();
         }
-        if (jt.hasNext()) {
-            LlocActual.associarTransportDirecte(new MT_Directe(nomMT,(int) (preu*100),duradaTrajecte,visitableActual));
-        } else if (it.hasNext()) {
-            LlocActual.associarTransportDirecte(new MT_Directe(nomMT,(int) (preu*100),duradaTrajecte,allotjamentActual));
+        if (trobatV) {
+            visitableActual.afegirTransportDirecte(new MT_Directe(nomMT,(int) (preu*100),duradaTrajecte,visitableActual));
+        } else if (trobatA) {
+            allotjamentActual.afegirTransportDirecte(new MT_Directe(nomMT,(int) (preu*100),duradaTrajecte,visitableActual));
         } else {
             //excepcio
         }
@@ -304,7 +304,7 @@ class IO {
                 } else visitableActual = visitableIt.next();
             }
             nomVisitable = scan.readLine();
-
+            visitableIt=LlistaVisitables.iterator();
             visitableActual = visitableIt.next();
         }
         ArrayList<String> tipusRuta = new ArrayList<String>();
