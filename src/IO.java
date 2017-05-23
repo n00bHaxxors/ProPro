@@ -313,6 +313,7 @@ class IO {
             tipusRuta.add(temp);
             temp=scan.readLine();
         }
+        origen = null; desti = null;
         LlistaViatges.add(new Viatge(dataInici.atTime(horaInici),nombreDies,preuMaxim,categoria,new GrupClients(clients),origen,desti,visitables,tipusRuta));
     }
 
