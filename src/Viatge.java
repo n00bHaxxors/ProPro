@@ -27,8 +27,9 @@ public class Viatge {
         }
         llistaVisitables= visitables;
         Iterator<String> itTipus = t.iterator();
-        String temp = itTipus.next();
-        do{
+        String temp;
+        while(itTipus.hasNext()){
+            temp = itTipus.next();
             switch(temp){
                 case "ruta curta":
                     rutaCurta=true;
@@ -43,8 +44,7 @@ public class Viatge {
                     //throw
                     break;
             }
-            temp = itTipus.next();
-        }while(itTipus.hasNext());
+        }
     }
     public LocalDateTime dataHoraInici(){
         return dataHoraInici;
