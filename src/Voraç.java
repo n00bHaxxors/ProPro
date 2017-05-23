@@ -41,15 +41,21 @@ public abstract class Voraç {
     /** @brief Busca l'activitat que maximitza la qualitat (?) del circuit
      @pre Circuit, viatge, itr i visitats no nuls, tipus=b/c/p
      @post Retorna l'activitat més prometedora*/
-    private static Activitat Buscar_Prometedor(Circuit circuit, Viatge viatge, Iterator<Activitat> itr_candidats, TreeMap<Activitat, Boolean> visitats, char tipus) {
+    private static Activitat Buscar_Prometedor(Mapa m, Circuit c, Viatge v, Iterator<Activitat> itr_cand, TreeSet<Visitable> oblig, Set<String> obl_fet, char tipus) {
         Activitat iCan, millor = null;
+        boolean obligatori=false;
 
-        while (itr_candidats.hasNext()) {
-            iCan=itr_candidats.next();
-            //SI activitat és un lloc per on hem de passar obligatoriament i encara no hi hem passat -> PASSARHI (retornar aquesta activitat ja) (?)
-            //iCan.UbicacioActual()
-            if (visitats.get(iCan)!=null && ModulCalculs.Acceptable(iCan,viatge,circuit)) { //falten condicions
-                if (iCan.comparar(millor,viatge.clients(),tipus))
+        while (itr_cand.hasNext() && !obligatori){
+            iCan=itr_cand.next();
+
+            if (ModulCalculs.Acceptable(iCan,v,c)){
+                //SI activitat és un lloc per on hem de passar obligatoriament i encara no hi hem passat -> PASSARHI
+                if(oblig.contains(iCan)){
+                    obligatori=true;
+                    oblig.remove(iCan);
+                    millor=iCan;
+                }
+                else if (iCan.comparar(millor, v.clients(), tipus))
                     millor = iCan;
             }
         }
@@ -61,7 +67,8 @@ public abstract class Voraç {
      @pre mapa i viatge no nuls, tipus=b/c/s
      @post Retorna un circuit amb la ruta trobada optimitzant en funció del tipus_voraç*/
     private static Circuit Alg_Voraç(Mapa mapa, Viatge viatge, char tipus_voraç){
-        TreeMap<Activitat,Boolean> visitats=new TreeMap<>();
+        //TreeMap<Activitat,Boolean> visitats=new TreeMap<>();
+        TreeSet<String> obligatoris_visitats=new TreeSet();
         Activitat iCan = new Visita(); //activitat stub per entrar al while
         Circuit circuit = new Circuit(viatge.dataHoraInici());
         Iterator<Activitat> itr_candidats;
@@ -75,7 +82,7 @@ public abstract class Voraç {
 
         while(!circuit.solucioCompleta(obligatoris,viatge.origen(),viatge.desti(),viatge.nombreDies(),mapa) && iCan!=null){
             itr_candidats=ModulCalculs.inicialitzarCandidats(circuit.ultimaActivitat(), mapa, viatge.origen(), viatge.desti(),circuit);
-            iCan=Buscar_Prometedor(circuit,viatge,itr_candidats,visitats,tipus_voraç);
+            iCan=Buscar_Prometedor(mapa,circuit,viatge,itr_candidats,obligatoris,obligatoris_visitats,tipus_voraç);
             if(iCan!=null){ //???
                 circuit.afegirActivitat(iCan, viatge.clients(), mapa);
             }
