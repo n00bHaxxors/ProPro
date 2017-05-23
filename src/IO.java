@@ -139,29 +139,31 @@ class IO {
         Iterator<Allotjament> it = LlistaAllotjaments.iterator();
         Iterator<Visitable> jt = LlistaVisitables.iterator();
         Iterator<Lloc> llocIt = LlistaLlocs.iterator();
-        boolean trobat = false;
+        boolean trobatV = false;
+        boolean trobatA = false;
 
         Allotjament allotjamentActual = it.next();
-        while (it.hasNext() && !trobat) {
-            if (allotjamentActual.nom().equals(nomAllotjVisitable)) trobat = true;
+        while (it.hasNext() && !trobatA) {
+            if (allotjamentActual.nom().equals(nomAllotjVisitable)) trobatA = true;
             else allotjamentActual = it.next();
         }
-        trobat = false;
         Visitable visitableActual = jt.next();
-        while (jt.hasNext() && !trobat) {
-            if (visitableActual.nom().equals(nomAllotjVisitable)) trobat = true;
+        while (jt.hasNext() && !trobatV) {
+            if (visitableActual.nom().equals(nomAllotjVisitable)) trobatV = true;
             else visitableActual = jt.next();
         }
         String lloc = scan.readLine();
-        trobat = false;
+        boolean trobat = false;
         Lloc LlocActual = llocIt.next();
         while (llocIt.hasNext() && !trobat) {
             if (LlocActual.nom().equals(lloc)) trobat = true;
             else LlocActual = llocIt.next();
         }
-        if (jt.hasNext()) {
+        if (trobatV) {
+            visitableActual.assignarLlocPrincipal(LlocActual.nom());
             LlocActual.associarPuntInteres(visitableActual);
-        } else if (it.hasNext()) {
+        } else if (trobatA) {
+            allotjamentActual.assignarLlocPrincipal(LlocActual.nom());
             LlocActual.associarPuntInteres(allotjamentActual);
         } else {
             //excepcio
