@@ -75,7 +75,7 @@ public class Circuit {
         LocalTime temps = a.Duracio();
         fi_viatge = fi_viatge.toLocalDate().atTime(a.horaActivitat()).plusHours(temps.getHour()).plusMinutes(temps.getMinute());
         dies = (int)ChronoUnit.DAYS.between(fi_viatge, inici_viatge);
-        grau_satisfaccio += a.Satisfaccio(g);
+        grau_satisfaccio += a.Satisfaccio(g); int temporal = a.Satisfaccio(g);
         if (m.conteVisitable(a.nomAct())) visitesFetes.put(a.nomAct(),(Visita)a);
     }
     
@@ -109,7 +109,6 @@ public class Circuit {
         //comprovem que origen i desti son visitables
         boolean oVis = g.conteVisitable(origen.nom()), dVis = g.conteVisitable(desti.nom());
         boolean resultat = diesV>=dies;
-        int a = 10 +2;
         if (oVis) resultat = resultat && activitats.get(0).nomAct().equals(origen.nom()) && visitesFetes.containsKey(origen.nom());
         if (dVis) resultat = resultat && activitats.get(nActivitats-1).nomAct().equals(desti.nom()) && visitesFetes.containsKey(desti.nom());
         else resultat = resultat && activitats.get(nActivitats-1).UbicacioActual().equals(desti.nom());

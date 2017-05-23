@@ -18,7 +18,7 @@ public abstract class ModulCalculs {
     /** @brief Inicialitza els candidats possibles en funció de la activitat anterior
      @pre a != null
      @post retorna un iterador a un conjunt amb els candidats possibles*/
-    public static Iterator<Activitat> inicialitzarCandidats(Activitat a, Mapa g, Localitzacio inici, Localitzacio fi, Circuit solucio_actual){
+    public static Iterator<Activitat> inicialitzarCandidats(Activitat a, Mapa g, Localitzacio inici, Localitzacio fi, Circuit solucio_actual, Viatge v){
         ArrayList<Activitat> arbre = new ArrayList();
         PuntInteres pActual = null;
         if (a != null && (g.conteVisitable(a.UbicacioActual()) || g.conteAllotjament(a.UbicacioActual())) ) pActual = g.puntInteres(a.UbicacioActual());
@@ -30,7 +30,7 @@ public abstract class ModulCalculs {
         if (pActual != null) {
             llocActual = g.lloc(pActual.nomLloc());
             if (pActual.obreAvui(ara) && !pActual.esLlocPas()) actPActual = pActual.ActivitatCorresponent(pActual.ProximaObertura(ara));
-            if (actPActual != null && actPActual.Satisfaccio(g.clients()) > 0) arbre.add(actPActual);
+            if (actPActual != null && actPActual.Satisfaccio(v.clients()) > 0) arbre.add(actPActual);
             //activitats x desplaçament directe desde el PI actual;
             Iterator<MT_Directe> itr1 = pActual.TransportsDirectes();
             while (itr1.hasNext()){

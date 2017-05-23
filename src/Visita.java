@@ -57,6 +57,7 @@ public class Visita extends Activitat{
      @post Retorna la satisfaccio calculada*/
     @Override
     public int Satisfaccio(GrupClients g){
+        int a = visitat.grauSatisfaccio(g);
         return visitat.grauSatisfaccio(g);
     }
     
