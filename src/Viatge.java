@@ -19,13 +19,13 @@ public class Viatge {
         preuMaxim = p;
         categoria = c;
         clients = cl;
+        llistaVisitables = new ArrayList<>();
        Iterator<Visitable> it= visitables.iterator();
         origen = it.next();
         while(it.hasNext()){
             desti = it.next();
             if(it.hasNext())llistaVisitables.add(desti);
         }
-        llistaVisitables= visitables;
         Iterator<String> itTipus = t.iterator();
         String temp;
         while(itTipus.hasNext()){
