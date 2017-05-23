@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.*;
@@ -9,34 +8,6 @@ import java.util.*;
  */
 
 public abstract class Voraç {
-
-    /*private Boolean completa(PuntInteres desti, Set<PuntInteres> a_visitar, ArrayList<Activitat> activitats){
-        Boolean c1, c2;
-        c1=activitats.get(activitats.size() - 1).nomAct().equals(desti.nom()); //!!!!! nom? nomlloc? no hi ha cap altre manera millor que comparar lstring?
-        c2=activitats.containsAll(a_visitar); //Activitats vs PI //potser ho podem fer contant els punts a visitar que ja hem visitat aixi estalviem fer un O(n)
-        return c1 && c2;
-    }
-
-    /** @brief Fa la comparació corresponent en funcio del tipus de variable a optimitzar
-     @pre actual i millor no nuls i tipus=bcs
-     @post Retorna cert si l'activitat actual és millor que la millor activitat trobada fins el moment*/
-    /*private static Boolean comparar(Activitat actual, Activitat millor, GrupClients gc, char tipus){
-        Boolean res=true;
-        if(millor!=null){
-            switch(tipus){
-                case 'b':
-                    res=actual.preuAct()<millor.preuAct();
-                    break;
-                case 's':
-                    res=actual.Satisfaccio(gc)>millor.Satisfaccio(gc);
-                    break;
-                case 'c':
-                    res=actual.Duracio().isBefore(millor.Duracio());
-                    break;
-            }
-        }
-        return res;
-    }*/
 
     /** @brief Busca l'activitat que maximitza la qualitat (?) del circuit
      @pre Circuit, viatge, itr i visitats no nuls, tipus=b/c/p
@@ -67,11 +38,9 @@ public abstract class Voraç {
      @pre mapa i viatge no nuls, tipus=b/c/s
      @post Retorna un circuit amb la ruta trobada optimitzant en funció del tipus_voraç*/
     private static Circuit Alg_Voraç(Mapa mapa, Viatge viatge, char tipus_voraç){
-        //TreeMap<Activitat,Boolean> visitats=new TreeMap<>();
-        //TreeSet<String> obligatoris_visitats=new TreeSet();
-        Activitat iCan = new Visita(); //activitat stub per entrar al while
         Circuit circuit = new Circuit(viatge.dataHoraInici());
         Iterator<Activitat> itr_candidats;
+        Activitat iCan;
 
         Set<Visitable> obligatoris = new HashSet();
         Iterator<Visitable> itr_visitables = viatge.iteradorVisitables();
@@ -88,7 +57,7 @@ public abstract class Voraç {
             }
         }while(!circuit.solucioCompleta(obligatoris,viatge.origen(),viatge.desti(),viatge.nombreDies(),mapa) && iCan!=null);
 
-        return circuit;
+        return circuit; //si el circuit no és complet hauriem de reteronar null?
     }
 
     /** @brief Calcula les rutes que requereix el viatge
@@ -104,6 +73,7 @@ public abstract class Voraç {
             if (rutes[i]) 
                 res.put("ruta "+tipus_rutes[i], Alg_Voraç(m, v, tipus_voraç[i]));
 
+        System.out.println("Voraç completat");
         return res;
     }
 }
