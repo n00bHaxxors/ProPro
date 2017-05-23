@@ -29,13 +29,20 @@ public abstract class ModulCalculs {
             arbre.add(aux);
             return arbre.iterator();
         }
-        Activitat actPActual = null;
+        Activitat actPActual = null, actPActual2 = null;
         Lloc llocActual;
         LocalDateTime ara = solucio_actual.acabamentCircuit();
         if (pActual != null) {
             llocActual = g.lloc(pActual.nomLloc());
-            if (pActual.obreAvui(ara) && !pActual.esLlocPas()) actPActual = pActual.ActivitatCorresponent(pActual.ProximaObertura(ara));
-            if (actPActual != null /*&& actPActual.Satisfaccio(v.clients()) > 0*/) arbre.add(actPActual);
+            if (pActual.obreAvui(ara) && !pActual.esLlocPas()) {
+                LocalDateTime proxObert = pActual.ProximaObertura(ara), horaFiDinar = proxObert.toLocalDate().atTime(14, 0);
+                actPActual = pActual.ActivitatCorresponent(proxObert);
+                actPActual2 = pActual.ActivitatCorresponent(horaFiDinar);
+            }
+            if (actPActual != null /*&& actPActual.Satisfaccio(v.clients()) > 0*/) {
+                arbre.add(actPActual);
+                arbre.add(actPActual2);
+            }
             //activitats x desplaçament directe desde el PI actual;
             Iterator<MT_Directe> itr1 = pActual.TransportsDirectes();
             while (itr1.hasNext()){
