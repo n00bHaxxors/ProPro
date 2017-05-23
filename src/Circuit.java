@@ -63,7 +63,7 @@ public class Circuit {
      @post retorna a*/
     public Activitat ultimaActivitat(){
         if (activitats.isEmpty()) return null;
-        else return activitats.get(nActivitats);
+        else return activitats.get(nActivitats-1);
     }
     
     /** @brief afegeix una activitat al circuit
