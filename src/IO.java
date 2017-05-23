@@ -273,7 +273,7 @@ class IO {
         LocalDate dataInici = LocalDate.parse(scan.readLine());
         LocalTime horaInici = LocalTime.parse(scan.readLine());
         Integer nombreDies = Integer.parseInt(scan.readLine());
-        Integer preuMaxim = Integer.parseInt(scan.readLine());
+        Integer preuMaxim = 100*Integer.parseInt(scan.readLine());
         String categoria = scan.readLine();
         ArrayList<Client> clients = new ArrayList<Client>();
         String nomClient = scan.readLine();
@@ -376,5 +376,7 @@ class IO {
         GrupClients gc = new GrupClients(LlistaClients);
         Mapa mapa = new Mapa(gc,LlistaVisitables,LlistaAllotjaments,LlistaLlocs,LlistaViatges);
         return new MapaViatge(mapa,LlistaViatges);
+    }
+    public void mostrar(Circuit c){
     }
 }
