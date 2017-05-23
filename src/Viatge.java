@@ -20,7 +20,7 @@ public class Viatge {
         categoria = c;
         clients = cl;
         llistaVisitables = new ArrayList<>();
-       Iterator<Visitable> it= visitables.iterator();
+        Iterator<Visitable> it= visitables.iterator();
         origen = it.next();
         while(it.hasNext()){
             desti = it.next();

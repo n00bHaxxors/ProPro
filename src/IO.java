@@ -378,18 +378,18 @@ class IO {
         Mapa mapa = new Mapa(gc,LlistaVisitables,LlistaAllotjaments,LlistaLlocs,LlistaViatges);
         return new MapaViatge(mapa,LlistaViatges);
     }
-    public void mostrar(Circuit c){
+    public void mostrar(Circuit c, String fitxerSortida){
         try{
-            PrintWriter writer = new PrintWriter("sortida.txt", "UTF-8");
+            PrintWriter writer = new PrintWriter(fitxerSortida, "UTF-8");
             writer.println("Preu: " + String.format ("%.2f", c.preu_persona()));
             writer.close();
         } catch (IOException e) {
             // do something
         }
     }
-    public void crearKML(Circuit c){
+    public void crearKML(Circuit c, String fitxerKML){
         try{
-            PrintWriter writer = new PrintWriter("sortida.kml", "UTF-8");
+            PrintWriter writer = new PrintWriter(fitxerKML, "UTF-8");
             writer.println("The first line");
             writer.close();
         } catch (IOException e) {
