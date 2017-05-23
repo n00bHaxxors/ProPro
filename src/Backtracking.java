@@ -57,7 +57,7 @@ public abstract class Backtracking {
      @pre parametres no buits i a, b i els PuntInteres de c existents a g 
      @post solucio_optima passa amb el circuit demanat*/
     private static void AlgBT(Mapa g, Set<Visitable> c, Viatge v, char o){
-        Iterator<Activitat> itr = ModulCalculs.inicialitzarCandidats(solucio_actual.ultimaActivitat(), g, v.origen(), v.desti(),solucio_actual, v);
+        Iterator<Activitat> itr = ModulCalculs.inicialitzarCandidats(solucio_actual.ultimaActivitat(), g, solucio_actual, v);
         while (itr.hasNext()){
             Activitat act = itr.next();
             if(ModulCalculs.Acceptable(act,v,solucio_actual) && EsPotMillorar(act, o, v.clients())){

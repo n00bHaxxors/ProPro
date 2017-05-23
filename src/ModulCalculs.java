@@ -18,12 +18,12 @@ public abstract class ModulCalculs {
     /** @brief Inicialitza els candidats possibles en funció de la activitat anterior
      @pre a != null
      @post retorna un iterador a un conjunt amb els candidats possibles*/
-    public static Iterator<Activitat> inicialitzarCandidats(Activitat a, Mapa g, Localitzacio inici, Localitzacio fi, Circuit solucio_actual, Viatge v){
+    public static Iterator<Activitat> inicialitzarCandidats(Activitat a, Mapa g, Circuit solucio_actual, Viatge v){
         ArrayList<Activitat> arbre = new ArrayList();
         PuntInteres pActual = null;
         if (a != null && (g.conteVisitable(a.UbicacioActual()) || g.conteAllotjament(a.UbicacioActual())) ) pActual = g.puntInteres(a.UbicacioActual());
         else if (a != null && !g.conteVisitable(a.UbicacioActual()) && !g.conteAllotjament(a.UbicacioActual())) return arbre.iterator();
-        else if (g.conteVisitable(inici.nom())) pActual = (PuntInteres) inici;
+        else if (g.conteVisitable(v.origen().nom())) pActual = (PuntInteres) v.origen();
         Activitat actPActual = null;
         Lloc llocActual;
         LocalDateTime ara = solucio_actual.acabamentCircuit();
@@ -52,7 +52,7 @@ public abstract class ModulCalculs {
                 }
             }
         }
-        else llocActual = (Lloc) inici;
+        else llocActual = (Lloc) v.origen();
         //Activitats x desplaçament indirecte desde el lloc actual
         Iterator<Hub> itr2 = llocActual.hubs();
         while (itr2.hasNext()){
@@ -64,7 +64,7 @@ public abstract class ModulCalculs {
                 LocalTime duradaTotal;
                 if (pActual!=null) duradaTotal = mti.durada().plusHours(h.tempsTrasllatTotal().getHour()).plusMinutes(h.tempsTrasllatTotal().getMinute());
                 else duradaTotal = mti.durada().plusHours(h.tempsTrasllatDesti().getHour()).plusMinutes(h.tempsTrasllatDesti().getMinute());
-                if (l.nom().equals(fi)){
+                if (l.nom().equals(v.desti())){
                     LocalTime duradaTotal2 = mti.durada().plusHours(h.tempsTrasllatOrigen().getHour()).plusMinutes(h.tempsTrasllatOrigen().getMinute());
                     Desplaçament temp = new Desplaçament(mti.preu(),mti.diaHoraSortida().toLocalDate(),mti.diaHoraSortida().toLocalTime(),
                             mti, pActual, l, duradaTotal2);
