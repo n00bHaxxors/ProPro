@@ -7,7 +7,7 @@
  */
 
 public class Coordenada {
-    private Float x, y;
+    private Float x, y; //< Coordenades geogràfiques
 
     /**
      * @brief Crea una coordenada geogràfica a partir de les seves components vertical i horitzontal
@@ -18,6 +18,11 @@ public class Coordenada {
         x=est;
         y=nord;
     }
+    /**
+     * @brief Retorna la interpretació de text de la coordenada
+     * @pre cert
+     * @post Retorna la string
+     */
     public String toString(){
         return (x.toString()+','+y.toString()+",0");
     }

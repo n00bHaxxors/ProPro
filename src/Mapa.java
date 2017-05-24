@@ -11,11 +11,13 @@ import java.util.Iterator;
     @author Ismael El Habri
 */
 public class Mapa {
-    private GrupClients clients;
-    private HashMap<String,Visitable> mapaV;
-    private HashMap<String,Allotjament> mapaA;
-    private HashMap<String, Lloc> mapaLlocs;
-    private ArrayList<Viatge> viatges;
+    /** @invariant atributs != null
+        */
+    private GrupClients clients; //<contenidor de clients
+    private HashMap<String,Visitable> mapaV; //< contenidor de visitables
+    private HashMap<String,Allotjament> mapaA;//<contenidor de allotjaments 
+    private HashMap<String, Lloc> mapaLlocs; //<contenidor de llocs
+    private ArrayList<Viatge> viatges; //< contenidor de viatges solicitats
 
     /** @brief crea un mapa amb el grup de clients i el conjunt de llocs donats
 	@pre cert

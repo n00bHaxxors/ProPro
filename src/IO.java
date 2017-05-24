@@ -17,22 +17,30 @@ import java.util.*;
  */
 
 class IO {
+    /** @class MapaViatge
+     @brief Classe que ajunta un Mapa amb diversos Viatges
+     @author Lluís Trilla
+     */
     public static class MapaViatge{
-        public ArrayList<Viatge> viatges;
-        public Mapa mapa;
+        public ArrayList<Viatge> viatges; //< Llista de viatges
+        public Mapa mapa; //< Mapa on es fan els viatges
+        /**
+         * @brief Constructor de la classe
+         * @pre cert
+         * @post Crea la classe a partir de les dades entrades
+         */
         public MapaViatge(Mapa m, ArrayList<Viatge> v){
             mapa = m;
             viatges = v;
         }
     }
-    private static final String SEPARADOR = "*";
-    private BufferedReader scan;
-    ArrayList<Client> LlistaClients;
-    ArrayList<Lloc> LlistaLlocs;
-    ArrayList<Allotjament> LlistaAllotjaments;
-    ArrayList<Visitable> LlistaVisitables;
-    ArrayList<Visita> LlistaVisites;
-    ArrayList<Viatge> LlistaViatges;
+    private BufferedReader scan; //< Reader que usarem per llegir el fitxer d'entrada
+    private ArrayList<Client> LlistaClients; //< Llista de clients que omplim amb l'entrada
+    private ArrayList<Lloc> LlistaLlocs; //< Llista de Llocs que omplim amb l'entrada
+    private ArrayList<Allotjament> LlistaAllotjaments; //< Llista d'allotjaments que omplim amb l'entrada
+    private ArrayList<Visitable> LlistaVisitables; //< Llista de llocs visitables que omplim amb l'entrada
+    private ArrayList<Visita> LlistaVisites; //< Llista de Visites que omplim amb l'entrada
+    private ArrayList<Viatge> LlistaViatges; //< Llista de Viatges que omplim amb l'entrada
 
     /**
      * @brief Tracta el cas "client" de IO
@@ -81,7 +89,7 @@ class IO {
         do {
             llistaCaracteristiques.add(caracteristica);
             caracteristica = scan.readLine();
-        } while (!caracteristica.equals(SEPARADOR));
+        } while (!caracteristica.equals('*'));
         LlistaAllotjaments.add(new Allotjament(nomAllotjament, (int)(100*preuHabDoble), coordAllotjament, llistaCaracteristiques, TimeZone.getTimeZone(zonaHoraria), categoria));
     }
     /**
@@ -101,7 +109,7 @@ class IO {
         do {
             llistaCaracteristiques.add(caracteristica);
             caracteristica = scan.readLine();
-        } while (!caracteristica.equals(SEPARADOR));
+        } while (!caracteristica.equals('*'));
         String horari = scan.readLine();
         ArrayList<Visitable.BlocHorari> llistaHoraris = new ArrayList<Visitable.BlocHorari>();
         do {
@@ -116,10 +124,10 @@ class IO {
             horaFi = LocalTime.parse(partsHorari[9]+':'+partsHorari[10]);
             llistaHoraris.add(new Visitable.BlocHorari(diaInici,horaInici,diaFi,horaFi));
             horari = scan.readLine();
-        } while (!horari.equals(SEPARADOR) && (horari.length() - horari.replace("-", "").length())== 2);
+        } while (!horari.equals('*') && (horari.length() - horari.replace("-", "").length())== 2);
         String excepcio = horari;
         ArrayList<Visitable.ExcepcioHorari> llistaExcepcions = new ArrayList<Visitable.ExcepcioHorari>();
-        if(!excepcio.equals(SEPARADOR)) {
+        if(!excepcio.equals('*')) {
             do {
                 MonthDay dia;
                 LocalTime horaInici, horaFi;
@@ -130,7 +138,7 @@ class IO {
                 horaFi = LocalTime.parse(partsHorari[5] + ':' + partsHorari[6]);
                 llistaExcepcions.add(new Visitable.ExcepcioHorari(dia, horaInici, horaFi));
                 excepcio = scan.readLine();
-            } while (!excepcio.equals(SEPARADOR));
+            } while (!excepcio.equals('*'));
         }
         LlistaVisitables.add(new Visitable(nomVisitable, (int)(100*preu), coordVisitable, llistaCaracteristiques, TimeZone.getTimeZone(zonaHoraria), LocalTime.parse(tempsVisita), llistaExcepcions, llistaHoraris));
     }

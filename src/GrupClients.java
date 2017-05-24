@@ -11,7 +11,7 @@ import java.util.Iterator;
  */
 
 public class GrupClients {
-    private ArrayList<Client> clients;
+    private ArrayList<Client> clients; //< Llista de clients
 
     /**
      * @brief Crea un GrupClients

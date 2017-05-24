@@ -12,10 +12,10 @@ import java.util.Iterator;
 
 public class Hub {
 
-    private LocalTime temps_trasllat_origen, temps_trasllat_desti;
-    private ArrayList<MT_Indirecte> transports;
-    private Lloc desti;
-    private String nom;
+    private LocalTime temps_trasllat_origen, temps_trasllat_desti; //< Temps que es tarda per arribar o marxar del hub
+    private ArrayList<MT_Indirecte> transports; //< Llista de transports del mateix hub
+    private Lloc desti; //< Destinacio dels transports del hub
+    private String nom; //< Nom del mitjà de transport
 
     /** @brief Constructor amb paràmetres
      @pre nom, o, d i de no nuls
