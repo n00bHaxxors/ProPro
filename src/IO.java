@@ -3,6 +3,7 @@
  */
 
 import java.io.*;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -402,8 +403,41 @@ class IO {
     public void mostrar(Circuit c, String fitxerSortida){
         try{
             PrintWriter writer = new PrintWriter(fitxerSortida, "UTF-8");
-            writer.println("Preu: " + String.format ("%.2f", c.preu_persona()));
-            writer.println("Satisfaccio " + String.format ("%.2f", c.grau_satisfaccio()));
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(2);
+            writer.println("Preu: " + df.format(c.preu_persona()/100));
+            writer.println("Satisfaccio " + df.format(c.grau_satisfaccio()));
+            Iterator<Activitat> it = c.Activitats();
+            Activitat activitatActual;
+            LocalTime horaAnterior = null;
+            LocalDate ultimDia = null;
+            while(it.hasNext()){
+                activitatActual=it.next();
+                if(ultimDia==null || !ultimDia.equals(activitatActual.diaActivitat())){
+                    writer.println(activitatActual.diaActivitat().toString());
+                }
+                ultimDia=activitatActual.diaActivitat();
+                if(horaAnterior !=null){
+                    if(!horaAnterior.equals(activitatActual.horaActivitat())){
+                        if((horaAnterior.getHour()<12 || (horaAnterior.getHour()==12&&horaAnterior.getMinute()==0)) &&
+                                (activitatActual.horaActivitat().getHour()>14 || activitatActual.horaActivitat().getHour()==14 && activitatActual.horaActivitat().getMinute()>=0 )){
+                            if(horaAnterior.getHour()<12){
+                                writer.println(horaAnterior.toString() + "-12:00 Temps lliure");
+                            }
+                            writer.println("12:00-14:00 Dinar");
+                            if(activitatActual.horaActivitat().getHour()>14 || (activitatActual.horaActivitat().getHour()==14 && activitatActual.horaActivitat().getMinute()>0)){
+                                writer.println("14:00-"+activitatActual.horaActivitat().toString()+" Temps lliure");
+                            }
+
+                        }
+                        else{//TEMPS LLIURE
+                            writer.println(horaAnterior.toString() + '-' + activitatActual.horaActivitat() + " Temps lliure");
+                        }
+                    }
+                }
+                horaAnterior=activitatActual.horaActivitat().plusHours(activitatActual.Duracio().getHour()).plusMinutes(activitatActual.Duracio().getMinute());
+                writer.println(activitatActual.toString());
+            }
             writer.close();
         } catch (IOException e) {
             // do something
@@ -418,5 +452,4 @@ class IO {
             // do something
         }
     }
-
 }
