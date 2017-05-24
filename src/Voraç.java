@@ -15,12 +15,12 @@ public abstract class Voraç {
         Activitat iCan, millor = null;
         int var_millor=0, var_trans[]=new int[1];
         LocalTime temps_millor=null, temps_trans[]=new LocalTime[1];
-        boolean millor_ob=false, millor_visitable=false;
+        boolean millor_ob=false;
 
         while (itr_cand.hasNext()) {
             iCan = itr_cand.next();
 
-            if (ModulCalculs.Acceptable(iCan, v, c, oblig)) {
+            if (ModulCalculs.Acceptable(iCan, v, c, oblig) && !c.visitat(iCan.UbicacioActual())) {
                 boolean actual_ob, comp; //booleans finals
                 boolean actual_capaobligatori = false; //booleans intermitjos
 
@@ -30,7 +30,7 @@ public abstract class Voraç {
                 actual_ob = oblig.contains(iCan) || actual_capaobligatori; //es obligatori o VA cap a un obligatori
                 comp = iCan.comparar(millor, v.clients(), m, var_trans, temps_trans, var_millor, temps_millor, tipus);
 
-                if (!millor_ob && comp || actual_ob && !millor_ob || actual_ob && comp) { //simplificable
+                if (!millor_ob && comp || actual_ob && (!millor_ob || comp) || m.conteVisitable(iCan.nomAct()) && !m.conteVisitable(millor.nomAct())) {
                     millor = iCan;
                     millor_ob = actual_ob;
                     var_millor = var_trans[0];
