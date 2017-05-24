@@ -100,17 +100,17 @@ public abstract class Activitat {
      */
     public Boolean comparar(Activitat millor, GrupClients gc, Mapa m, int var_trans[], LocalTime temps_trans[], int var_millor, LocalTime temps_millor, char tipus) {
         Boolean res = true;
-        int var_optimitzar_actual = tipus == 'b' ? preu : Satisfaccio(gc); //si busquem barat posem preu de l'activitat, si no, satisfaccio, perquè encara que tipus sigui c no influeix
+        int var_optimitzar_actual = tipus == 'b' ? preu : Satisfaccio(gc);
         LocalTime temps_optimitzar_actual = Duracio();
 
         if (!m.conteAllotjament(nomAct()) && !m.conteVisitable(nomAct())) //si és un desplaçament...
             switch (tipus) {
                 case 'b':
-                    var_optimitzar_actual = m.puntInteres(this.UbicacioActual()).preu() + preu;
+                    var_optimitzar_actual = m.puntInteres(UbicacioActual()).preu() + preu;
                     var_trans[0] = var_optimitzar_actual;
                     break;
                 case 's':
-                    var_optimitzar_actual = m.puntInteres(this.UbicacioActual()).grauSatisfaccio(gc);
+                    var_optimitzar_actual = m.puntInteres(UbicacioActual()).grauSatisfaccio(gc);
                     var_trans[0] = var_optimitzar_actual;
                     break;
                 case 'c':

@@ -15,8 +15,7 @@ public abstract class Voraç {
         Activitat iCan, millor = null;
         int var_millor=0, var_trans[]=new int[1];
         LocalTime temps_millor=null, temps_trans[]=new LocalTime[1];
-        boolean millor_ob=false; //?
-        ArrayList<Activitat> debug_candidats=new ArrayList<>(); //debug
+        boolean millor_ob=false, millor_visitable=false;
 
         while (itr_cand.hasNext()) {
             iCan = itr_cand.next();
@@ -68,7 +67,7 @@ public abstract class Voraç {
             }
         }while(!circuit.solucioCompleta(obligatoris,viatge.origen(),viatge.desti(),viatge.nombreDies(),mapa) && iCan!=null);
 
-        return circuit; //si el circuit no és complet hauriem de reteronar null?
+        return circuit; //si el circuit no és complet hauriem de retornar null?
     }
 
     /** @brief Calcula les rutes que requereix el viatge
