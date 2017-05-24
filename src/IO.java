@@ -336,11 +336,10 @@ class IO {
             tipusRuta.add(nomRuta);
             nomRuta=scan.readLine();
         }
-        //origen = null; desti = null;
         LlistaViatges.add(new Viatge(dataInici.atTime(horaInici),nombreDies,preuMaxim,categoria,new GrupClients(clients),origen,desti,visitables,tipusRuta));
     }
 
-    public MapaViatge llegir(String f) throws ParseException {
+    public MapaViatge llegir(String f) throws ParseException, ExcepcioIOCasDesconegut{
         LlistaClients = new ArrayList<Client>();
         LlistaLlocs = new ArrayList<Lloc>();
         LlistaAllotjaments = new ArrayList<Allotjament>();
@@ -389,7 +388,7 @@ class IO {
                         casViatge();
                         break;
                     default:
-                        break;
+                        throw new ExcepcioIOCasDesconegut();
                 }
                 codi_operacio = scan.readLine();
             }
@@ -400,7 +399,7 @@ class IO {
         Mapa mapa = new Mapa(gc,LlistaVisitables,LlistaAllotjaments,LlistaLlocs,LlistaViatges);
         return new MapaViatge(mapa,LlistaViatges);
     }
-    public void mostrar(Circuit c, String fitxerSortida){
+    public void mostrar(Circuit c, String fitxerSortida) throws ExcepcioContingutCasIOErroni {
         try{
             PrintWriter writer = new PrintWriter(fitxerSortida, "UTF-8");
             DecimalFormat df = new DecimalFormat();
@@ -440,7 +439,7 @@ class IO {
             }
             writer.close();
         } catch (IOException e) {
-            // do something
+            throw new ExcepcioContingutCasIOErroni();
         }
     }
     public void crearKML(Circuit c, String fitxerKML, Mapa m){
@@ -503,7 +502,7 @@ class IO {
                     "</kml>");
             writer.close();
         } catch (IOException e) {
-            // do something
+
         }
     }
 }

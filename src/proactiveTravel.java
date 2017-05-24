@@ -101,7 +101,7 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
             fc.getExtensionFilters().add(extFilter);
             textKML.setText(fc.showSaveDialog(null).getAbsolutePath());
         }
-        if(event.getSource()==botoExecutar){ 
+        if(event.getSource()==botoExecutar){
             if(radioBT.isSelected()){
                 File fileBT = new File(textInput.getText());
                 if(fileBT.exists() && !fileBT.isDirectory()) {
@@ -111,6 +111,8 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
                         mp = io.llegir(textInput.getText());
                     } catch (ParseException e) {
                         e.printStackTrace();
+                    } catch (ExcepcioIOCasDesconegut excepcioIOCasDesconegut) {
+                        excepcioIOCasDesconegut.printStackTrace();
                     }
                     Iterator<Viatge> it = mp.viatges.iterator();
                     while(it.hasNext()){
@@ -119,9 +121,22 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
                         Circuit circuitBarat=hashCircuits.get("ruta barata");
                         Circuit circuitCurt=hashCircuits.get("ruta curta");
                         Circuit circuitSatisf=hashCircuits.get("ruta satisfactoria");
-                        if(circuitBarat != null){io.mostrar(circuitBarat,textOutput.getText()); io.crearKML(circuitBarat,textKML.getText(),mp.mapa);}
-                        if(circuitCurt != null){io.mostrar(circuitCurt,textOutput.getText()); io.crearKML(circuitCurt,textKML.getText(),mp.mapa);}
-                        if(circuitSatisf != null){io.mostrar(circuitSatisf,textOutput.getText()); io.crearKML(circuitSatisf,textKML.getText(),mp.mapa);}
+                        try {
+                            if (circuitBarat != null) {
+                                io.mostrar(circuitBarat, textOutput.getText());
+                                io.crearKML(circuitBarat, textKML.getText(), mp.mapa);
+                            }
+                            if (circuitCurt != null) {
+                                io.mostrar(circuitCurt, textOutput.getText());
+                                io.crearKML(circuitCurt, textKML.getText(), mp.mapa);
+                            }
+                            if (circuitSatisf != null) {
+                                io.mostrar(circuitSatisf, textOutput.getText());
+                                io.crearKML(circuitSatisf, textKML.getText(), mp.mapa);
+                            }
+                        } catch (ExcepcioContingutCasIOErroni excepcioContingutCasIOErroni) {
+                                excepcioContingutCasIOErroni.printStackTrace();
+                        }
                     }
                 }
             }
@@ -134,6 +149,8 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
                         mp = io.llegir(textInput.getText());
                     } catch (ParseException e) {
                         e.printStackTrace();
+                    } catch (ExcepcioIOCasDesconegut excepcioIOCasDesconegut) {
+                        excepcioIOCasDesconegut.printStackTrace();
                     }
                     Iterator<Viatge> it = mp.viatges.iterator();
                     while(it.hasNext()){
@@ -142,14 +159,31 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
                         Circuit circuitBarat=hashCircuits.get("ruta barata");
                         Circuit circuitCurt=hashCircuits.get("ruta curta");
                         Circuit circuitSatisf=hashCircuits.get("ruta satisfactoria");
-                        if(circuitBarat != null){io.mostrar(circuitBarat,textOutput.getText()); io.crearKML(circuitBarat,textKML.getText(),mp.mapa);}
-                        if(circuitCurt != null){io.mostrar(circuitCurt,textOutput.getText()); io.crearKML(circuitCurt,textKML.getText(),mp.mapa);}
-                        if(circuitSatisf != null){io.mostrar(circuitSatisf,textOutput.getText()); io.crearKML(circuitSatisf,textKML.getText(),mp.mapa);}
+                        try {
+                            if (circuitBarat != null) {
+                                io.mostrar(circuitBarat, textOutput.getText());
+                                io.crearKML(circuitBarat, textKML.getText(), mp.mapa);
+                            }
+                            if (circuitCurt != null) {
+                                io.mostrar(circuitCurt, textOutput.getText());
+                                io.crearKML(circuitCurt, textKML.getText(), mp.mapa);
+                            }
+                            if (circuitSatisf != null) {
+                                io.mostrar(circuitSatisf, textOutput.getText());
+                                io.crearKML(circuitSatisf, textKML.getText(), mp.mapa);
+                            }
+                        }catch (ExcepcioContingutCasIOErroni excepcioContingutCasIOErroni) {
+                            excepcioContingutCasIOErroni.printStackTrace();
+                        }
                     }
                 }
             }
             else{
-                //throu
+                try {
+                    throw new ExcepcioRadioButtons();
+                } catch (ExcepcioRadioButtons excepcioRadioButtons) {
+                    excepcioRadioButtons.printStackTrace();
+                }
             }
         }
     }
