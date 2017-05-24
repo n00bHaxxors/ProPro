@@ -297,25 +297,43 @@ class IO {
         String nomVisitable = scan.readLine();
         ArrayList<Visitable> visitables = new ArrayList<Visitable>();
         Iterator<Visitable> visitableIt = LlistaVisitables.iterator();
-        Localitzacio origen, desti;
+        Localitzacio origen=null;
+                Localitzacio  desti=null;
         Visitable visitableActual= visitableIt.next();
+        Localitzacio temp;
         while(!nomVisitable.equals("*")) {
             while (visitableActual!=null && !trobat) {
                 if (visitableActual.nom().equals(nomVisitable)) {
+                    nomVisitable = scan.readLine();
+                    if(nomVisitable.equals("*")){desti=visitableActual;}
+                    else {
+                        if (origen == null) origen = visitableActual;
+                        else visitables.add(visitableActual);
+                    }
                     trobat = true;
-                    visitables.add(visitableActual);
                 } else visitableActual = visitableIt.next();
             }
+            if(!trobat){
+                Iterator<Lloc> LlocsIt= LlistaLlocs.iterator();
+                temp=LlocsIt.next();
+                while (temp!=null && !trobat) {
+                    if (temp.nom().equals(nomVisitable)) {
+                        if(origen==null)origen = temp;
+                        else desti=temp;
+                        trobat = true;
+                        nomVisitable = scan.readLine();
+                    } else temp = LlocsIt.next();
+                }
+            }
             trobat = false;
-            nomVisitable = scan.readLine();
             visitableIt=LlistaVisitables.iterator();
             visitableActual = visitableIt.next();
         }
         ArrayList<String> tipusRuta = new ArrayList<String>();
-        String temp = scan.readLine();
-        while(!temp.equals("*")){
-            tipusRuta.add(temp);
-            temp=scan.readLine();
+        String nomRuta = scan.readLine();
+        while(!nomRuta.equals("*")){
+            tipusRuta.add(nomRuta);
+            nomRuta=scan.readLine();
         }
         origen = null; desti = null;
         LlistaViatges.add(new Viatge(dataInici.atTime(horaInici),nombreDies,preuMaxim,categoria,new GrupClients(clients),origen,desti,visitables,tipusRuta));
