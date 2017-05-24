@@ -119,20 +119,20 @@ class IO {
         LocalDate data = LocalDate.parse(scan.readLine()); //data de la visita més recent
         scan.readLine(); //llegir separador
         Iterator<Client> it = LlistaClients.iterator();
-        Client clientActual= it.next();
+        Client clientActual = null; //--sipwarriper: el netbeans mha obligat a inicialitzar-la a algo:/
         Boolean trobat = false;
-        while(clientActual!=null && !trobat){
+        while(it.hasNext() && !trobat){
+            clientActual= it.next();
             if(clientActual.nom().equals(nom_client)) trobat = true;
-            else clientActual = it.next();
         }
         Iterator<Visitable> jt = LlistaVisitables.iterator();
-        Visitable visitableActual = jt.next();
+        Visitable visitableActual = null;
         trobat = false;
-        while(visitableActual!=null && !trobat){
+        while(jt.hasNext() && !trobat){
+            visitableActual = jt.next();
             if(visitableActual.nom().equals(nom_lloc)) trobat = true;
-            else visitableActual = jt.next();
         }
-        clientActual.afegirVisita(visitableActual,data);
+        if (clientActual != null && visitableActual!= null) clientActual.afegirVisita(visitableActual,data); //--sipwarriper: probablament aqui s'hauria de fer diferenciació de booleans per tirar excepcio si no troba el client i/o el visitable
     }
     private void casAssociarLloc() throws IOException {
         String nomAllotjVisitable = scan.readLine();
@@ -142,22 +142,23 @@ class IO {
         boolean trobatV = false;
         boolean trobatA = false;
 
-        Allotjament allotjamentActual = it.next();
-        while (allotjamentActual!=null && !trobatA) {
+        Allotjament allotjamentActual = null;
+        while (it.hasNext() && !trobatA) {
+            allotjamentActual = it.next();
             if (allotjamentActual.nom().equals(nomAllotjVisitable)) trobatA = true;
-            else allotjamentActual = it.next();
+            
         }
-        Visitable visitableActual = jt.next();
-        while (visitableActual!=null && !trobatV) {
+        Visitable visitableActual = null;
+        while (jt.hasNext() && !trobatV) {
+            visitableActual = jt.next();
             if (visitableActual.nom().equals(nomAllotjVisitable)) trobatV = true;
-            else visitableActual = jt.next();
         }
         String lloc = scan.readLine();
         boolean trobat = false;
-        Lloc LlocActual = llocIt.next();
-        while (LlocActual!=null && !trobat) {
+        Lloc LlocActual = null;
+        while (llocIt.hasNext() && !trobat) {
+            LlocActual = llocIt.next();
             if (LlocActual.nom().equals(lloc)) trobat = true;
-            else LlocActual = llocIt.next();
         }
         if (trobatV) {
             visitableActual.assignarLlocPrincipal(LlocActual.nom());
@@ -166,7 +167,7 @@ class IO {
             allotjamentActual.assignarLlocPrincipal(LlocActual.nom());
             LlocActual.associarPuntInteres(allotjamentActual);
         } else {
-            //excepcio
+            //excepcio //--sipwarriper: en els ifs anteriors no cladria mmirar si hem trobat el llocActual?
         }
         scan.readLine();
     }
@@ -179,10 +180,10 @@ class IO {
 
         Iterator<Lloc> llocIt = LlistaLlocs.iterator();
         boolean trobat = false;
-        Lloc LlocActual = llocIt.next();
-        while (LlocActual!=null && !trobat) {
+        Lloc LlocActual = null;
+        while (llocIt.hasNext() && !trobat) {
+            LlocActual = llocIt.next();
             if (LlocActual.nom().equals(nomLloc)) trobat = true;
-            else LlocActual = llocIt.next();
         }
         LlocActual.associarTransport(transport);
         scan.readLine();
@@ -198,30 +199,28 @@ class IO {
         Iterator<Allotjament> it = LlistaAllotjaments.iterator();
         Iterator<Visitable> jt = LlistaVisitables.iterator();
         Iterator<Lloc> llocIt = LlistaLlocs.iterator();
-        PuntInteres origen=it.next();
+        PuntInteres origen = null;
         boolean origenTrobat=false;
-        while (origen!=null && !origenTrobat) {
+        while (it.hasNext() && !origenTrobat) {
+            origen=it.next();
             if (origen.nom().equals(nomOrigen)) origenTrobat = true;
-            else origen = it.next();
         }if(!origenTrobat) {
-            origen = jt.next();
-            while (origen != null && !origenTrobat) {
+            while (jt.hasNext() && !origenTrobat) {
+                origen = jt.next();
                 if (origen.nom().equals(nomDesti)) origenTrobat = true;
-                else origen = jt.next();
             }
         }
         it = LlistaAllotjaments.iterator();
         jt = LlistaVisitables.iterator();
-        PuntInteres desti=it.next();
+        PuntInteres desti=null;
         boolean destiTrobat=false;
-        while (desti!=null && !destiTrobat) {
+        while (it.hasNext() && !destiTrobat) {
+            desti = it.next();
             if (desti.nom().equals(nomDesti)) destiTrobat = true;
-            else origen = it.next();
         }if(!destiTrobat) {
-            desti = jt.next();
-            while (desti != null && !destiTrobat) {
+            while (jt.hasNext()&& !destiTrobat) {
+                desti = jt.next();
                 if (desti.nom().equals(nomDesti)) destiTrobat = true;
-                else desti = jt.next();
             }
         }
         origen.afegirTransportDirecte(new MT_Directe(nomMT,(int) (preu*100),duradaTrajecte,desti));
@@ -256,17 +255,17 @@ class IO {
         Iterator<Lloc> llocIt = LlistaLlocs.iterator();
         boolean trobat = false;
 
-        Lloc llocOrigen = llocIt.next();
-        while (llocOrigen!=null && !trobat) {
+        Lloc llocOrigen = null;
+        while (llocIt.hasNext() && !trobat) {
+            llocOrigen = llocIt.next();
             if (llocOrigen.nom().equals(nomOrigen)) trobat = true;
-            else llocOrigen = llocIt.next();
         }
         trobat = false;
         llocIt = LlistaLlocs.iterator();
-        Lloc llocDesti = llocIt.next();
+        Lloc llocDesti = null;
         while (llocDesti!=null && !trobat) {
+            llocDesti = llocIt.next();
             if (llocDesti.nom().equals(nomDesti)) trobat = true;
-            else llocDesti = llocIt.next();
         }
         llocOrigen.associarHub(new Hub(nomMT,tempsAnada,tempsTornada,llocDesti,partences));
     }
@@ -281,13 +280,13 @@ class IO {
         Iterator<Client> clientIt = LlistaClients.iterator();
         Boolean trobat = new Boolean(false);
         do{
-            Client client = clientIt.next();
-            while (client!=null && !trobat) {
+            Client client = null;
+            while (clientIt.hasNext() && !trobat) {
+                client = clientIt.next();
                 if (client.nom().equals(nomClient)) {
                     trobat = true;
                     clients.add(client);
                 }
-                else client = clientIt.next();
             }
             trobat = false;
             clientIt = LlistaClients.iterator();
@@ -299,10 +298,11 @@ class IO {
         Iterator<Visitable> visitableIt = LlistaVisitables.iterator();
         Localitzacio origen=null;
                 Localitzacio  desti=null;
-        Visitable visitableActual= visitableIt.next();
+        Visitable visitableActual = null;
         Localitzacio temp;
         while(!nomVisitable.equals("*")) {
-            while (visitableActual!=null && !trobat) {
+            while (visitableIt.hasNext() && !trobat) {
+                visitableActual = visitableIt.next();
                 if (visitableActual.nom().equals(nomVisitable)) {
                     nomVisitable = scan.readLine();
                     if(nomVisitable.equals("*")){desti=visitableActual;}
@@ -311,18 +311,19 @@ class IO {
                         else visitables.add(visitableActual);
                     }
                     trobat = true;
-                } else visitableActual = visitableIt.next();
+                }
             }
             if(!trobat){
                 Iterator<Lloc> LlocsIt= LlistaLlocs.iterator();
-                temp=LlocsIt.next();
-                while (temp!=null && !trobat) {
+                while (LlocsIt.hasNext() && !trobat) {
+                    //--sipwarriper: temp per a què s'utilitza??
+                    temp=LlocsIt.next();
                     if (temp.nom().equals(nomVisitable)) {
                         if(origen==null)origen = temp;
                         else desti=temp;
                         trobat = true;
                         nomVisitable = scan.readLine();
-                    } else temp = LlocsIt.next();
+                    }
                 }
             }
             trobat = false;
