@@ -88,6 +88,7 @@ public class Circuit {
         dies = (int)ChronoUnit.DAYS.between(fi_viatge, inici_viatge);
         grau_satisfaccio += a.Satisfaccio(g); int temporal = a.Satisfaccio(g);
         if (m.conteVisitable(a.nomAct())) visitesFetes.put(a.nomAct(),(Visita)a);
+        preu_per_persona += a.preuAct();
     }
     
     /** @brief Treu l'última activitat del circuit
@@ -104,6 +105,7 @@ public class Circuit {
         else fi_viatge = inici_viatge;
         dies = (int)ChronoUnit.DAYS.between(fi_viatge, inici_viatge);
         grau_satisfaccio -= a.Satisfaccio(g);
+        preu_per_persona -= a.preuAct();
         if (m.conteVisitable(a.nomAct())) visitesFetes.remove(a.nomAct());
     }
     /** @brief Consulta el dia i la hora en que acabem el circuit
