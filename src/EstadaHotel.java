@@ -10,7 +10,9 @@ import java.util.Set;
     @author Ismael El Habri
 */
 public class EstadaHotel extends Activitat {
-    private Allotjament hotel;
+    /** @invariant hotel!=null
+     */
+    private Allotjament hotel; //<Allotjament on fem l'estada al hotel
     
     /** @brief Constructor de una Estadia a un Hotel
      @pre parametres != null

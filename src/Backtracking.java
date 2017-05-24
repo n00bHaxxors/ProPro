@@ -18,7 +18,10 @@ import java.util.TreeSet;
 */
 
 public abstract class Backtracking {
-    private static Circuit solucio_optima, solucio_actual;
+    /** @invariant si solucio_optima no està buit, sempre serà igual o millor (optimitzant el que s'hagi demanat) que solucio_actual
+     */
+    private static Circuit solucio_optima; //< Circuit amb la solució optima trobada pel Backtracking
+    private static Circuit solucio_actual; //<Solucio que es va modificant a cada iteració del Backtracking
     
     /** @brief Calcula el circuit més Barat
      @pre parametres no buits i a, b i els PuntInteres de c existents a g 

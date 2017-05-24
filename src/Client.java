@@ -10,7 +10,6 @@ import java.util.Iterator;
     @author Ismael El Habri
 */
 
-
 public class Client {
     private class VisitaAnterior{
         private Visitable v; private LocalDate data;

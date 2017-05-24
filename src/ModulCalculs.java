@@ -16,6 +16,10 @@ import java.util.Set;
  */
 
 public abstract class ModulCalculs {
+    /** @invariant modul funcional, no té invariant
+     */
+    
+    
     /** @brief Inicialitza els candidats possibles en funció de la activitat anterior
      @pre a != null
      @post retorna un iterador a un conjunt amb els candidats possibles*/

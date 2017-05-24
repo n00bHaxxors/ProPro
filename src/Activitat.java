@@ -9,20 +9,17 @@ import java.util.Set;
     @author Ismael El Habri
 */
 public abstract class Activitat {
-
-    private LocalDate dia;
-    private LocalTime hora;
-    private int preu;
-
-    /**
-     * @brief Construeix una activitat amb les dades
-     * @pre d, h i p diferent de nulls
-     * @post Crea una nova activitat amb hora h, dia d i preu p
+    /** @invariant dia != null && hora!=null && preu != null
      */
-    public Activitat(LocalDate d, LocalTime h, int p) {
-        dia = d;
-        hora = h;
-        preu = p;
+    private LocalDate dia; //<dia en que es fa l'activitat
+    private LocalTime hora; //<hora en que es comença l'activitat
+    private int preu; //<preu de l'activitat
+    
+    /** @brief Construeix una activitat amb les dades
+     @pre d, h i p diferent de nulls
+     @post Crea una nova activitat amb hora h, dia d i preu p*/
+    public Activitat(LocalDate d, LocalTime h, int p){
+        dia=d;hora=h;preu=p;
     }
 
     /**

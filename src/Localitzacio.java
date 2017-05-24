@@ -9,7 +9,6 @@ import java.util.TimeZone;
  @author Ismael El Habri
  */
 
-
 public abstract class Localitzacio {
     /** @brief Consulta el nom de la localització
 	@pre cert
