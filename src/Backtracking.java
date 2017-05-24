@@ -118,20 +118,20 @@ public abstract class Backtracking {
         boolean empatPreu, empatSatisfaccio, empatDies, resultat = false;
         empatPreu = solucio_optima.preu_persona()==solucio_actual.preu_persona(); 
         empatSatisfaccio = solucio_optima.grau_satisfaccio()==solucio_actual.grau_satisfaccio();
-        empatDies = solucio_optima.dies_total()==solucio_actual.dies_total();
+        empatDies = solucio_optima.acabamentCircuit().equals(solucio_actual.acabamentCircuit());
         switch (o){
             case 'b' : //barata
                 if (solucio_optima.preu_persona()>solucio_actual.preu_persona()) resultat = true;
                 else if (empatPreu && solucio_optima.grau_satisfaccio()<solucio_actual.grau_satisfaccio()) resultat = true;
-                else resultat = empatPreu && empatSatisfaccio && solucio_optima.dies_total()>solucio_actual.dies_total();
+                else resultat = empatPreu && empatSatisfaccio && solucio_optima.acabamentCircuit().isAfter(solucio_actual.acabamentCircuit());
             case 'c' : //curta
-                if (solucio_optima.dies_total()>solucio_actual.dies_total()) resultat = true;
+                if (solucio_optima.acabamentCircuit().isAfter(solucio_actual.acabamentCircuit())) resultat = true;
                 else if (empatDies && solucio_optima.grau_satisfaccio()<solucio_actual.grau_satisfaccio()) resultat = true;
                 else resultat = empatDies && empatSatisfaccio && solucio_optima.preu_persona() > solucio_actual.preu_persona();
             case 's' : //satisfactoria
-                if (solucio_optima.grau_satisfaccio()>solucio_actual.grau_satisfaccio()) resultat = true;
-                else if (empatSatisfaccio && solucio_optima.grau_satisfaccio()<solucio_actual.grau_satisfaccio()) resultat = true;
-                else resultat = empatSatisfaccio && empatPreu && solucio_optima.dies_total()>solucio_actual.dies_total();
+                if (solucio_optima.grau_satisfaccio()<solucio_actual.grau_satisfaccio()) resultat = true;
+                else if (empatSatisfaccio && solucio_optima.preu_persona()>solucio_actual.preu_persona()) resultat = true;
+                else resultat = empatSatisfaccio && empatPreu && solucio_optima.acabamentCircuit().isAfter(solucio_actual.acabamentCircuit());
         }
         return resultat;
     }
