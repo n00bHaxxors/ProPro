@@ -18,7 +18,7 @@ public class GrupClients {
      * @pre cert
      * @post Crea un GrupClients buit
      */
-    public GrupClients(ArrayList<Client> aC){clients=aC;}
+    public GrupClients(ArrayList<Client> aC){clients=new ArrayList(aC);}
     
     public Iterator<Client> iteradorClients(){
         return clients.iterator();
