@@ -18,4 +18,7 @@ public class Coordenada {
         x=est;
         y=nord;
     }
+    public String toString(){
+        return (x.toString()+','+y.toString()+",0");
+    }
 }
