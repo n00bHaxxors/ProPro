@@ -11,7 +11,9 @@ import java.util.TimeZone;
 */
 
 public class Allotjament extends PuntInteres {
-    private String categoria;
+    /** @invariant categoria != null
+        */
+    private String categoria; //< categoria del allotjament
     
     /** @brief Crea un punt d'allotjament amb els parametres
 	@pre cert

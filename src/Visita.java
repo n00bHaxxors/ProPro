@@ -40,7 +40,13 @@ public class Visita extends Activitat{
         boolean visitaSatisfactoria = Satisfaccio(v.clients())>0 || v.desti().nom()==visitat.nom() || v.origen().nom()==visitat.nom() || obl.contains(visitat);
         boolean resultat = !shaVisitat && inici.toLocalTime().isBefore(LocalTime.of(23, 59)) && fi.isBefore(inici.plusDays(1).toLocalDate().atTime(0, 0)) &&
                 !c.horesVisites(diaActivitat()).plusHours(Duracio().getHour()).plusMinutes(Duracio().getMinute()).isAfter(LocalTime.of(6, 0));
-        return resultat && visitaSatisfactoria;
+        boolean visitaAnterior=false;
+        Iterator<Client> itr = v.clients().iteradorClients();
+        while (itr.hasNext() && !visitaAnterior){
+            Client cl = itr.next();
+            visitaAnterior = cl.shaVisitat(visitat);
+        }
+        return resultat && visitaSatisfactoria && !visitaAnterior;
     }
     
     /** @brief Consulta la duracio de la visita
