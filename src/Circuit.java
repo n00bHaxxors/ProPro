@@ -31,6 +31,17 @@ public class Circuit {
     public Circuit(int preu, int grau, int d, ArrayList<Activitat> a){ //aixo cal?
         preu_per_persona=preu; grau_satisfaccio=grau; dies = d; activitats=a;
     }
+    
+    /** @brief Constructor de copia
+     @pre cert
+     @post nou circuit amb contingut clonat de o*/
+    public Circuit(Circuit o){
+        preu_per_persona = o.preu_per_persona; grau_satisfaccio = o.grau_satisfaccio; dies = o.dies; nActivitats = o.nActivitats;
+        inici_viatge=o.inici_viatge.toLocalDate().atTime(o.inici_viatge.toLocalTime());
+        fi_viatge=o.inici_viatge.toLocalDate().atTime(o.fi_viatge.toLocalTime());
+        activitats = new ArrayList (o.activitats); visitesFetes = new HashMap(visitesFetes);
+    }
+    
     /** @brief Constructor circuit amb el dia d'inici del circuit
      @pre cert
      @post Circuit usant di com a dia inicial i final (está buit)*/
@@ -75,7 +86,7 @@ public class Circuit {
         LocalTime temps = a.Duracio();
         fi_viatge = fi_viatge.toLocalDate().atTime(a.horaActivitat()).plusHours(temps.getHour()).plusMinutes(temps.getMinute());
         dies = (int)ChronoUnit.DAYS.between(fi_viatge, inici_viatge);
-        grau_satisfaccio += a.Satisfaccio(g);
+        grau_satisfaccio += a.Satisfaccio(g); int temporal = a.Satisfaccio(g);
         if (m.conteVisitable(a.nomAct())) visitesFetes.put(a.nomAct(),(Visita)a);
     }
     
@@ -86,8 +97,11 @@ public class Circuit {
         nActivitats--;
         Activitat a = activitats.remove(nActivitats);
         LocalTime temps = a.Duracio();
-        Activitat b = activitats.get(nActivitats-1);
-        fi_viatge=b.diaActivitat().atTime(b.horaActivitat()).plusHours(temps.getHour()).plusMinutes(temps.getMinute());
+        if (nActivitats != 0){
+            Activitat b = activitats.get(nActivitats-1);
+            fi_viatge=b.diaActivitat().atTime(b.horaActivitat()).plusHours(temps.getHour()).plusMinutes(temps.getMinute());
+        }
+        else fi_viatge = inici_viatge;
         dies = (int)ChronoUnit.DAYS.between(fi_viatge, inici_viatge);
         grau_satisfaccio -= a.Satisfaccio(g);
         if (m.conteVisitable(a.nomAct())) visitesFetes.remove(a.nomAct());
@@ -109,7 +123,6 @@ public class Circuit {
         //comprovem que origen i desti son visitables
         boolean oVis = g.conteVisitable(origen.nom()), dVis = g.conteVisitable(desti.nom());
         boolean resultat = diesV>=dies;
-        int a = 10 +2;
         if (oVis) resultat = resultat && activitats.get(0).nomAct().equals(origen.nom()) && visitesFetes.containsKey(origen.nom());
         if (dVis) resultat = resultat && activitats.get(nActivitats-1).nomAct().equals(desti.nom()) && visitesFetes.containsKey(desti.nom());
         else resultat = resultat && activitats.get(nActivitats-1).UbicacioActual().equals(desti.nom());
@@ -146,5 +159,13 @@ public class Circuit {
     public Iterator<Activitat> Activitats(){
         return activitats.iterator();
     }
+
+    /** @brief consulta si amb l'activitat a estarem transportant-nos en bucle
+     @pre a existent
+     @post retorna cet si estem tornat a l'origen del desplaçament anterior*/    
+    public boolean transportEnBucle(Activitat a){
+        if (nActivitats<2) return false;
+        return activitats.get(nActivitats-2).UbicacioActual().equals(a.UbicacioActual());
+    } 
     
 }

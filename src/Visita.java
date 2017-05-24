@@ -39,7 +39,7 @@ public class Visita extends Activitat{
         LocalDateTime inici = diaActivitat().atTime(horaActivitat()), 
                 fi = inici.plusHours(Duracio().getHour()).plusMinutes(Duracio().getMinute());
         // ! visitat, abans del final del dia, i menys de sis hores de visites totals diaries
-        boolean resultat = !shaVisitat && inici.isBefore(inici.plusDays(1).toLocalDate().atTime(0, 0)) && fi.isBefore(inici.plusDays(1).toLocalDate().atTime(0, 0)) &&
+        boolean resultat = !shaVisitat && inici.toLocalTime().isBefore(LocalTime.of(23, 59)) && fi.isBefore(inici.plusDays(1).toLocalDate().atTime(0, 0)) &&
                 c.horesVisites(diaActivitat()).plusHours(Duracio().getHour()).plusMinutes(Duracio().getMinute()).isBefore(LocalTime.of(6, 0));
         return resultat;
     }
@@ -57,6 +57,7 @@ public class Visita extends Activitat{
      @post Retorna la satisfaccio calculada*/
     @Override
     public int Satisfaccio(GrupClients g){
+        int a = visitat.grauSatisfaccio(g);
         return visitat.grauSatisfaccio(g);
     }
     

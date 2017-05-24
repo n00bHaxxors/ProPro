@@ -18,19 +18,31 @@ public abstract class ModulCalculs {
     /** @brief Inicialitza els candidats possibles en funció de la activitat anterior
      @pre a != null
      @post retorna un iterador a un conjunt amb els candidats possibles*/
-    public static Iterator<Activitat> inicialitzarCandidats(Activitat a, Mapa g, Localitzacio inici, Localitzacio fi, Circuit solucio_actual){
+    public static Iterator<Activitat> inicialitzarCandidats(Activitat a, Mapa g, Circuit solucio_actual, Viatge v){
         ArrayList<Activitat> arbre = new ArrayList();
         PuntInteres pActual = null;
         if (a != null && (g.conteVisitable(a.UbicacioActual()) || g.conteAllotjament(a.UbicacioActual())) ) pActual = g.puntInteres(a.UbicacioActual());
-        else if (a != null && !g.conteVisitable(a.UbicacioActual()) && !g.conteAllotjament(a.UbicacioActual())) return arbre.iterator();
-        else if (g.conteVisitable(inici.nom())) pActual = (PuntInteres) inici;
-        Activitat actPActual = null;
+        else if (a != null && !g.conteVisitable(a.UbicacioActual()) && !g.conteAllotjament(a.UbicacioActual())) return arbre.iterator(); //hem acabat en un lloc, i no en un PI en concret
+        else if (a == null && g.conteVisitable(v.origen().nom())) {
+            pActual = (PuntInteres) v.origen();
+            Activitat aux = pActual.ActivitatCorresponent(pActual.ProximaObertura(solucio_actual.acabamentCircuit()));
+            arbre.add(aux);
+            return arbre.iterator();
+        }
+        Activitat actPActual = null, actPActual2 = null;
         Lloc llocActual;
         LocalDateTime ara = solucio_actual.acabamentCircuit();
         if (pActual != null) {
             llocActual = g.lloc(pActual.nomLloc());
-            if (pActual.obreAvui(ara) && !pActual.esLlocPas()) actPActual = pActual.ActivitatCorresponent(pActual.ProximaObertura(ara));
-            if (actPActual != null && actPActual.Satisfaccio(g.clients()) > 0) arbre.add(actPActual);
+            if (pActual.obreAvui(ara) && !pActual.esLlocPas()) {
+                LocalDateTime proxObert = pActual.ProximaObertura(ara), horaFiDinar = proxObert.toLocalDate().atTime(14, 0);
+                actPActual = pActual.ActivitatCorresponent(proxObert);
+                actPActual2 = pActual.ActivitatCorresponent(horaFiDinar);
+            }
+            if (actPActual != null /*&& actPActual.Satisfaccio(v.clients()) > 0*/) {
+                arbre.add(actPActual);
+                arbre.add(actPActual2);
+            }
             //activitats x desplaçament directe desde el PI actual;
             Iterator<MT_Directe> itr1 = pActual.TransportsDirectes();
             while (itr1.hasNext()){
@@ -45,14 +57,16 @@ public abstract class ModulCalculs {
                 Iterator<PuntInteres> itr2 = llocActual.puntsInteres();
                 while(itr2.hasNext()){
                     PuntInteres pi = itr2.next();
-                    if (! pi.nom().equals(pActual.nom())) {
+                    boolean condicioMTD = !pi.nom().equals(pActual.nom());
+                    if (!pi.nom().equals(pActual.nom())) {
                         Activitat aux = mtd.desplaçament(ara.toLocalDate(), ara.toLocalTime(), pActual, pi);
+                        String temp = aux.toString();
                         arbre.add(aux);
                     }
                 }
             }
         }
-        else llocActual = (Lloc) inici;
+        else llocActual = (Lloc) v.origen();
         //Activitats x desplaçament indirecte desde el lloc actual
         Iterator<Hub> itr2 = llocActual.hubs();
         while (itr2.hasNext()){
@@ -64,7 +78,7 @@ public abstract class ModulCalculs {
                 LocalTime duradaTotal;
                 if (pActual!=null) duradaTotal = mti.durada().plusHours(h.tempsTrasllatTotal().getHour()).plusMinutes(h.tempsTrasllatTotal().getMinute());
                 else duradaTotal = mti.durada().plusHours(h.tempsTrasllatDesti().getHour()).plusMinutes(h.tempsTrasllatDesti().getMinute());
-                if (l.nom().equals(fi)){
+                if (l.nom().equals(v.desti().nom())){
                     LocalTime duradaTotal2 = mti.durada().plusHours(h.tempsTrasllatOrigen().getHour()).plusMinutes(h.tempsTrasllatOrigen().getMinute());
                     Desplaçament temp = new Desplaçament(mti.preu(),mti.diaHoraSortida().toLocalDate(),mti.diaHoraSortida().toLocalTime(),
                             mti, pActual, l, duradaTotal2);
