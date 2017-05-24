@@ -10,11 +10,6 @@ import java.util.Set;
 public class Visita extends Activitat{
     private Visitable visitat;
 
-    /** @brief Constructor per defecte
-     @pre cert
-     @post Visita buida creada*/
-    public Visita(){}
-
     /** @brief Constructor amb paràmetres
      @pre cert
      @post Visita amb lloc visitat i data de visita creada*/
@@ -75,7 +70,7 @@ public class Visita extends Activitat{
     @Override
     public String toString(){
         LocalTime horaFinal = horaActivitat().plusHours(Duracio().getHour()).plusMinutes(Duracio().getMinute());
-        String s = horaActivitat().toString() + " " + horaFinal.toString() + " " + nomAct();
+        String s = horaActivitat().toString() + " - " + horaFinal.toString() + " " + nomAct();
         return s;
     }
 }

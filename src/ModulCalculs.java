@@ -108,6 +108,8 @@ public abstract class ModulCalculs {
         long dies = ChronoUnit.DAYS.between(fi, solucio_actual.iniciCircuit());
         LocalTime iniciHoraDinar = (LocalTime.of(12, 0)), fiHoraDinar = (LocalTime.of(14, 0));
         boolean esHoraDinar = !a.horaActivitat().isBefore(iniciHoraDinar) &&
+                !a.horaActivitat().plusHours(a.Duracio().getHour()).plusMinutes(a.Duracio().getMinute()).isBefore(iniciHoraDinar) && 
+                !a.horaActivitat().isAfter(fiHoraDinar) && 
                 !a.horaActivitat().plusHours(a.Duracio().getHour()).plusMinutes(a.Duracio().getMinute()).isAfter(fiHoraDinar);
         boolean resultatParcial = (solucio_actual.preu_persona() + a.preuAct()) <= v.preuMaxim() && dies <= v.nombreDies() && !esHoraDinar;
         return resultatParcial && a.Acceptable(solucio_actual,v,c);
