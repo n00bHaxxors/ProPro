@@ -114,11 +114,13 @@ public abstract class Activitat {
                     var_trans[0] = var_optimitzar_actual;
                     break;
                 case 'c':
-                    temps_optimitzar_actual = Duracio()/*.plus(visitable.Duracio())*/;
+                    temps_optimitzar_actual = Duracio();
                     temps_trans[0] = temps_optimitzar_actual;
                     break;
             }
 
+
+            int a;
         if (millor != null) {
             switch (tipus) {
                 case 'b':
@@ -128,7 +130,8 @@ public abstract class Activitat {
                     res = var_optimitzar_actual > var_millor;
                     break;
                 case 'c':
-                    res = temps_optimitzar_actual.isBefore(temps_millor);
+                    if(temps_millor!=null)
+                        res = temps_optimitzar_actual.isBefore(temps_millor);
                     break;
             }
         }
