@@ -11,7 +11,7 @@ import java.util.Iterator;
  */
 
 public class GrupClients {
-    private ArrayList<Client> clients;
+    private ArrayList<Client> clients; //< Llista de clients
 
     /**
      * @brief Crea un GrupClients
@@ -19,6 +19,11 @@ public class GrupClients {
      * @post Crea un GrupClients buit
      */
     public GrupClients(ArrayList<Client> aC){clients=new ArrayList(aC);}
+    /**
+     * @brief Retorna un iterador de clients del grup
+     * @pre cert
+     * @post Retorna l'iterador
+     */
     public Iterator<Client> iteradorClients(){
         return clients.iterator();
     }

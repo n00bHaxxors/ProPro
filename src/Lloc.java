@@ -10,24 +10,52 @@ import java.util.TimeZone;
  */
 
 public class Lloc extends Localitzacio{
-    private String Nom;
-    private Coordenada CoordenadaLloc;
-    private TimeZone Zona;
-    private ArrayList<PuntInteres> puntsInteres;
-    private ArrayList<MT_Directe> mitjansDirectes;
-    private ArrayList<Hub> hubs;
+    private String Nom; //< Nom del lloc
+    private Coordenada CoordenadaLloc; //< Posició del lloc
+    private TimeZone Zona; //< Fus horari del lloc
+    private ArrayList<PuntInteres> puntsInteres; //< Llista de punts d'interés del lloc
+    private ArrayList<MT_Directe> mitjansDirectes; //< Llista de transports directes del lloc
+    private ArrayList<Hub> hubs; //< Llista de hubs del lloc
 
-
+    /**
+     * @brief Associa un Punt d'interés al lloc
+     * @pre cert
+     * @post Associa el punt d'interés
+     */
     public void associarPuntInteres(PuntInteres v){puntsInteres.add(v);}
+    /**
+     * @brief Associa un transport directe a lloc
+     * @pre cert
+     * @post Associa el transport directe
+     */
     public void associarTransport(MT_Directe d){mitjansDirectes.add(d);}
-    public void associarTransportDirecte(MT_Directe d){mitjansDirectes.add(d);}
+    /**
+     * @brief Afegeix un hub al lloc
+     * @pre cert
+     * @post Afegeix el hub a la llista de hubs
+     */
     public void associarHub(Hub h){hubs.add(h);}
+    /**
+     * @brief Retorna un iterador als punts d'interés del lloc
+     * @pre cert
+     * @post Retorna l'iterador
+     */
     public Iterator<PuntInteres> puntsInteres(){
         return puntsInteres.iterator();
     }
+    /**
+     * @brief Retorna un iterador als mitjans de transport directes
+     * @pre cert
+     * @post Retorna l'iterador
+     */
     public Iterator<MT_Directe> mitjansDirectes(){
         return mitjansDirectes.iterator();
     }
+    /**
+     * @brief Retorna un iterador als hubs del lloc
+     * @pre cert
+     * @post Retorna l'iterador
+     */
     public Iterator<Hub> hubs(){
         return hubs.iterator();
     }

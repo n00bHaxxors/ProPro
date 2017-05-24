@@ -17,23 +17,36 @@ import java.util.*;
  */
 
 class IO {
+    /** @class MapaViatge
+     @brief Classe que ajunta un Mapa amb diversos Viatges
+     @author Lluís Trilla
+     */
     public static class MapaViatge{
-        public ArrayList<Viatge> viatges;
-        public Mapa mapa;
+        public ArrayList<Viatge> viatges; //< Llista de viatges
+        public Mapa mapa; //< Mapa on es fan els viatges
+        /**
+         * @brief Constructor de la classe
+         * @pre cert
+         * @post Crea la classe a partir de les dades entrades
+         */
         public MapaViatge(Mapa m, ArrayList<Viatge> v){
             mapa = m;
             viatges = v;
         }
     }
-    private static final String SEPARADOR = "*";
-    private BufferedReader scan;
-    ArrayList<Client> LlistaClients;
-    ArrayList<Lloc> LlistaLlocs;
-    ArrayList<Allotjament> LlistaAllotjaments;
-    ArrayList<Visitable> LlistaVisitables;
-    ArrayList<Visita> LlistaVisites;
-    ArrayList<Viatge> LlistaViatges;
+    private BufferedReader scan; //< Reader que usarem per llegir el fitxer d'entrada
+    private ArrayList<Client> LlistaClients; //< Llista de clients que omplim amb l'entrada
+    private ArrayList<Lloc> LlistaLlocs; //< Llista de Llocs que omplim amb l'entrada
+    private ArrayList<Allotjament> LlistaAllotjaments; //< Llista d'allotjaments que omplim amb l'entrada
+    private ArrayList<Visitable> LlistaVisitables; //< Llista de llocs visitables que omplim amb l'entrada
+    private ArrayList<Visita> LlistaVisites; //< Llista de Visites que omplim amb l'entrada
+    private ArrayList<Viatge> LlistaViatges; //< Llista de Viatges que omplim amb l'entrada
 
+    /**
+     * @brief Tracta el cas "client" de IO
+     * @pre cert
+     * @post Emplena les llistes amb les dades llegides
+     */
     private void casClient() throws IOException {
         ArrayList<String> preferencies = new ArrayList<String>();
         String nom_client, pref;
@@ -46,6 +59,11 @@ class IO {
         } while (!pref.equals("*"));
         LlistaClients.add(new Client(nom_client, preferencies));
     }
+    /**
+     * @brief Tracta el cas "lloc" de IO
+     * @pre cert
+     * @post Emplena les llistes amb les dades llegides
+     */
     private void casLloc() throws IOException {
         String nom_lloc = scan.readLine();
         String [] stringCoord = scan.readLine().split(",");
@@ -54,6 +72,11 @@ class IO {
         scan.readLine(); //llegir separador
         LlistaLlocs.add(new Lloc(nom_lloc, cord_lloc, TimeZone.getTimeZone(IDZonaHoraria)));
     }
+    /**
+     * @brief Tracta el cas "allotjament" de IO
+     * @pre cert
+     * @post Emplena les llistes amb les dades llegides
+     */
     private void casAllotjament() throws IOException {
         String nomAllotjament = scan.readLine();
         String [] stringCoord = scan.readLine().split(",");
@@ -66,9 +89,14 @@ class IO {
         do {
             llistaCaracteristiques.add(caracteristica);
             caracteristica = scan.readLine();
-        } while (!caracteristica.equals(SEPARADOR));
+        } while (!caracteristica.equals('*'));
         LlistaAllotjaments.add(new Allotjament(nomAllotjament, (int)(100*preuHabDoble), coordAllotjament, llistaCaracteristiques, TimeZone.getTimeZone(zonaHoraria), categoria));
     }
+    /**
+     * @brief Tracta el cas "lloc visitable" de IO
+     * @pre cert
+     * @post Emplena les llistes amb les dades llegides
+     */
     private void casVisitable() throws ParseException, IOException {
         String nomVisitable = scan.readLine();
         String[] parts = scan.readLine().split(",");
@@ -81,7 +109,7 @@ class IO {
         do {
             llistaCaracteristiques.add(caracteristica);
             caracteristica = scan.readLine();
-        } while (!caracteristica.equals(SEPARADOR));
+        } while (!caracteristica.equals('*'));
         String horari = scan.readLine();
         ArrayList<Visitable.BlocHorari> llistaHoraris = new ArrayList<Visitable.BlocHorari>();
         do {
@@ -96,10 +124,10 @@ class IO {
             horaFi = LocalTime.parse(partsHorari[9]+':'+partsHorari[10]);
             llistaHoraris.add(new Visitable.BlocHorari(diaInici,horaInici,diaFi,horaFi));
             horari = scan.readLine();
-        } while (!horari.equals(SEPARADOR) && (horari.length() - horari.replace("-", "").length())== 2);
+        } while (!horari.equals('*') && (horari.length() - horari.replace("-", "").length())== 2);
         String excepcio = horari;
         ArrayList<Visitable.ExcepcioHorari> llistaExcepcions = new ArrayList<Visitable.ExcepcioHorari>();
-        if(!excepcio.equals(SEPARADOR)) {
+        if(!excepcio.equals('*')) {
             do {
                 MonthDay dia;
                 LocalTime horaInici, horaFi;
@@ -110,10 +138,15 @@ class IO {
                 horaFi = LocalTime.parse(partsHorari[5] + ':' + partsHorari[6]);
                 llistaExcepcions.add(new Visitable.ExcepcioHorari(dia, horaInici, horaFi));
                 excepcio = scan.readLine();
-            } while (!excepcio.equals(SEPARADOR));
+            } while (!excepcio.equals('*'));
         }
         LlistaVisitables.add(new Visitable(nomVisitable, (int)(100*preu), coordVisitable, llistaCaracteristiques, TimeZone.getTimeZone(zonaHoraria), LocalTime.parse(tempsVisita), llistaExcepcions, llistaHoraris));
     }
+    /**
+     * @brief Tracta el cas "visita" de IO
+     * @pre cert
+     * @post Emplena les llistes amb les dades llegides
+     */
     private void casVisita() throws IOException {
         String nom_client = scan.readLine();
         String nom_lloc = scan.readLine();
@@ -135,6 +168,11 @@ class IO {
         }
         if (clientActual != null && visitableActual!= null) clientActual.afegirVisita(visitableActual,data); //--sipwarriper: probablament aqui s'hauria de fer diferenciació de booleans per tirar excepcio si no troba el client i/o el visitable
     }
+    /**
+     * @brief Tracta el cas "associar lloc" de IO
+     * @pre cert
+     * @post Emplena les llistes amb les dades llegides
+     */
     private void casAssociarLloc() throws IOException {
         String nomAllotjVisitable = scan.readLine();
         Iterator<Allotjament> it = LlistaAllotjaments.iterator();
@@ -172,6 +210,11 @@ class IO {
         }
         scan.readLine();
     }
+    /**
+     * @brief Tracta el cas "associar transport" de IO
+     * @pre cert
+     * @post Emplena les llistes amb les dades llegides
+     */
     private void casAssociarTransport() throws IOException {
         String nomLloc = scan.readLine();
         String nomMT=scan.readLine();
@@ -189,6 +232,11 @@ class IO {
         LlocActual.associarTransport(transport);
         scan.readLine();
     }
+    /**
+     * @brief Tracta el cas "transport directe" de IO
+     * @pre cert
+     * @post Emplena les llistes amb les dades llegides
+     */
     private void casMTDirecte() throws IOException {
         String nomOrigen = scan.readLine();
         String nomDesti = scan.readLine();
@@ -227,6 +275,11 @@ class IO {
         origen.afegirTransportDirecte(new MT_Directe(nomMT,(int) (preu*100),duradaTrajecte,desti));
         scan.readLine();
     }
+    /**
+     * @brief Tracta el cas "transport indirecte" de IO
+     * @pre cert
+     * @post Emplena les llistes amb les dades llegides
+     */
     private void casMTIndirecte() throws IOException {
         ArrayList<MT_Indirecte> partences = new ArrayList<MT_Indirecte>();
         String nomOrigen = scan.readLine();
@@ -270,6 +323,11 @@ class IO {
         }
         llocOrigen.associarHub(new Hub(nomMT,tempsAnada,tempsTornada,llocDesti,partences));
     }
+    /**
+     * @brief Tracta el cas "viatge" de IO
+     * @pre cert
+     * @post Emplena les llistes amb les dades llegides
+     */
     private void casViatge() throws IOException {
         LocalDate dataInici = LocalDate.parse(scan.readLine());
         LocalTime horaInici = LocalTime.parse(scan.readLine());
@@ -338,7 +396,11 @@ class IO {
         }
         LlistaViatges.add(new Viatge(dataInici.atTime(horaInici),nombreDies,preuMaxim,categoria,new GrupClients(clients),origen,desti,visitables,tipusRuta));
     }
-
+    /**
+     * @brief Retorna un MapaViatge creat a partir de les dades entrades
+     * @pre f és el path de l'arxiu d'entrada
+     * @post Retorna el MapaViatge
+     */
     public MapaViatge llegir(String f) throws ParseException, ExcepcioIOCasDesconegut{
         LlistaClients = new ArrayList<Client>();
         LlistaLlocs = new ArrayList<Lloc>();
@@ -399,6 +461,11 @@ class IO {
         Mapa mapa = new Mapa(gc,LlistaVisitables,LlistaAllotjaments,LlistaLlocs,LlistaViatges);
         return new MapaViatge(mapa,LlistaViatges);
     }
+    /**
+     * @brief Crea un arxiu amb el resultat del circuit
+     * @pre Es tenen permisos d'escriptura al arxiu especificat
+     * @post Crea l'arxiu de sortida i l'emplena
+     */
     public void mostrar(Circuit c, String fitxerSortida) throws ExcepcioContingutCasIOErroni {
         try{
             PrintWriter writer = new PrintWriter(fitxerSortida, "UTF-8");
@@ -442,6 +509,11 @@ class IO {
             throw new ExcepcioContingutCasIOErroni();
         }
     }
+    /**
+     * @brief Crea un arxiu amb les dades KML del circuit
+     * @pre Es tenen permisos d'escriptura al arxiu especificat
+     * @post Crea l'arxiu KML i l'emplena
+     */
     public void crearKML(Circuit c, String fitxerKML, Mapa m){
         try{
             PrintWriter writer = new PrintWriter(fitxerKML, "UTF-8");
