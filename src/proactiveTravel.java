@@ -101,7 +101,7 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
             fc.getExtensionFilters().add(extFilter);
             textKML.setText(fc.showSaveDialog(null).getAbsolutePath());
         }
-        if(event.getSource()==botoExecutar){
+        if(event.getSource()==botoExecutar){ 
             if(radioBT.isSelected()){
                 File fileBT = new File(textInput.getText());
                 if(fileBT.exists() && !fileBT.isDirectory()) {
