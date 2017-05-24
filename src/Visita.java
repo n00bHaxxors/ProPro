@@ -10,11 +10,6 @@ import java.util.Set;
 public class Visita extends Activitat{
     private Visitable visitat;
 
-    /** @brief Constructor per defecte
-     @pre cert
-     @post Visita buida creada*/
-    public Visita(){}
-
     /** @brief Constructor amb paràmetres
      @pre cert
      @post Visita amb lloc visitat i data de visita creada*/
