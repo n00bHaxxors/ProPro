@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 
@@ -77,6 +78,7 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
             scene = new Scene(root, 400, 300);
             primaryStage.getIcons().add(new Image("/java9.png"));
             primaryStage.setScene(scene);
+            primaryStage.setTitle("ProactiveTravel");
             primaryStage.show();
         }
     }
@@ -89,11 +91,15 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
         }
         if (event.getSource()== botoOutput){
             FileChooser fc = new FileChooser();
-            textOutput.setText(fc.showOpenDialog(null).getAbsolutePath());
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+            fc.getExtensionFilters().add(extFilter);
+            textOutput.setText(fc.showSaveDialog(null).getAbsolutePath());
         }
         if (event.getSource()== botoKML){
             FileChooser fc = new FileChooser();
-            textKML.setText(fc.showOpenDialog(null).getAbsolutePath());
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("KML files (*.kml)", "*.kml");
+            fc.getExtensionFilters().add(extFilter);
+            textKML.setText(fc.showSaveDialog(null).getAbsolutePath());
         }
         if(event.getSource()==botoExecutar){
             if(radioBT.isSelected()){
@@ -109,7 +115,13 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
                     Iterator<Viatge> it = mp.viatges.iterator();
                     while(it.hasNext()){
                         Viatge viatge = it.next();
-                        Backtracking.CircuitExacte(mp.mapa,viatge);
+                        HashMap<String,Circuit> hashCircuits = Backtracking.CircuitExacte(mp.mapa,viatge);
+                        Circuit circuitBarat=hashCircuits.get("ruta barata");
+                        Circuit circuitCurt=hashCircuits.get("ruta curta");
+                        Circuit circuitSatisf=hashCircuits.get("ruta satisfactoria");
+                        if(circuitBarat != null){io.mostrar(circuitBarat,textOutput.getText()); io.mostrar(circuitBarat,textOutput.getText());}
+                        if(circuitCurt != null){io.mostrar(circuitCurt,textOutput.getText()); io.mostrar(circuitCurt,textOutput.getText());}
+                        if(circuitSatisf != null){io.mostrar(circuitSatisf,textOutput.getText()); io.mostrar(circuitSatisf,textOutput.getText());}
                     }
                 }
             }
@@ -126,7 +138,13 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
                     Iterator<Viatge> it = mp.viatges.iterator();
                     while(it.hasNext()){
                         Viatge viatge = it.next();
-                        Voraç.Circuit_Voraç(mp.mapa,viatge);
+                        HashMap<String,Circuit> hashCircuits = Voraç.Circuit_Voraç(mp.mapa,viatge);
+                        Circuit circuitBarat=hashCircuits.get("ruta barata");
+                        Circuit circuitCurt=hashCircuits.get("ruta curta");
+                        Circuit circuitSatisf=hashCircuits.get("ruta satisfactoria");
+                        if(circuitBarat != null){io.mostrar(circuitBarat,textOutput.getText()); io.mostrar(circuitBarat,textOutput.getText());}
+                        if(circuitCurt != null){io.mostrar(circuitCurt,textOutput.getText()); io.mostrar(circuitCurt,textOutput.getText());}
+                        if(circuitSatisf != null){io.mostrar(circuitSatisf,textOutput.getText()); io.mostrar(circuitSatisf,textOutput.getText());}
                     }
                 }
             }
