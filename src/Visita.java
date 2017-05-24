@@ -70,7 +70,7 @@ public class Visita extends Activitat{
     @Override
     public String toString(){
         LocalTime horaFinal = horaActivitat().plusHours(Duracio().getHour()).plusMinutes(Duracio().getMinute());
-        String s = horaActivitat().toString() + " " + horaFinal.toString() + " " + nomAct();
+        String s = horaActivitat().toString() + " - " + horaFinal.toString() + " " + nomAct();
         return s;
     }
 }
