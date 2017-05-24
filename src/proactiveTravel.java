@@ -50,7 +50,6 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
 
             root = FXMLLoader.load(getClass().getResource("proactiveTravel.fxml"));
             scene = new Scene(root, 400, 300);
-            primaryStage.getIcons().add(new Image("/java9.png"));
             primaryStage.setScene(scene);
             primaryStage.setTitle("ProactiveTravel");
             primaryStage.show();
