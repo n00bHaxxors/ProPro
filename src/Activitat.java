@@ -9,10 +9,11 @@ import java.util.Set;
     @author Ismael El Habri
 */
 public abstract class Activitat {
-
-    private LocalDate dia;
-    private LocalTime hora;
-    private int preu;
+    /** @invariant dia != null && hora!=null && preu != null
+     */
+    private LocalDate dia; //<dia en que es fa l'activitat
+    private LocalTime hora; //<hora en que es comença l'activitat
+    private int preu; //<preu de l'activitat
     
     /** @brief Construeix una activitat amb les dades
      @pre d, h i p diferent de nulls

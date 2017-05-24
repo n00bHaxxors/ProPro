@@ -6,11 +6,13 @@
 import java.time.*;
 import java.util.Set;
 
-public class Desplaçament extends Activitat { //aka trasllat
-
-    private Mitja_Transport mitja;
-    private Localitzacio origen, desti;
-    private LocalTime durada;
+public class Desplaçament extends Activitat {
+    /** @invariant mitja!=null && origen != null && desti != null && durada !=null
+     */
+    private Mitja_Transport mitja; //<mitja de transport amb què s'ha fet el desplaçament
+    private Localitzacio origen; //<Localització on s'inicia el desplaçament
+    private Localitzacio desti; //<Localització on s'acaba el desplaçament
+    private LocalTime durada;//<Durada del desplaçament
  
     /** @brief Constructor amb parametres
      @pre cert

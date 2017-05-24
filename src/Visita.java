@@ -8,8 +8,10 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class Visita extends Activitat{
-    private Visitable visitat;
-
+    /** @invariant vistat!=null
+     */
+    private Visitable visitat; //< Visitable al qual s'ha fet la visita
+    
     /** @brief Constructor amb paràmetres
      @pre cert
      @post Visita amb lloc visitat i data de visita creada*/

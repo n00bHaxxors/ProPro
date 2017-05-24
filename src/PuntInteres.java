@@ -14,13 +14,15 @@ import java.util.TimeZone;
 
 public abstract class PuntInteres extends Localitzacio implements Comparable<PuntInteres>{
     //Atributs
-    private String nom;
-    private int preu;
-    private Coordenada ubicacio;
-    private HashSet<String> caracteristiques;
-    private TimeZone zona;
-    private ArrayList<MT_Directe> transportsDirectes;
-    private String LlocPrincipal;
+    /** @invariant tots els atributs != null excepte llocPrincipal, el qual es null si no aquest Punt d'interes no pertany a cap lloc
+        */
+    private String nom; //< nom del punt d'interès
+    private int preu; //< preu de visita o allotjament del punt d'interès
+    private Coordenada ubicacio; //< Coordneada del punt d'interès
+    private HashSet<String> caracteristiques; //< llista de caracteristiques del Punt d'Interès
+    private TimeZone zona; //< zona horaria del punt d'interès
+    private ArrayList<MT_Directe> transportsDirectes; //< llista de transports directes desde el punt d'interès
+    private String LlocPrincipal; //< lloc principal al qual està associat el punt d'interès
     
     //Mètodes
     
