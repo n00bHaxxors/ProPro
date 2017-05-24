@@ -39,7 +39,7 @@ public class Circuit {
         preu_per_persona = o.preu_per_persona; grau_satisfaccio = o.grau_satisfaccio; dies = o.dies; nActivitats = o.nActivitats;
         inici_viatge=o.inici_viatge.toLocalDate().atTime(o.inici_viatge.toLocalTime());
         fi_viatge=o.inici_viatge.toLocalDate().atTime(o.fi_viatge.toLocalTime());
-        activitats = new ArrayList (o.activitats); visitesFetes = new HashMap(visitesFetes);
+        activitats = new ArrayList (o.activitats); visitesFetes = new HashMap(o.visitesFetes);
     }
     
     /** @brief Constructor circuit amb el dia d'inici del circuit
