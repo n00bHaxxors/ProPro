@@ -17,11 +17,11 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class Circuit {
-    private LocalDateTime inici_viatge, fi_viatge;
-    private int preu_per_persona;
-    private int grau_satisfaccio;
-    private int dies;
-    private int nActivitats;
+    private LocalDateTime inici_viatge, fi_viatge; //<Data d'inici i fi del viatge
+    private int preu_per_persona; //<preu per client del viatge
+    private int grau_satisfaccio; //<grau de satisfaccio que obtindran els clients
+    private int dies; //<dies de duracio del viatge
+    private int nActivitats; //<numero d'activitats que es faràne en el viatge
     private ArrayList<Activitat> activitats;
     HashMap<String, Visita> visitesFetes;
 
