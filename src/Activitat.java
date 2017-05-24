@@ -79,11 +79,11 @@ public abstract class Activitat {
         if (!m.conteAllotjament(nomAct()) && !m.conteVisitable(nomAct())) //si és un desplaçament...
             switch(tipus) {
                 case 'b':
-                    var_optimitzar_actual = m.puntInteres(nomAct()).preu() + preu;
+                    var_optimitzar_actual = m.puntInteres(this.UbicacioActual()).preu() + preu;
                     var_trans[0] = var_optimitzar_actual;
                     break;
                 case 's':
-                    var_optimitzar_actual = m.puntInteres(nomAct()).grauSatisfaccio(gc);
+                    var_optimitzar_actual = m.puntInteres(this.UbicacioActual()).grauSatisfaccio(gc);
                     var_trans[0] = var_optimitzar_actual;
                     break;
                 case 'c':

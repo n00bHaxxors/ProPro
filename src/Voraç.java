@@ -89,6 +89,8 @@ public abstract class Voraç {
             iCan=Buscar_Prometedor(mapa,circuit,viatge,itr_candidats,obligatoris,tipus_voraç);
             if(iCan!=null){
                 circuit.afegirActivitat(iCan,mapa,viatge);
+                if(obligatoris.contains(mapa.puntInteres(iCan.UbicacioActual()))) //NOM O UBICACIO???
+                    obligatoris.remove(mapa.puntInteres(iCan.UbicacioActual()));
             }
         }while(!circuit.solucioCompleta(obligatoris,viatge.origen(),viatge.desti(),viatge.nombreDies(),mapa) && iCan!=null);
 
