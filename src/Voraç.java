@@ -53,7 +53,7 @@ public abstract class Voraç {
             itr_candidats=ModulCalculs.inicialitzarCandidats(circuit.ultimaActivitat(), mapa,circuit,viatge);
             iCan=Buscar_Prometedor(circuit,viatge,itr_candidats,obligatoris,tipus_voraç);
             if(iCan!=null){
-                circuit.afegirActivitat(iCan, viatge.clients(), mapa);
+                circuit.afegirActivitat(iCan,mapa,viatge);
             }
         }while(!circuit.solucioCompleta(obligatoris,viatge.origen(),viatge.desti(),viatge.nombreDies(),mapa) && iCan!=null);
 
