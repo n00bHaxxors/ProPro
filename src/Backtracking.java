@@ -60,6 +60,7 @@ public abstract class Backtracking {
         Iterator<Activitat> itr = ModulCalculs.inicialitzarCandidats(solucio_actual.ultimaActivitat(), g, solucio_actual, v);
         while (itr.hasNext()){
             Activitat act = itr.next();
+            boolean acce = ModulCalculs.Acceptable(act,v,solucio_actual), millorable = EsPotMillorar(act, o, v.clients());
             if(ModulCalculs.Acceptable(act,v,solucio_actual) && EsPotMillorar(act, o, v.clients())){
                 AnotarCandidat(act,g,v);
                 if (!SolucioCompleta(c,v.origen(),v.desti(),v.nombreDies(),g)) AlgBT(g,c,v,o);
@@ -80,10 +81,14 @@ public abstract class Backtracking {
          switch (o){
             case 'b' : //barata
                 resultat = a.preuAct()+solucio_actual.preu_persona() < solucio_optima.preu_persona();
+                break;
             case 'c' : //curta
                 resultat = a.horaActivitat().plusHours(a.Duracio().getHour()).plusMinutes(a.Duracio().getMinute()).isBefore(solucio_optima.acabamentCircuit().toLocalTime());
+                break;
             case 's' : //satisfactoria
-                resultat = a.Satisfaccio(g) + solucio_actual.grau_satisfaccio() < solucio_optima.grau_satisfaccio();
+                resultat = true;
+                //resultat = a.Satisfaccio(g) + solucio_actual.grau_satisfaccio() < solucio_optima.grau_satisfaccio();
+                break;
                 
         }
         return resultat;
@@ -124,14 +129,17 @@ public abstract class Backtracking {
                 if (solucio_optima.preu_persona()>solucio_actual.preu_persona()) resultat = true;
                 else if (empatPreu && solucio_optima.grau_satisfaccio()<solucio_actual.grau_satisfaccio()) resultat = true;
                 else resultat = empatPreu && empatSatisfaccio && solucio_optima.acabamentCircuit().isAfter(solucio_actual.acabamentCircuit());
+                break;
             case 'c' : //curta
                 if (solucio_optima.acabamentCircuit().isAfter(solucio_actual.acabamentCircuit())) resultat = true;
                 else if (empatDies && solucio_optima.grau_satisfaccio()<solucio_actual.grau_satisfaccio()) resultat = true;
                 else resultat = empatDies && empatSatisfaccio && solucio_optima.preu_persona() > solucio_actual.preu_persona();
+                break;
             case 's' : //satisfactoria
                 if (solucio_optima.grau_satisfaccio()<solucio_actual.grau_satisfaccio()) resultat = true;
                 else if (empatSatisfaccio && solucio_optima.preu_persona()>solucio_actual.preu_persona()) resultat = true;
                 else resultat = empatSatisfaccio && empatPreu && solucio_optima.acabamentCircuit().isAfter(solucio_actual.acabamentCircuit());
+                break;
         }
         return resultat;
     }
