@@ -121,14 +121,14 @@ class IO {
         Iterator<Client> it = LlistaClients.iterator();
         Client clientActual= it.next();
         Boolean trobat = false;
-        while(it.hasNext() && !trobat){
+        while(clientActual!=null && !trobat){
             if(clientActual.nom().equals(nom_client)) trobat = true;
             else clientActual = it.next();
         }
         Iterator<Visitable> jt = LlistaVisitables.iterator();
         Visitable visitableActual = jt.next();
         trobat = false;
-        while(jt.hasNext() && !trobat){
+        while(visitableActual!=null && !trobat){
             if(visitableActual.nom().equals(nom_lloc)) trobat = true;
             else visitableActual = jt.next();
         }
@@ -143,19 +143,19 @@ class IO {
         boolean trobatA = false;
 
         Allotjament allotjamentActual = it.next();
-        while (it.hasNext() && !trobatA) {
+        while (allotjamentActual!=null && !trobatA) {
             if (allotjamentActual.nom().equals(nomAllotjVisitable)) trobatA = true;
             else allotjamentActual = it.next();
         }
         Visitable visitableActual = jt.next();
-        while (jt.hasNext() && !trobatV) {
+        while (visitableActual!=null && !trobatV) {
             if (visitableActual.nom().equals(nomAllotjVisitable)) trobatV = true;
             else visitableActual = jt.next();
         }
         String lloc = scan.readLine();
         boolean trobat = false;
         Lloc LlocActual = llocIt.next();
-        while (llocIt.hasNext() && !trobat) {
+        while (LlocActual!=null && !trobat) {
             if (LlocActual.nom().equals(lloc)) trobat = true;
             else LlocActual = llocIt.next();
         }
@@ -180,7 +180,7 @@ class IO {
         Iterator<Lloc> llocIt = LlistaLlocs.iterator();
         boolean trobat = false;
         Lloc LlocActual = llocIt.next();
-        while (llocIt.hasNext() && !trobat) {
+        while (LlocActual!=null && !trobat) {
             if (LlocActual.nom().equals(nomLloc)) trobat = true;
             else LlocActual = llocIt.next();
         }
@@ -201,19 +201,19 @@ class IO {
         boolean trobatA = false;
 
         Allotjament allotjamentActual = it.next();
-        while (it.hasNext() && !trobatA) {
+        while (allotjamentActual!=null && !trobatA) {
             if (allotjamentActual.nom().equals(nomDesti)) trobatA = true;
             else allotjamentActual = it.next();
         }
         boolean trobatV = false;
         Visitable visitableActual = jt.next();
-        while (jt.hasNext() && !trobatV) {
+        while (visitableActual!=null && !trobatV) {
             if (visitableActual.nom().equals(nomDesti)) trobatV = true;
             else visitableActual = jt.next();
         }
         boolean trobat = false;
         Lloc LlocActual = llocIt.next();
-        while (llocIt.hasNext() && !trobat) {
+        while (LlocActual!=null && !trobat) {
             if (LlocActual.nom().equals(nomOrigen)) trobat = true;
             else LlocActual = llocIt.next();
         }
@@ -256,14 +256,14 @@ class IO {
         boolean trobat = false;
 
         Lloc llocOrigen = llocIt.next();
-        while (llocIt.hasNext() && !trobat) {
+        while (llocOrigen!=null && !trobat) {
             if (llocOrigen.nom().equals(nomOrigen)) trobat = true;
             else llocOrigen = llocIt.next();
         }
         trobat = false;
         llocIt = LlistaLlocs.iterator();
         Lloc llocDesti = llocIt.next();
-        while (llocIt.hasNext() && !trobat) {
+        while (llocDesti!=null && !trobat) {
             if (llocDesti.nom().equals(nomDesti)) trobat = true;
             else llocDesti = llocIt.next();
         }
@@ -281,13 +281,15 @@ class IO {
         Boolean trobat = new Boolean(false);
         do{
             Client client = clientIt.next();
-            while (clientIt.hasNext() && !trobat) {
+            while (client!=null && !trobat) {
                 if (client.nom().equals(nomClient)) {
                     trobat = true;
                     clients.add(client);
                 }
                 else client = clientIt.next();
             }
+            trobat = false;
+            clientIt = LlistaClients.iterator();
             nomClient=scan.readLine();
         }while(!nomClient.equals("*"));
         trobat = false;
@@ -297,7 +299,7 @@ class IO {
         Localitzacio origen, desti;
         Visitable visitableActual= visitableIt.next();
         while(!nomVisitable.equals("*")) {
-            while (visitableIt.hasNext() && !trobat) {
+            while (visitableActual!=null && !trobat) {
                 if (visitableActual.nom().equals(nomVisitable)) {
                     trobat = true;
                     visitables.add(visitableActual);
@@ -382,6 +384,7 @@ class IO {
         try{
             PrintWriter writer = new PrintWriter(fitxerSortida, "UTF-8");
             writer.println("Preu: " + String.format ("%.2f", c.preu_persona()));
+            writer.println("Satisfaccio " + String.format ("%.2f", c.grau_satisfaccio()));
             writer.close();
         } catch (IOException e) {
             // do something
