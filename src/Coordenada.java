@@ -7,6 +7,8 @@
  */
 
 public class Coordenada {
+    /** @invariant -180 < x > 180 i -90 < y > 90
+     */
     private Float x, y; //< Coordenades geogràfiques
 
     /**
