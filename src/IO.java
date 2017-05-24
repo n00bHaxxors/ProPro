@@ -89,7 +89,7 @@ class IO {
         do {
             llistaCaracteristiques.add(caracteristica);
             caracteristica = scan.readLine();
-        } while (!caracteristica.equals('*'));
+        } while (!caracteristica.equals("*"));
         LlistaAllotjaments.add(new Allotjament(nomAllotjament, (int)(100*preuHabDoble), coordAllotjament, llistaCaracteristiques, TimeZone.getTimeZone(zonaHoraria), categoria));
     }
     /**
@@ -109,7 +109,7 @@ class IO {
         do {
             llistaCaracteristiques.add(caracteristica);
             caracteristica = scan.readLine();
-        } while (!caracteristica.equals('*'));
+        } while (!caracteristica.equals("*"));
         String horari = scan.readLine();
         ArrayList<Visitable.BlocHorari> llistaHoraris = new ArrayList<Visitable.BlocHorari>();
         do {
@@ -124,10 +124,10 @@ class IO {
             horaFi = LocalTime.parse(partsHorari[9]+':'+partsHorari[10]);
             llistaHoraris.add(new Visitable.BlocHorari(diaInici,horaInici,diaFi,horaFi));
             horari = scan.readLine();
-        } while (!horari.equals('*') && (horari.length() - horari.replace("-", "").length())== 2);
+        } while (!horari.equals("*") && (horari.length() - horari.replace("-", "").length())== 2);
         String excepcio = horari;
         ArrayList<Visitable.ExcepcioHorari> llistaExcepcions = new ArrayList<Visitable.ExcepcioHorari>();
-        if(!excepcio.equals('*')) {
+        if(!excepcio.equals("*")) {
             do {
                 MonthDay dia;
                 LocalTime horaInici, horaFi;
@@ -138,7 +138,7 @@ class IO {
                 horaFi = LocalTime.parse(partsHorari[5] + ':' + partsHorari[6]);
                 llistaExcepcions.add(new Visitable.ExcepcioHorari(dia, horaInici, horaFi));
                 excepcio = scan.readLine();
-            } while (!excepcio.equals('*'));
+            } while (!excepcio.equals("*"));
         }
         LlistaVisitables.add(new Visitable(nomVisitable, (int)(100*preu), coordVisitable, llistaCaracteristiques, TimeZone.getTimeZone(zonaHoraria), LocalTime.parse(tempsVisita), llistaExcepcions, llistaHoraris));
     }
