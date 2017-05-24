@@ -119,9 +119,9 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
                         Circuit circuitBarat=hashCircuits.get("ruta barata");
                         Circuit circuitCurt=hashCircuits.get("ruta curta");
                         Circuit circuitSatisf=hashCircuits.get("ruta satisfactoria");
-                        if(circuitBarat != null){io.mostrar(circuitBarat,textOutput.getText()); io.mostrar(circuitBarat,textOutput.getText());}
-                        if(circuitCurt != null){io.mostrar(circuitCurt,textOutput.getText()); io.mostrar(circuitCurt,textOutput.getText());}
-                        if(circuitSatisf != null){io.mostrar(circuitSatisf,textOutput.getText()); io.mostrar(circuitSatisf,textOutput.getText());}
+                        if(circuitBarat != null){io.mostrar(circuitBarat,textOutput.getText()); io.crearKML(circuitBarat,textKML.getText(),mp.mapa);}
+                        if(circuitCurt != null){io.mostrar(circuitCurt,textOutput.getText()); io.crearKML(circuitCurt,textKML.getText(),mp.mapa);}
+                        if(circuitSatisf != null){io.mostrar(circuitSatisf,textOutput.getText()); io.crearKML(circuitSatisf,textKML.getText(),mp.mapa);}
                     }
                 }
             }
@@ -142,9 +142,9 @@ public class proactiveTravel extends Application implements EventHandler<ActionE
                         Circuit circuitBarat=hashCircuits.get("ruta barata");
                         Circuit circuitCurt=hashCircuits.get("ruta curta");
                         Circuit circuitSatisf=hashCircuits.get("ruta satisfactoria");
-                        if(circuitBarat != null){io.mostrar(circuitBarat,textOutput.getText()); io.mostrar(circuitBarat,textOutput.getText());}
-                        if(circuitCurt != null){io.mostrar(circuitCurt,textOutput.getText()); io.mostrar(circuitCurt,textOutput.getText());}
-                        if(circuitSatisf != null){io.mostrar(circuitSatisf,textOutput.getText()); io.mostrar(circuitSatisf,textOutput.getText());}
+                        if(circuitBarat != null){io.mostrar(circuitBarat,textOutput.getText()); io.crearKML(circuitBarat,textKML.getText(),mp.mapa);}
+                        if(circuitCurt != null){io.mostrar(circuitCurt,textOutput.getText()); io.crearKML(circuitCurt,textKML.getText(),mp.mapa);}
+                        if(circuitSatisf != null){io.mostrar(circuitSatisf,textOutput.getText()); io.crearKML(circuitSatisf,textKML.getText(),mp.mapa);}
                     }
                 }
             }

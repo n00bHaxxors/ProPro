@@ -1,6 +1,4 @@
 import java.time.LocalTime;
-import java.util.Iterator;
-import java.util.Set;
 import java.util.*;
 
 /** @class Voraç
@@ -22,7 +20,6 @@ public abstract class Voraç {
 
         while (itr_cand.hasNext()) {
             iCan = itr_cand.next();
-            debug_candidats.add(iCan); //debug
 
             if (ModulCalculs.Acceptable(iCan, v, c, oblig)) {
                 boolean actual_ob, comp; //booleans finals
@@ -30,40 +27,17 @@ public abstract class Voraç {
 
                 if (!m.conteAllotjament(iCan.nomAct()) && !m.conteVisitable(iCan.nomAct())) //si és un desplaçament...
                     actual_capaobligatori = oblig.contains(m.puntInteres(iCan.nomAct())); //si el punt d'interès (suposem) a on va el T és obligatori(i no hi hem passat)...
-                //actual_capaobligatori = oblig.contains(m.lloc(iCan.UbicacioActual()));//si el lloc cap on va el desplaçament és obligatori(i no hi hem passat)...
 
                 actual_ob = oblig.contains(iCan) || actual_capaobligatori; //es obligatori o VA cap a un obligatori
                 comp = iCan.comparar(millor, v.clients(), m, var_trans, temps_trans, var_millor, temps_millor, tipus);
+
                 if (!millor_ob && comp || actual_ob && !millor_ob || actual_ob && comp) { //simplificable
                     millor = iCan;
                     millor_ob = actual_ob;
                     var_millor = var_trans[0];
                     temps_millor = temps_trans[0];
-                    //?
                 }
             }
-        }
-
-                /*//SI activitat és un lloc per on hem de passar obligatoriament i encara no hi hem passat -> PASSARHI
-                if(oblig.contains(iCan)){
-                    obligatori=true;
-                    oblig.remove(iCan);
-                    millor=iCan;
-                }
-                else if(!m.conteAllotjament(iCan.nomAct()) && !m.conteVisitable(iCan.nomAct())){ //si és un desplaçament...
-                    if(!c.visitat(m.lloc(iCan.UbicacioActual()).nom())){//obtenim el lloc cap on va el transport
-
-                    }
-
-                }
-                else if (iCan.comparar(millor, v.clients(), tipus))
-                    millor = iCan;
-            }*/
-
-        //debug:
-        while (itr_cand.hasNext()) { //debug
-            iCan = itr_cand.next();
-            debug_candidats.add(iCan);
         }
 
         return millor;
@@ -89,8 +63,8 @@ public abstract class Voraç {
             iCan=Buscar_Prometedor(mapa,circuit,viatge,itr_candidats,obligatoris,tipus_voraç);
             if(iCan!=null){
                 circuit.afegirActivitat(iCan,mapa,viatge);
-                if(obligatoris.contains(mapa.puntInteres(iCan.UbicacioActual()))) //NOM O UBICACIO???
-                    obligatoris.remove(mapa.puntInteres(iCan.UbicacioActual()));
+                if(obligatoris.contains(mapa.puntInteres(iCan.nomAct())))
+                    obligatoris.remove(mapa.puntInteres(iCan.nomAct()));
             }
         }while(!circuit.solucioCompleta(obligatoris,viatge.origen(),viatge.desti(),viatge.nombreDies(),mapa) && iCan!=null);
 
