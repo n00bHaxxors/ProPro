@@ -108,6 +108,8 @@ public abstract class ModulCalculs {
         LocalTime iniciHoraDinar = (LocalTime.of(12, 0)), fiHoraDinar = (LocalTime.of(14, 0));
         boolean esHoraDinar = !a.horaActivitat().isBefore(iniciHoraDinar) &&
                 !a.horaActivitat().plusHours(a.Duracio().getHour()).plusMinutes(a.Duracio().getMinute()).isAfter(fiHoraDinar);
+        boolean preuOK= (solucio_actual.preu_persona() + a.preuAct()) <= v.preuMaxim();
+        boolean diesOK= dies <= v.nombreDies();
         boolean resultatParcial = (solucio_actual.preu_persona() + a.preuAct()) <= v.preuMaxim() && dies <= v.nombreDies() && !esHoraDinar;
         return resultatParcial && a.Acceptable(solucio_actual,v);
     }

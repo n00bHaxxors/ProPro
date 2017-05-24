@@ -61,10 +61,10 @@ public abstract class Backtracking {
         while (itr.hasNext()){
             Activitat act = itr.next();
             if(ModulCalculs.Acceptable(act,v,solucio_actual) && EsPotMillorar(act, o, v.clients())){
-                AnotarCandidat(act, v.clients(), g);
+                AnotarCandidat(act,g,v);
                 if (!SolucioCompleta(c,v.origen(),v.desti(),v.nombreDies(),g)) AlgBT(g,c,v,o);
                 else if (MillorQueOptima(o)) solucio_optima = new Circuit (solucio_actual); 
-                DesanotarCandidat(v.clients(), g);
+                DesanotarCandidat(g,v);
             }
         }
     }
@@ -90,15 +90,15 @@ public abstract class Backtracking {
     /** @brief Afegeix l'activitat a solucio_actual
      @pre a i g != null
      @post solució actual actualitzada amb la nova activitat*/
-    private static void AnotarCandidat(Activitat a, GrupClients g, Mapa m){
-        solucio_actual.afegirActivitat(a, g, m);
+    private static void AnotarCandidat(Activitat a, Mapa m, Viatge v){
+        solucio_actual.afegirActivitat(a, m, v);
     }
     
     /** @brief treu l'última activitat 
      @pre g != null
      @post solució actual actualitzada treient l'úlitma activitat */
-    private static void DesanotarCandidat(GrupClients g, Mapa m){
-        solucio_actual.treureUltimaActivitat(g, m);
+    private static void DesanotarCandidat(Mapa m, Viatge v){
+        solucio_actual.treureUltimaActivitat(m, v);
     }
     
     /** @brief Consulta si solucio actual es solucioCompleta

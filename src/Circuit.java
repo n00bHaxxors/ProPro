@@ -80,13 +80,13 @@ public class Circuit {
     /** @brief afegeix una activitat al circuit
      @pre a acceptable
      @post a afegida al circuit*/
-    public void afegirActivitat(Activitat a, GrupClients g, Mapa m){
+    public void afegirActivitat(Activitat a, Mapa m, Viatge v){
         activitats.add(a);
         nActivitats++;
         LocalTime temps = a.Duracio();
         fi_viatge = fi_viatge.toLocalDate().atTime(a.horaActivitat()).plusHours(temps.getHour()).plusMinutes(temps.getMinute());
         dies = (int)ChronoUnit.DAYS.between(fi_viatge, inici_viatge);
-        grau_satisfaccio += a.Satisfaccio(g); int temporal = a.Satisfaccio(g);
+        grau_satisfaccio += a.Satisfaccio(v.clients());
         if (m.conteVisitable(a.nomAct())) visitesFetes.put(a.nomAct(),(Visita)a);
         preu_per_persona += a.preuAct();
     }
@@ -94,7 +94,7 @@ public class Circuit {
     /** @brief Treu l'última activitat del circuit
      @pre Circuit no buit
      @post última activitat del circuit treta*/
-    public void treureUltimaActivitat(GrupClients g, Mapa m){        
+    public void treureUltimaActivitat(Mapa m, Viatge v){        
         nActivitats--;
         Activitat a = activitats.remove(nActivitats);
         LocalTime temps = a.Duracio();
@@ -104,7 +104,7 @@ public class Circuit {
         }
         else fi_viatge = inici_viatge;
         dies = (int)ChronoUnit.DAYS.between(fi_viatge, inici_viatge);
-        grau_satisfaccio -= a.Satisfaccio(g);
+        grau_satisfaccio -= a.Satisfaccio(v.clients());
         preu_per_persona -= a.preuAct();
         if (m.conteVisitable(a.nomAct())) visitesFetes.remove(a.nomAct());
     }
