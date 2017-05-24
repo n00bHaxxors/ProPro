@@ -198,32 +198,33 @@ class IO {
         Iterator<Allotjament> it = LlistaAllotjaments.iterator();
         Iterator<Visitable> jt = LlistaVisitables.iterator();
         Iterator<Lloc> llocIt = LlistaLlocs.iterator();
-        boolean trobatA = false;
-
-        Allotjament allotjamentActual = it.next();
-        while (allotjamentActual!=null && !trobatA) {
-            if (allotjamentActual.nom().equals(nomDesti)) trobatA = true;
-            else allotjamentActual = it.next();
+        PuntInteres origen=it.next();
+        boolean origenTrobat=false;
+        while (origen!=null && !origenTrobat) {
+            if (origen.nom().equals(nomOrigen)) origenTrobat = true;
+            else origen = it.next();
+        }if(!origenTrobat) {
+            origen = jt.next();
+            while (origen != null && !origenTrobat) {
+                if (origen.nom().equals(nomDesti)) origenTrobat = true;
+                else origen = jt.next();
+            }
         }
-        boolean trobatV = false;
-        Visitable visitableActual = jt.next();
-        while (visitableActual!=null && !trobatV) {
-            if (visitableActual.nom().equals(nomDesti)) trobatV = true;
-            else visitableActual = jt.next();
+        it = LlistaAllotjaments.iterator();
+        jt = LlistaVisitables.iterator();
+        PuntInteres desti=it.next();
+        boolean destiTrobat=false;
+        while (desti!=null && !destiTrobat) {
+            if (desti.nom().equals(nomDesti)) destiTrobat = true;
+            else origen = it.next();
+        }if(!destiTrobat) {
+            desti = jt.next();
+            while (desti != null && !destiTrobat) {
+                if (desti.nom().equals(nomDesti)) destiTrobat = true;
+                else desti = jt.next();
+            }
         }
-        boolean trobat = false;
-        Lloc LlocActual = llocIt.next();
-        while (LlocActual!=null && !trobat) {
-            if (LlocActual.nom().equals(nomOrigen)) trobat = true;
-            else LlocActual = llocIt.next();
-        }
-        if (trobatV) {
-            visitableActual.afegirTransportDirecte(new MT_Directe(nomMT,(int) (preu*100),duradaTrajecte,visitableActual));
-        } else if (trobatA) {
-            allotjamentActual.afegirTransportDirecte(new MT_Directe(nomMT,(int) (preu*100),duradaTrajecte,visitableActual));
-        } else {
-            //excepcio
-        }
+        origen.afegirTransportDirecte(new MT_Directe(nomMT,(int) (preu*100),duradaTrajecte,desti));
         scan.readLine();
     }
     private void casMTIndirecte() throws IOException {
