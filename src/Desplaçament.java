@@ -34,7 +34,7 @@ public class Desplaçament extends Activitat { //aka trasllat
                 fi = inici.plusHours(Duracio().getHour()).plusMinutes(Duracio().getMinute());
         // ! visitat, abans del final del dia, i menys de sis hores de visites totals diaries
         boolean resultat = potSerNocturn || inici.isBefore(inici.plusDays(1).toLocalDate().atTime(0, 0)) && fi.isBefore(inici.plusDays(1).toLocalDate().atTime(0, 0));
-        return resultat && !c.transportEnBucle(this);
+        return resultat;
     }
     
     /** @brief Consulta la duracio del desplaçament

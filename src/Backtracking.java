@@ -63,7 +63,9 @@ public abstract class Backtracking {
             if(ModulCalculs.Acceptable(act,v,solucio_actual) && EsPotMillorar(act, o, v.clients())){
                 AnotarCandidat(act,g,v);
                 if (!SolucioCompleta(c,v.origen(),v.desti(),v.nombreDies(),g)) AlgBT(g,c,v,o);
-                else if (MillorQueOptima(o)) solucio_optima = new Circuit (solucio_actual); 
+                else if (MillorQueOptima(o)) {
+                    solucio_optima = new Circuit (solucio_actual);
+                } 
                 DesanotarCandidat(g,v);
             }
         }

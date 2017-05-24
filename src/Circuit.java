@@ -39,7 +39,7 @@ public class Circuit {
         preu_per_persona = o.preu_per_persona; grau_satisfaccio = o.grau_satisfaccio; dies = o.dies; nActivitats = o.nActivitats;
         inici_viatge=o.inici_viatge.toLocalDate().atTime(o.inici_viatge.toLocalTime());
         fi_viatge=o.inici_viatge.toLocalDate().atTime(o.fi_viatge.toLocalTime());
-        activitats = new ArrayList (o.activitats); visitesFetes = new HashMap(visitesFetes);
+        activitats = new ArrayList (o.activitats); visitesFetes = new HashMap(o.visitesFetes);
     }
     
     /** @brief Constructor circuit amb el dia d'inici del circuit
@@ -161,13 +161,4 @@ public class Circuit {
     public Iterator<Activitat> Activitats(){
         return activitats.iterator();
     }
-
-    /** @brief consulta si amb l'activitat a estarem transportant-nos en bucle
-     @pre a existent
-     @post retorna cet si estem tornat a l'origen del desplaçament anterior*/    
-    public boolean transportEnBucle(Activitat a){
-        if (nActivitats<2) return false;
-        return activitats.get(nActivitats-2).UbicacioActual().equals(a.UbicacioActual());
-    } 
-    
 }
