@@ -34,10 +34,10 @@ public abstract class ModulCalculs {
         Lloc llocActual;
         LocalDateTime ara = solucio_actual.acabamentCircuit();
         if (pActual != null) {
+            LocalDateTime proxObert = pActual.ProximaObertura(ara), horaFiDinar = ara.toLocalDate().atTime(14, 0);
             if (pActual.nomLloc()!= null) llocActual = g.lloc(pActual.nomLloc());
             else llocActual = null;
             if (pActual.obreAvui(ara) && !pActual.esLlocPas()) {
-                LocalDateTime proxObert = pActual.ProximaObertura(ara), horaFiDinar = proxObert.toLocalDate().atTime(14, 0);
                 actPActual = pActual.ActivitatCorresponent(proxObert);
                 if (proxObert.isBefore(horaFiDinar))actPActual2 = pActual.ActivitatCorresponent(horaFiDinar);
             }
@@ -51,6 +51,10 @@ public abstract class ModulCalculs {
                 MT_Directe mtd = itr1.next();
                 Activitat aux = mtd.desplaçament(ara.toLocalDate(), ara.toLocalTime(), pActual);
                 arbre.add(aux);
+                if (ara.toLocalTime().isBefore(horaFiDinar.toLocalTime())) {
+                    Activitat aux2 = mtd.desplaçament(horaFiDinar.toLocalDate(), horaFiDinar.toLocalTime(), pActual);
+                    arbre.add(aux2);
+                }
             }
             //Transports directes amb el transport default del lloc
             if (llocActual != null) itr1 = llocActual.mitjansDirectes();
@@ -63,6 +67,10 @@ public abstract class ModulCalculs {
                     if (!pi.nom().equals(pActual.nom())) {
                         Activitat aux = mtd.desplaçament(ara.toLocalDate(), ara.toLocalTime(), pActual, pi);
                         arbre.add(aux);
+                        if (ara.toLocalTime().isBefore(horaFiDinar.toLocalTime())) {
+                            Activitat aux2 = mtd.desplaçament(horaFiDinar.toLocalDate(), horaFiDinar.toLocalTime(), pActual, pi);
+                            arbre.add(aux2);
+                        }
                     }
                 }
             }
@@ -106,12 +114,10 @@ public abstract class ModulCalculs {
     public static boolean Acceptable(Activitat a, Viatge v, Circuit solucio_actual, Set<Visitable> c){
         LocalDateTime fi = solucio_actual.acabamentCircuit().toLocalDate().atTime(a.horaActivitat()).plusHours(a.Duracio().getHour()).plusMinutes(a.Duracio().getMinute());
         long dies = ChronoUnit.DAYS.between(fi, solucio_actual.iniciCircuit());
-        LocalTime iniciHoraDinar = (LocalTime.of(12, 0)), fiHoraDinar = (LocalTime.of(14, 0));
-        boolean esHoraDinar = !a.horaActivitat().isBefore(iniciHoraDinar) &&
-                !a.horaActivitat().plusHours(a.Duracio().getHour()).plusMinutes(a.Duracio().getMinute()).isBefore(iniciHoraDinar) && 
-                !a.horaActivitat().isAfter(fiHoraDinar) && 
-                !a.horaActivitat().plusHours(a.Duracio().getHour()).plusMinutes(a.Duracio().getMinute()).isAfter(fiHoraDinar);
-        boolean resultatParcial = (solucio_actual.preu_persona() + a.preuAct()) <= v.preuMaxim() && dies <= v.nombreDies() && !esHoraDinar;
+        LocalTime iniciHoraDinar = (LocalTime.of(11, 59)), fiHoraDinar = (LocalTime.of(13, 59));
+        boolean NoEsHoraDinar = a.horaActivitat().isBefore(iniciHoraDinar) && a.horaActivitat().plusHours(a.Duracio().getHour()).plusMinutes(a.Duracio().getMinute()).isBefore(iniciHoraDinar)
+                || a.horaActivitat().isAfter(fiHoraDinar) && a.horaActivitat().plusHours(a.Duracio().getHour()).plusMinutes(a.Duracio().getMinute()).isAfter(fiHoraDinar);
+        boolean resultatParcial = (solucio_actual.preu_persona() + a.preuAct()) <= v.preuMaxim() && dies <= v.nombreDies() && NoEsHoraDinar;
         return resultatParcial && a.Acceptable(solucio_actual,v,c);
     }
 }
