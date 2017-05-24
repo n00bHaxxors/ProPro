@@ -6,7 +6,8 @@
 import java.time.LocalTime;
 
 abstract class Mitja_Transport {
-
+    /** @invariant preu>=0
+     */
     private String nom; //<nom del mitjà de transport
     private int preu; //<preu per usar el mitjà de transport
     private LocalTime durada; //<durada del viatge amb el mitjà de transport

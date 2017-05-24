@@ -17,6 +17,8 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class Circuit {
+    /** @invariant inici viatge < fi viatge i dies >=1
+     */
     private LocalDateTime inici_viatge, fi_viatge; //<Data d'inici i fi del viatge
     private int preu_per_persona; //<preu per client del viatge
     private int grau_satisfaccio; //<grau de satisfaccio que obtindran els clients

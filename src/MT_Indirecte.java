@@ -6,7 +6,8 @@
 import java.time.*;
 
 public class MT_Indirecte extends Mitja_Transport {
-
+    /** @invariant 0<dia<=31, 00:00<hora<=24:00
+     */
     private LocalDate dia; //<dia de sortida del mitjà de transport
     private LocalTime hora; //<hora de sortida del mitjà de transport
 

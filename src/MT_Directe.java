@@ -6,7 +6,8 @@
 import java.time.*;
 
 public class MT_Directe extends Mitja_Transport {
-
+    /** @invariant cert
+     * */
     private PuntInteres desti; //<Destí del mitjà de transport
 
     /** @brief Constructor amb parametres
