@@ -2,6 +2,7 @@
     @brief Classe Activitat
 */
 import java.time.*;
+import java.util.Set;
 
 /** @class Activitat
     @brief Classe que representa una Activitat
@@ -39,7 +40,7 @@ public abstract class Activitat {
     /** @brief Consulta si l'Activitat és acceptable
      @pre circuit i viatge no buits
      @post retorna cert si és acceptable i fals en c.c.*/
-    public abstract boolean Acceptable(Circuit c, Viatge v);
+    public abstract boolean Acceptable(Circuit c, Viatge v, Set<Visitable> obl);
     
     /** @brief Consulta la duracio de l'activitat
      @pre cert

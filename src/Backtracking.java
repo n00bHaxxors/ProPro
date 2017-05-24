@@ -4,7 +4,6 @@
 */
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,8 +59,7 @@ public abstract class Backtracking {
         Iterator<Activitat> itr = ModulCalculs.inicialitzarCandidats(solucio_actual.ultimaActivitat(), g, solucio_actual, v);
         while (itr.hasNext()){
             Activitat act = itr.next();
-            boolean acce = ModulCalculs.Acceptable(act,v,solucio_actual), millorable = EsPotMillorar(act, o, v.clients());
-            if(ModulCalculs.Acceptable(act,v,solucio_actual) && EsPotMillorar(act, o, v.clients())){
+            if(ModulCalculs.Acceptable(act,v,solucio_actual,c) && EsPotMillorar(act, o, v.clients())){
                 AnotarCandidat(act,g,v);
                 if (!SolucioCompleta(c,v.origen(),v.desti(),v.nombreDies(),g)) AlgBT(g,c,v,o);
                 else if (MillorQueOptima(o)) {
@@ -83,7 +81,7 @@ public abstract class Backtracking {
                 resultat = a.preuAct()+solucio_actual.preu_persona() < solucio_optima.preu_persona();
                 break;
             case 'c' : //curta
-                resultat = a.horaActivitat().plusHours(a.Duracio().getHour()).plusMinutes(a.Duracio().getMinute()).isBefore(solucio_optima.acabamentCircuit().toLocalTime());
+                resultat = a.diaActivitat().atTime(a.horaActivitat().plusHours(a.Duracio().getHour()).plusMinutes(a.Duracio().getMinute())).isBefore(solucio_optima.acabamentCircuit());
                 break;
             case 's' : //satisfactoria
                 resultat = true;

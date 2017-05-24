@@ -3,6 +3,7 @@
 */
 import java.time.*;
 import java.util.Iterator;
+import java.util.Set;
 
 /** @class EstadaHotel
     @brief Classe que representa una Estada en un Allotjament
@@ -23,7 +24,7 @@ public class EstadaHotel extends Activitat {
      @pre circuit i viatge no buits
      @post retorna cert si és acceptable i fals en c.c.*/
     @Override
-    public boolean Acceptable (Circuit c, Viatge v){
+    public boolean Acceptable (Circuit c, Viatge v,Set<Visitable> obl){
         boolean resultat = hotel.categoria().equals(v.categoria());
         return resultat;
     }

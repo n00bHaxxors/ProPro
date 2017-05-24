@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Set;
 //import java.util.TreeSet;
 
 /** @class ModulCalculs
@@ -102,15 +103,13 @@ public abstract class ModulCalculs {
     /** @brief consulta si una activitat es acceptable
      @pre a != null && v !=null
      @post retorna cert si la activitat compleix amb les condicions corresponents i fals en c.c.*/
-    public static boolean Acceptable(Activitat a, Viatge v, Circuit solucio_actual){
+    public static boolean Acceptable(Activitat a, Viatge v, Circuit solucio_actual, Set<Visitable> c){
         LocalDateTime fi = solucio_actual.acabamentCircuit().toLocalDate().atTime(a.horaActivitat()).plusHours(a.Duracio().getHour()).plusMinutes(a.Duracio().getMinute());
         long dies = ChronoUnit.DAYS.between(fi, solucio_actual.iniciCircuit());
         LocalTime iniciHoraDinar = (LocalTime.of(12, 0)), fiHoraDinar = (LocalTime.of(14, 0));
         boolean esHoraDinar = !a.horaActivitat().isBefore(iniciHoraDinar) &&
                 !a.horaActivitat().plusHours(a.Duracio().getHour()).plusMinutes(a.Duracio().getMinute()).isAfter(fiHoraDinar);
-        boolean preuOK= (solucio_actual.preu_persona() + a.preuAct()) <= v.preuMaxim();
-        boolean diesOK= dies <= v.nombreDies();
         boolean resultatParcial = (solucio_actual.preu_persona() + a.preuAct()) <= v.preuMaxim() && dies <= v.nombreDies() && !esHoraDinar;
-        return resultatParcial && a.Acceptable(solucio_actual,v);
+        return resultatParcial && a.Acceptable(solucio_actual,v,c);
     }
 }

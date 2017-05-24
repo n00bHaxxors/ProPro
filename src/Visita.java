@@ -5,6 +5,7 @@
 
 import java.time.*;
 import java.util.Iterator;
+import java.util.Set;
 
 public class Visita extends Activitat{
     private Visitable visitat;
@@ -34,14 +35,15 @@ public class Visita extends Activitat{
      @pre circuit i viatge no buits
      @post retorna cert si és acceptable i fals en c.c.*/
     @Override
-    public boolean Acceptable (Circuit c, Viatge v){
+    public boolean Acceptable (Circuit c, Viatge v, Set<Visitable> obl){
         boolean shaVisitat = c.visitaFeta(visitat);
         LocalDateTime inici = diaActivitat().atTime(horaActivitat()), 
                 fi = inici.plusHours(Duracio().getHour()).plusMinutes(Duracio().getMinute());
         // ! visitat, abans del final del dia, i menys de sis hores de visites totals diaries
+        boolean visitaSatisfactoria = Satisfaccio(v.clients())>0 || v.desti().nom()==visitat.nom() || v.origen().nom()==visitat.nom() || obl.contains(visitat);
         boolean resultat = !shaVisitat && inici.toLocalTime().isBefore(LocalTime.of(23, 59)) && fi.isBefore(inici.plusDays(1).toLocalDate().atTime(0, 0)) &&
                 !c.horesVisites(diaActivitat()).plusHours(Duracio().getHour()).plusMinutes(Duracio().getMinute()).isAfter(LocalTime.of(6, 0));
-        return resultat;
+        return resultat && visitaSatisfactoria;
     }
     
     /** @brief Consulta la duracio de la visita

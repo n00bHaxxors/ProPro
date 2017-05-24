@@ -4,6 +4,7 @@
  */
 
 import java.time.*;
+import java.util.Set;
 
 public class Desplaçament extends Activitat { //aka trasllat
 
@@ -28,7 +29,7 @@ public class Desplaçament extends Activitat { //aka trasllat
      @pre circuit i viatge no buits
      @post retorna cert si és acceptable i fals en c.c.*/
     @Override
-    public boolean Acceptable (Circuit c, Viatge v){
+    public boolean Acceptable (Circuit c, Viatge v, Set<Visitable> obl){
         boolean potSerNocturn = c.dies_total()==v.nombreDies() || c.dies_total() == 0;
         LocalDateTime inici = diaActivitat().atTime(horaActivitat()), 
                 fi = inici.plusHours(Duracio().getHour()).plusMinutes(Duracio().getMinute());

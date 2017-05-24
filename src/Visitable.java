@@ -228,4 +228,12 @@ public class Visitable extends PuntInteres{
         LocalDateTime obertura = ProximaObertura(ara);
         return new Visita (this, obertura.toLocalDate(),obertura.toLocalTime());
     }
+    
+    @Override
+    public boolean equals(Object b){
+        if (b == null) return false;
+        if (! Visitable.class.isAssignableFrom(b.getClass())) return false;
+        final Visitable visitable2 = (Visitable) b;
+        return nom().equals(visitable2.nom());
+    }
 }
