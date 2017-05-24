@@ -22,8 +22,8 @@ public class Circuit {
     private int grau_satisfaccio; //<grau de satisfaccio que obtindran els clients
     private int dies; //<dies de duracio del viatge
     private int nActivitats; //<numero d'activitats que es faràne en el viatge
-    private ArrayList<Activitat> activitats;
-    HashMap<String, Visita> visitesFetes;
+    private ArrayList<Activitat> activitats; //<llista d'activitats que faràn els clients
+    HashMap<String, Visita> visitesFetes; //<diferents visites que poden fer els clients
 
     /** @brief Constructor circuit amb paràmetres
      @pre cert

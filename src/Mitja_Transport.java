@@ -1,15 +1,15 @@
-import java.time.LocalTime;
-
 /** @class Mitjà Transport
  @brief Recurs que permet als nostres clients desplaçar-se entre ubicacions
  @author Marc Cané Salamià
  */
 
+import java.time.LocalTime;
+
 abstract class Mitja_Transport {
 
-    private String nom;
-    private int preu;
-    private LocalTime durada;
+    private String nom; //<nom del mitjà de transport
+    private int preu; //<preu per usar el mitjà de transport
+    private LocalTime durada; //<durada del viatge amb el mitjà de transport
 
     /** @brief Constructor per defecte
     @pre cert
