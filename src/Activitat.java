@@ -71,9 +71,45 @@ public abstract class Activitat {
     /** @brief Fa la comparació corresponent en funcio del tipus de variable a optimitzar
      @pre tipus=b,c,s
      @post Retorna cert si l'activitat actual és millor que la millor activitat trobada fins el moment*/
-    public Boolean comparar(Activitat millor, GrupClients gc, char tipus){
+    public Boolean comparar(Activitat millor, GrupClients gc, Mapa m, int var_trans[], LocalTime temps_trans[], int var_millor, LocalTime temps_millor, char tipus){
         Boolean res=true;
+        int var_optimitzar_actual=tipus=='b'?preu:Satisfaccio(gc); //si busquem barat posem preu de l'activitat, si no, satisfaccio, perquè encara que tipus sigui c no influeix
+        LocalTime temps_optimitzar_actual=Duracio();
+
+        if (!m.conteAllotjament(nomAct()) && !m.conteVisitable(nomAct())) //si és un desplaçament...
+            switch(tipus) {
+                case 'b':
+                    var_optimitzar_actual = m.puntInteres(nomAct()).preu() + preu;
+                    var_trans[0] = var_optimitzar_actual;
+                    break;
+                case 's':
+                    var_optimitzar_actual = m.puntInteres(nomAct()).grauSatisfaccio(gc);
+                    var_trans[0] = var_optimitzar_actual;
+                    break;
+                case 'c':
+                    temps_optimitzar_actual = Duracio()/*.plus(visitable.Duracio())*/;
+                    temps_trans[0] = temps_optimitzar_actual;
+                    break;
+            }
+
         if(millor!=null){
+            switch(tipus){
+                case 'b':
+                    res=var_optimitzar_actual<var_millor;
+                    break;
+                case 's':
+                    res=var_optimitzar_actual>var_millor;
+                    break;
+                case 'c':
+                    res=temps_optimitzar_actual.isBefore(temps_millor);
+                    break;
+            }
+        }
+
+        return res;
+    }
+
+    /*if(millor!=null){
             switch(tipus){
                 case 'b':
                     res=preu<millor.preu;
@@ -85,8 +121,5 @@ public abstract class Activitat {
                     res=Duracio().isBefore(millor.Duracio());
                     break;
             }
-        }
-        return res;
-    }
-    
+        }*/
 }

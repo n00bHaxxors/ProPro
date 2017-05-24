@@ -39,7 +39,7 @@ public class Circuit {
         preu_per_persona = o.preu_per_persona; grau_satisfaccio = o.grau_satisfaccio; dies = o.dies; nActivitats = o.nActivitats;
         inici_viatge=o.inici_viatge.toLocalDate().atTime(o.inici_viatge.toLocalTime());
         fi_viatge=o.inici_viatge.toLocalDate().atTime(o.fi_viatge.toLocalTime());
-        activitats = new ArrayList (o.activitats); visitesFetes = new HashMap(o.visitesFetes);
+        activitats = new ArrayList (o.activitats); visitesFetes = new HashMap(visitesFetes);
     }
     
     /** @brief Constructor circuit amb el dia d'inici del circuit
@@ -124,18 +124,14 @@ public class Circuit {
     public boolean solucioCompleta(Set<Visitable> c, Localitzacio origen, Localitzacio desti, int diesV, Mapa g){
         //comprovem que origen i desti son visitables
         boolean oVis = g.conteVisitable(origen.nom()), dVis = g.conteVisitable(desti.nom());
-        boolean resultat;
-        if (oVis) resultat = activitats.get(0).nomAct().equals(origen.nom()) && visitesFetes.containsKey(origen.nom());
-        else resultat = true;
+        boolean resultat = diesV>=dies;
+        if (oVis) resultat = resultat && activitats.get(0).nomAct().equals(origen.nom()) && visitesFetes.containsKey(origen.nom());
         if (dVis) resultat = resultat && activitats.get(nActivitats-1).nomAct().equals(desti.nom()) && visitesFetes.containsKey(desti.nom());
         else resultat = resultat && activitats.get(nActivitats-1).UbicacioActual().equals(desti.nom());
         Iterator<Visitable> itr = c.iterator();
         while (resultat && itr.hasNext()){
             Visitable aux = itr.next();
             resultat = visitesFetes.containsKey(aux.nom());
-        }
-        if (resultat) {
-            String a = "aqui va un breakpoiint!";
         }
         return resultat;
     }
@@ -165,4 +161,18 @@ public class Circuit {
     public Iterator<Activitat> Activitats(){
         return activitats.iterator();
     }
+
+    /** @brief consulta si amb l'activitat a estarem transportant-nos en bucle
+     @pre a existent
+     @post retorna cet si estem tornat a l'origen del desplaçament anterior*/    
+    public boolean transportEnBucle(Activitat a){
+        if (nActivitats<2) return false;
+        return activitats.get(nActivitats-2).UbicacioActual().equals(a.UbicacioActual());
+    }
+
+    /** @brief consulta si hem visitat un lloc
+     @pre s no nul
+     @post retorna cert si hem visitat v i fals en c.c.*/
+    public boolean visitat(String s){ return visitesFetes.containsKey(s);}
+
 }

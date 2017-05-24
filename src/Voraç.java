@@ -1,3 +1,4 @@
+import java.time.LocalTime;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.*;
@@ -10,25 +11,59 @@ import java.util.*;
 public abstract class Voraç {
 
     /** @brief Busca l'activitat que maximitza la qualitat (?) del circuit
-     @pre Circuit, viatge, itr i visitats no nuls, tipus=b/c/p
+     @pre Circuit, viatge, itr i visitats no nuls, tipus=b/c/s
      @post Retorna l'activitat més prometedora*/
-    private static Activitat Buscar_Prometedor(Circuit c, Viatge v, Iterator<Activitat> itr_cand, Set<Visitable> oblig, char tipus) {
+    private static Activitat Buscar_Prometedor(Mapa m,Circuit c, Viatge v, Iterator<Activitat> itr_cand, Set<Visitable> oblig, char tipus) {
         Activitat iCan, millor = null;
-        boolean obligatori=false;
+        int var_millor=0, var_trans[]=new int[1];
+        LocalTime temps_millor=null, temps_trans[]=new LocalTime[1];
+        boolean millor_ob=false; //?
+        ArrayList<Activitat> debug_candidats=new ArrayList<>(); //debug
 
-        while (itr_cand.hasNext() && !obligatori){
-            iCan=itr_cand.next();
+        while (itr_cand.hasNext()) {
+            iCan = itr_cand.next();
+            debug_candidats.add(iCan); //debug
 
-            if (ModulCalculs.Acceptable(iCan,v,c)){
-                //SI activitat és un lloc per on hem de passar obligatoriament i encara no hi hem passat -> PASSARHI
+            if (ModulCalculs.Acceptable(iCan, v, c, oblig)) {
+                boolean actual_ob, comp; //booleans finals
+                boolean actual_capaobligatori = false; //booleans intermitjos
+
+                if (!m.conteAllotjament(iCan.nomAct()) && !m.conteVisitable(iCan.nomAct())) //si és un desplaçament...
+                    actual_capaobligatori = oblig.contains(m.puntInteres(iCan.nomAct())); //si el punt d'interès (suposem) a on va el T és obligatori(i no hi hem passat)...
+                //actual_capaobligatori = oblig.contains(m.lloc(iCan.UbicacioActual()));//si el lloc cap on va el desplaçament és obligatori(i no hi hem passat)...
+
+                actual_ob = oblig.contains(iCan) || actual_capaobligatori; //es obligatori o VA cap a un obligatori
+                comp = iCan.comparar(millor, v.clients(), m, var_trans, temps_trans, var_millor, temps_millor, tipus);
+                if (!millor_ob && comp || actual_ob && !millor_ob || actual_ob && comp) { //simplificable
+                    millor = iCan;
+                    millor_ob = actual_ob;
+                    var_millor = var_trans[0];
+                    temps_millor = temps_trans[0];
+                    //?
+                }
+            }
+        }
+
+                /*//SI activitat és un lloc per on hem de passar obligatoriament i encara no hi hem passat -> PASSARHI
                 if(oblig.contains(iCan)){
                     obligatori=true;
                     oblig.remove(iCan);
                     millor=iCan;
                 }
+                else if(!m.conteAllotjament(iCan.nomAct()) && !m.conteVisitable(iCan.nomAct())){ //si és un desplaçament...
+                    if(!c.visitat(m.lloc(iCan.UbicacioActual()).nom())){//obtenim el lloc cap on va el transport
+
+                    }
+
+                }
                 else if (iCan.comparar(millor, v.clients(), tipus))
                     millor = iCan;
-            }
+            }*/
+
+        //debug:
+        while (itr_cand.hasNext()) { //debug
+            iCan = itr_cand.next();
+            debug_candidats.add(iCan);
         }
 
         return millor;
@@ -51,7 +86,7 @@ public abstract class Voraç {
 
         do{
             itr_candidats=ModulCalculs.inicialitzarCandidats(circuit.ultimaActivitat(), mapa,circuit,viatge);
-            iCan=Buscar_Prometedor(circuit,viatge,itr_candidats,obligatoris,tipus_voraç);
+            iCan=Buscar_Prometedor(mapa,circuit,viatge,itr_candidats,obligatoris,tipus_voraç);
             if(iCan!=null){
                 circuit.afegirActivitat(iCan,mapa,viatge);
             }
