@@ -297,7 +297,7 @@ class IO {
         ArrayList<Visitable> visitables = new ArrayList<Visitable>();
         Iterator<Visitable> visitableIt = LlistaVisitables.iterator();
         Localitzacio origen=null;
-                Localitzacio  desti=null;
+        Localitzacio  desti=null;
         Visitable visitableActual = null;
         Localitzacio temp;
         while(!nomVisitable.equals("*")) {
@@ -316,7 +316,6 @@ class IO {
             if(!trobat){
                 Iterator<Lloc> LlocsIt= LlistaLlocs.iterator();
                 while (LlocsIt.hasNext() && !trobat) {
-                    //--sipwarriper: temp per a què s'utilitza??
                     temp=LlocsIt.next();
                     if (temp.nom().equals(nomVisitable)) {
                         if(origen==null)origen = temp;
@@ -336,7 +335,7 @@ class IO {
             tipusRuta.add(nomRuta);
             nomRuta=scan.readLine();
         }
-        origen = null; desti = null;
+        //origen = null; desti = null;
         LlistaViatges.add(new Viatge(dataInici.atTime(horaInici),nombreDies,preuMaxim,categoria,new GrupClients(clients),origen,desti,visitables,tipusRuta));
     }
 
