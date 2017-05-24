@@ -177,14 +177,14 @@ public class Visitable extends PuntInteres{
         while (!resultat && itr.hasNext()){
             ExcepcioHorari excepcio = itr.next();
             resultat = excepcio.EsAvui(avui);
-            if (!ara.toLocalTime().isBefore(excepcio.horaTencament())) casEspecial = true;
+            if (ara.toLocalTime().isAfter(excepcio.horaTencament())) casEspecial = true;
         }
         if (!resultat){
             Iterator<BlocHorari> itr2 = horari.iterator();
             while (!resultat && itr2.hasNext()){
                 BlocHorari franja = itr2.next();
                 resultat = franja.esAquestFranja(avui);
-                if (!ara.toLocalTime().isBefore(franja.horaTencament())) casEspecial = true;
+                if (ara.toLocalTime().isAfter(franja.horaTencament())) casEspecial = true;
             }
         }
         return resultat && !casEspecial;

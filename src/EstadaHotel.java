@@ -13,13 +13,14 @@ public class EstadaHotel extends Activitat {
     /** @invariant hotel!=null
      */
     private Allotjament hotel; //<Allotjament on fem l'estada al hotel
+    private LocalTime duracio; //< Atribut que ens diu el temps que passem al hotel
     
     /** @brief Constructor de una Estadia a un Hotel
      @pre parametres != null
      @post Crea una estadia amb les dades donades*/
-    public EstadaHotel(Allotjament h, LocalDate dia, LocalTime hora){
+    public EstadaHotel(Allotjament h, LocalDate dia, LocalTime hora, LocalTime d){
         super(dia, hora, h.preu());
-        hotel = h;
+        hotel = h; duracio = d;
     }
     
     /** @brief Consulta si l'Activitat és acceptable
@@ -36,7 +37,7 @@ public class EstadaHotel extends Activitat {
      @post Retorna la duració de la estada*/
     @Override
     public LocalTime Duracio(){
-        return null; // aixo probablament merexi una redifinició de la classe (a inicialitzar Candidat s'haurà de tenir en compte
+        return duracio; // aixo probablament merexi una redifinició de la classe (a inicialitzar Candidat s'haurà de tenir en compte
     }
     
     /** @brief Calcula la Satisfaccio que afageix l'activitat

@@ -25,8 +25,20 @@ public abstract class ModulCalculs {
      @post retorna un iterador a un conjunt amb els candidats possibles*/
     public static Iterator<Activitat> inicialitzarCandidats(Activitat a, Mapa g, Circuit solucio_actual, Viatge v){
         ArrayList<Activitat> arbre = new ArrayList();
-        PuntInteres pActual = null;
-        if (a != null && (g.conteVisitable(a.UbicacioActual()) || g.conteAllotjament(a.UbicacioActual())) ) pActual = g.puntInteres(a.UbicacioActual());
+        PuntInteres pActual = null; boolean tempA = false;
+        Activitat actPActual = null, actPActual2 = null;
+        Lloc llocActual;
+        LocalDateTime ara = solucio_actual.acabamentCircuit();
+        if (a != null && g.conteVisitable(a.UbicacioActual())) pActual = g.puntInteres(a.UbicacioActual());
+        else if (a!=null && g.conteAllotjament(a.UbicacioActual())) {
+            pActual = g.puntInteres(a.UbicacioActual());
+            tempA = true;
+            LocalTime duracio = LocalTime.of(0, 0);
+            if (ara.toLocalTime().isBefore(LocalTime.of(4,0))) duracio = LocalTime.of(4-ara.getHour(), ara.getMinute());
+            else duracio = LocalTime.of(28-ara.getHour(), ara.getMinute());
+            actPActual = new EstadaHotel ((Allotjament)pActual,pActual.ProximaObertura(ara).toLocalDate(), pActual.ProximaObertura(ara).toLocalTime(), duracio);
+            arbre.add(actPActual);
+        }
         else if (a != null && !g.conteVisitable(a.UbicacioActual()) && !g.conteAllotjament(a.UbicacioActual())) return arbre.iterator(); //hem acabat en un lloc, i no en un PI en concret
         else if (a == null && g.conteVisitable(v.origen().nom())) {
             pActual = (PuntInteres) v.origen();
@@ -34,18 +46,15 @@ public abstract class ModulCalculs {
             arbre.add(aux);
             return arbre.iterator(); //primera activitat, si origen es visitable, ha de ser una visita a origen
         }
-        Activitat actPActual = null, actPActual2 = null;
-        Lloc llocActual;
-        LocalDateTime ara = solucio_actual.acabamentCircuit();
         if (pActual != null) {
             LocalDateTime proxObert = pActual.ProximaObertura(ara), horaFiDinar = ara.toLocalDate().atTime(14, 0);
             if (pActual.nomLloc()!= null) llocActual = g.lloc(pActual.nomLloc());
             else llocActual = null;
-            if (pActual.obreAvui(ara) && !pActual.esLlocPas()) {
+            if (!tempA && pActual.obreAvui(ara) && !pActual.esLlocPas()) {
                 actPActual = pActual.ActivitatCorresponent(proxObert);
                 if (proxObert.isBefore(horaFiDinar))actPActual2 = pActual.ActivitatCorresponent(horaFiDinar);
             }
-            if (actPActual != null /*&& actPActual.Satisfaccio(v.clients()) > 0*/) {
+            if (!tempA && actPActual != null /*&& actPActual.Satisfaccio(v.clients()) > 0*/) {
                 arbre.add(actPActual);
                 if (actPActual2 != null) arbre.add(actPActual2);
             }

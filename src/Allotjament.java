@@ -35,7 +35,7 @@ public class Allotjament extends PuntInteres {
 	@post retorna l'activitat creada*/
     @Override
     public Activitat ActivitatCorresponent(LocalDateTime ara){
-        return new EstadaHotel(this, ara.toLocalDate(), ara.toLocalTime());
+        return new EstadaHotel(this, ara.toLocalDate(), ara.toLocalTime(),null);
     }
     
     /** @brief Consulta si l'Allotjament estarà obert avui
@@ -43,12 +43,12 @@ public class Allotjament extends PuntInteres {
 	@post retorna cert si estarà avui i fals en c.c.*/
     @Override
     public boolean obreAvui(LocalDateTime ara){
-        return ara.toLocalTime().isBefore(LocalTime.of(0, 0));
+        return ara.toLocalTime().isBefore(LocalTime.of(23, 59));
     }
     
     @Override
     public LocalDateTime ProximaObertura(LocalDateTime ara){
-        if(ara.toLocalTime().isBefore(LocalTime.of(0, 0))) return ara;
+        if(ara.toLocalTime().isBefore(LocalTime.of(23, 59))) return ara;
         else return ara.toLocalDate().atTime(LocalTime.of(4, 0));
     }
     

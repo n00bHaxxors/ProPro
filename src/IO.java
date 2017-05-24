@@ -494,7 +494,6 @@ class IO {
                             if(activitatActual.horaActivitat().getHour()>14 || (activitatActual.horaActivitat().getHour()==14 && activitatActual.horaActivitat().getMinute()>0)){
                                 writer.println("14:00-"+activitatActual.horaActivitat().toString()+" Temps lliure");
                             }
-
                         }
                         else{//TEMPS LLIURE
                             writer.println(horaAnterior.toString() + '-' + activitatActual.horaActivitat() + " Temps lliure");
