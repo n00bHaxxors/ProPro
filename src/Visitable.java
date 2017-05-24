@@ -3,7 +3,6 @@
 */
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
 import java.time.MonthDay;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,9 +18,12 @@ public class Visitable extends PuntInteres{
             @author Ismael El Habri
         */
     public static class BlocHorari{
-        
-        private MonthDay inici, fi;
-        private LocalTime horaInici, horaFi;
+        /** @invariant cap atribut == null, inici es anterior a fi i horaInici es anterior a horaFi
+        */
+        private MonthDay inici; //<dia i mes en que comença el aquest bloc horari
+        private MonthDay fi; //<dia i mes en que acaba aquest bloc horari
+        private LocalTime horaInici; //<hora d'opertura d'aquest bloc horari
+        private LocalTime horaFi; //<hora de tencament d'aquest bloc horari
         
         /** @brief Crea una franja amb els parametres
 	@pre cert
@@ -65,8 +67,11 @@ public class Visitable extends PuntInteres{
             @author Ismael El Habri
         */
     public static class ExcepcioHorari{
-        private MonthDay dia;
-        private LocalTime inici, fi;
+        /** @invariant cap atribut == null i inici es anterior a fi
+        */
+        private MonthDay dia; //dia i mes en que s'usa aquest horari excepcional
+        private LocalTime inici; //hora d'obertura de l'horari especial
+        private LocalTime fi; //< hora de tencament de l'horari especial
          
         /** @brief Crea una excepció d'horari
             @pre cert
@@ -100,11 +105,13 @@ public class Visitable extends PuntInteres{
         public LocalTime horaTencament(){ return fi; }
         
     }
-            
-    private boolean llocPas = false;
-    private ArrayList<BlocHorari> horari;
-    private ArrayList<ExcepcioHorari> diesExcepcionals;
-    private LocalTime tempsRec;
+    
+    /** @invariant si no es lloc de pas, cap atribut == null, si es lloc de pas horari==null && diesExcepcionals==null && tempsRec == null
+        */
+    private boolean llocPas = false; //< boolea que ens indica si el visitable es lloc de pas
+    private ArrayList<BlocHorari> horari; //< llista amb els diferents horaris habituals del visitable
+    private ArrayList<ExcepcioHorari> diesExcepcionals; //<llista amb els dies amb horaris especials del lloc
+    private LocalTime tempsRec; //<temps de visita recomenat
     //potser cal inicialitzar-lo a null
     
     /** @brief Crea un Lloc Visitable amb els parametres
@@ -229,6 +236,9 @@ public class Visitable extends PuntInteres{
         return new Visita (this, obertura.toLocalDate(),obertura.toLocalTime());
     }
     
+    /** @brief Consulta si dos visitables son iguals
+	@pre cert
+	@post retorna cert si els dos visitables son iguals i fals en c.c.*/    
     @Override
     public boolean equals(Object b){
         if (b == null) return false;

@@ -9,20 +9,17 @@ import java.util.Set;
     @author Ismael El Habri
 */
 public abstract class Activitat {
-
-    private LocalDate dia;
-    private LocalTime hora;
-    private int preu;
-
-    /**
-     * @brief Construeix una activitat amb les dades
-     * @pre d, h i p diferent de nulls
-     * @post Crea una nova activitat amb hora h, dia d i preu p
+    /** @invariant dia != null && hora!=null && preu != null
      */
-    public Activitat(LocalDate d, LocalTime h, int p) {
-        dia = d;
-        hora = h;
-        preu = p;
+    private LocalDate dia; //<dia en que es fa l'activitat
+    private LocalTime hora; //<hora en que es comença l'activitat
+    private int preu; //<preu de l'activitat
+    
+    /** @brief Construeix una activitat amb les dades
+     @pre d, h i p diferent de nulls
+     @post Crea una nova activitat amb hora h, dia d i preu p*/
+    public Activitat(LocalDate d, LocalTime h, int p){
+        dia=d;hora=h;preu=p;
     }
 
     /**
@@ -103,17 +100,17 @@ public abstract class Activitat {
      */
     public Boolean comparar(Activitat millor, GrupClients gc, Mapa m, int var_trans[], LocalTime temps_trans[], int var_millor, LocalTime temps_millor, char tipus) {
         Boolean res = true;
-        int var_optimitzar_actual = tipus == 'b' ? preu : Satisfaccio(gc); //si busquem barat posem preu de l'activitat, si no, satisfaccio, perquè encara que tipus sigui c no influeix
+        int var_optimitzar_actual = tipus == 'b' ? preu : Satisfaccio(gc);
         LocalTime temps_optimitzar_actual = Duracio();
 
         if (!m.conteAllotjament(nomAct()) && !m.conteVisitable(nomAct())) //si és un desplaçament...
             switch (tipus) {
                 case 'b':
-                    var_optimitzar_actual = m.puntInteres(this.UbicacioActual()).preu() + preu;
+                    var_optimitzar_actual = m.puntInteres(UbicacioActual()).preu() + preu;
                     var_trans[0] = var_optimitzar_actual;
                     break;
                 case 's':
-                    var_optimitzar_actual = m.puntInteres(this.UbicacioActual()).grauSatisfaccio(gc);
+                    var_optimitzar_actual = m.puntInteres(UbicacioActual()).grauSatisfaccio(gc);
                     var_trans[0] = var_optimitzar_actual;
                     break;
                 case 'c':
