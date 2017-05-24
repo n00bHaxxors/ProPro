@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /** @class IO
- @brief Classe que manipula la entrada i sortida del programa, conté el Main() de moment
+ @brief Classe que manipula la entrada i sortida del programa
  @author Lluís Trilla
  */
 

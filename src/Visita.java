@@ -1,5 +1,5 @@
 /** @class Visita
- @brief Lloc on ja ha estat un client (ta ok?)
+ @brief Lloc on ja ha estat un client
  @author Marc Cané Salamià
  */
 

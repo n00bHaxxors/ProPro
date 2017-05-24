@@ -1,10 +1,6 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
-
-/**
- * Created by clank on 16/05/2017.
- */
 public class Viatge {
     private LocalDateTime dataHoraInici;
     private Integer nombreDies, preuMaxim;

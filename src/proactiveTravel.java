@@ -17,9 +17,9 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
-
-/**
- * Created by aula on 5/5/2017.
+/** @class proactiveTravel
+ @brief Classe principal que conté GUI
+ @author Lluís Trilla
  */
 public class proactiveTravel extends Application implements EventHandler<ActionEvent> {
     public Parent root;

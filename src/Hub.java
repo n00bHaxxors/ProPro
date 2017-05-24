@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /** @class Hub
- @brief Hub
- @author Lluís Trilla ft. Markus
+ @brief Classe que agrupa diversos transports indirectes del mateix tipus
+ @author Lluís Trilla ft. Marc Cané
  */
 
 public class Hub {

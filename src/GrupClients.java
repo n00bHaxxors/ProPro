@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 /** @class GrupClients
- @brief GrupClients
+ @brief Grup de clients
  @author Lluís Trilla
  */
 
@@ -19,7 +19,6 @@ public class GrupClients {
      * @post Crea un GrupClients buit
      */
     public GrupClients(ArrayList<Client> aC){clients=new ArrayList(aC);}
-    
     public Iterator<Client> iteradorClients(){
         return clients.iterator();
     }
