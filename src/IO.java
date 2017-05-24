@@ -443,10 +443,64 @@ class IO {
             // do something
         }
     }
-    public void crearKML(Circuit c, String fitxerKML){
+    public void crearKML(Circuit c, String fitxerKML, Mapa m){
         try{
             PrintWriter writer = new PrintWriter(fitxerKML, "UTF-8");
-            writer.println("The first line");
+            writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                    "<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n" +
+                    "  <Document>\n" +
+                    "    <name>Ruta</name>\n" +
+                    "    <description>Ruta que han recorregut els clients</description>\n" +
+                    "    <Style id=\"yellowLineGreenPoly\">\n" +
+                    "      <LineStyle>\n" +
+                    "        <color>7f00ffff</color>\n" +
+                    "        <width>4</width>\n" +
+                    "      </LineStyle>\n" +
+                    "      <PolyStyle>\n" +
+                    "        <color>7f00ff00</color>\n" +
+                    "      </PolyStyle>\n" +
+                    "    </Style>");
+            Iterator<Activitat> it1 = c.Activitats();
+            Activitat activitatActual1;
+            Localitzacio localitzacioAnterior1 = null;
+            while(it1.hasNext()) {
+                activitatActual1 = it1.next();
+                String s = activitatActual1.UbicacioActual();
+                Localitzacio l = m.lloc(m.puntInteres(s).nomLloc());
+                if(l!=null && (localitzacioAnterior1==null || !localitzacioAnterior1.nom().equals(l.nom()))){
+                    writer.print("<Placemark>\n" +
+                            "    <name>"+l.nom() +"</name>\n" +
+                            "    <Point>\n" +
+                            "      <coordinates>"+ l.coordenada().toString()+"</coordinates>\n" +
+                            "    </Point>\n" +
+                            "  </Placemark>");
+                }
+                localitzacioAnterior1=l;
+            }
+                    writer.print("<Placemark>\n" +
+                    "      <name>Recorregut</name>\n" +
+                    "      <description>Recorregut dels clients</description>\n" +
+                    "      <styleUrl>#yellowLineGreenPoly</styleUrl>\n" +
+                    "      <LineString>\n" +
+                    "        <extrude>1</extrude>\n" +
+                    "        <tessellate>1</tessellate>\n" +
+                    "        <altitudeMode>absolute</altitudeMode>\n" +
+                    "        <coordinates> ");
+            Iterator<Activitat> it2 = c.Activitats();
+            Activitat activitatActual2;
+            Localitzacio localitzacioAnterior2 = null;
+            while(it2.hasNext()) {
+                activitatActual2 = it2.next();
+                String s = activitatActual2.UbicacioActual();
+                Localitzacio l = m.lloc(m.puntInteres(s).nomLloc());
+                if(l!=null && (localitzacioAnterior1==null || !localitzacioAnterior1.nom().equals(l.nom())))writer.println(l.coordenada().toString());
+                localitzacioAnterior2=l;
+            }
+            writer.print("</coordinates>\n" +
+                    "      </LineString>\n" +
+                    "    </Placemark>\n" +
+                    "  </Document>\n" +
+                    "</kml>");
             writer.close();
         } catch (IOException e) {
             // do something
