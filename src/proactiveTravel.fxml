@@ -23,10 +23,5 @@
       <Button fx:id="botoKML" layoutX="31.0" layoutY="111.0" mnemonicParsing="false" onAction="#handle" text="KML" />
       <Text fx:id="textOutput" layoutX="104.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Output path" />
       <Text fx:id="textKML" layoutX="104.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="KML path" />
-      <ImageView fitHeight="214.0" fitWidth="196.0" layoutX="203.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@imatgeperlagui.PNG" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>
