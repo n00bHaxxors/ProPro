@@ -1,17 +1,13 @@
 /** @class MT_Directe
- @brief Recurs que permet als clients desplaçar-se entre destinacions secundàries o primàries que no tinguin destinacions secundàries associades (cas especial a tenir en compte)
+ @brief Recurs que permet als clients desplaçar-se entre destinacions secundàries o primàries que no tinguin destinacions secundàries associades
  @author Marc Cané Salamià
  */
-
-//1-portar a un lloc amb tots els seus fills (sense origen desti)
-
-//2-Conexio directe: té origen i desti (que son secundaris del mateix lloc)
 
 import java.time.*;
 
 public class MT_Directe extends Mitja_Transport {
 
-    private PuntInteres desti;
+    private PuntInteres desti; //<Destí del mitjà de transport
 
     /** @brief Constructor amb parametres
      @pre cert
@@ -27,11 +23,17 @@ public class MT_Directe extends Mitja_Transport {
         super(n,p,d); desti=null;
     }
 
+    /** @brief Crea un desplaçament amb les dades del mitjà de transport
+     @pre cert
+     @post Retorna el desplaçament que fem amb el mitjà de transport*/
     public Desplaçament desplaçament(LocalDate dia, LocalTime hora, PuntInteres origen){
-        return new Desplaçament(preu(),dia,hora,this,origen,desti, durada());
+        return new Desplaçament(preu(),dia,hora,this,origen,desti,durada());
     }
-    
+
+    /** @brief Crea un desplaçament amb les dades del mitjà de transport i punt d'interes desti
+     @pre cert
+     @post Retorna el desplaçament que fem amb el mitjà de transport*/
     public Desplaçament desplaçament(LocalDate dia, LocalTime hora, PuntInteres origen, PuntInteres d){
-        return new Desplaçament(preu(),dia,hora,this,origen,d, durada());
+        return new Desplaçament(preu(),dia,hora,this,origen,d,durada());
     }
 }
