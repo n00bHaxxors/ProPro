@@ -5,21 +5,38 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+
 /** @class Client
-    @brief Client
+    @brief Classe contenidora de un Client
     @author Ismael El Habri
 */
 
 public class Client {
+    
+    /** @class VisitaAnterior
+    @brief Classe que conté una visita anterior de un visitable feta per un Client
+    @author Ismael El Habri
+    */
     private class VisitaAnterior{
-        private Visitable v; private LocalDate data;
+        /** @invariant v!=null && data != null
+        */
+        private Visitable v; //< visitable visitat
+        private LocalDate data; //<dia de la visita
+        /** @brief Crea una visita anterior feta pel client
+            @pre visitat && d diferents de null
+            @post Visita creada amb els parametres  */
         public VisitaAnterior (Visitable visitat, LocalDate d){ v=visitat; data=d; }
+        /** @brief consulta el nom del visitable
+            @pre cert
+            @post Retorna el nom del vistable visitat anteriorment  */
         public String nom_visitable(){ return v.nom(); }
     }
-    private String nom;
-    private ArrayList<VisitaAnterior> visites;
     
-    private HashSet<String> preferencies;
+    /** @invariant nom!=null && preferencies != null && visites != null
+     */
+    private String nom; //<nom del client
+    private ArrayList<VisitaAnterior> visites; //<llistat de visites anteriorment fetes pel client
+    private HashSet<String> preferencies; //conjunt de preferencies del Client
     
     /** @brief Crea un client amb els parametres
 	@pre cert
